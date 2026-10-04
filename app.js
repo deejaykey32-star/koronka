@@ -194,7 +194,7 @@ class SacredChimePlayer {
 
 
 // ========================================================
-// 3. SILNIK LEKTORA (WEB SPEECH API)
+// 3. SILNIK LEKTORA (WEB SPEECH API) — ODPORNY NA PAUZY I ZACINANIE
 // ========================================================
 class SpeechEngine {
   constructor(onStart, onEnd) {
@@ -203,7 +203,7 @@ class SpeechEngine {
     this.onEnd = onEnd || (() => {});
     this.polishVoice = null;
     this.isSpeaking = false;
-    this.currentUtterance = null;
+    this.sessionId = 0; // Unikalny identyfikator aktywnej sesji mowy zapobiegający wyścigom
     
     this.loadVoices();
     if (this.synth && this.synth.onvoiceschanged !== undefined) {
@@ -213,59 +213,129 @@ class SpeechEngine {
 
   loadVoices() {
     if (!this.synth) return;
-    const voices = this.synth.getVoices();
-    // Szukanie polskiego głosu
-    this.polishVoice = voices.find(v => v.lang === 'pl-PL' || v.lang === 'pl_PL' || v.lang.startsWith('pl')) || null;
+    try {
+      const voices = this.synth.getVoices();
+      // Szukanie polskiego głosu
+      this.polishVoice = voices.find(v => v.lang === 'pl-PL' || v.lang === 'pl_PL')
+        || voices.find(v => v.lang && v.lang.startsWith('pl'))
+        || null;
+    } catch (_) {}
+  }
+
+  /**
+   * Dzieli długie modlitwy na naturalne części liturgiczne.
+   * Zapobiega to znanemu błędowi silnika Chromium (Chrome/Edge/Android),
+   * który ucina wypowiedzi trwające dłużej niż 15 sekund.
+   */
+  splitIntoClauses(text) {
+    if (!text) return [];
+    const matches = text.match(/[^.!?;\n]+[.!?;\n]+/g) || [text];
+    const result = [];
+    for (let part of matches) {
+      const trimmed = part.trim();
+      if (trimmed) result.push(trimmed);
+    }
+    return result.length > 0 ? result : [text];
   }
 
   speak(text, onComplete) {
+    // Natychmiast zatrzymaj poprzednią mowę i unieważnij poprzednią sesję
     this.stop();
+
     if (!this.synth || !text) {
       if (onComplete) onComplete();
       return;
     }
 
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = 'pl-PL';
-    if (this.polishVoice) {
-      u.voice = this.polishVoice;
-    }
-    // Dostojne, spokojne tempo modlitewne
-    u.rate = 0.84;
-    u.pitch = 0.95;
+    const currentSession = ++this.sessionId;
+    const clauses = this.splitIntoClauses(text);
+    let clauseIndex = 0;
 
-    u.onstart = () => {
-      this.isSpeaking = true;
-      this.onStart();
-    };
-
-    u.onend = () => {
-      this.isSpeaking = false;
-      this.onEnd();
-      if (onComplete) onComplete();
-    };
-
-    u.onerror = (e) => {
-      this.isSpeaking = false;
-      this.onEnd();
-      if (onComplete) onComplete();
-    };
-
-    this.currentUtterance = u;
+    // Reset stanu syntezatora w przeglądarce
     try {
-      this.synth.speak(u);
-    } catch (_) {
-      this.isSpeaking = false;
-      this.onEnd();
-      if (onComplete) onComplete();
-    }
+      if (this.synth.paused) {
+        this.synth.resume();
+      }
+    } catch (_) {}
+
+    const speakNextClause = () => {
+      // Jeśli sesja została unieważniona (np. wciśnięto Pauzę lub Dalej), przerwij natychmiast
+      if (this.sessionId !== currentSession) return;
+
+      if (clauseIndex >= clauses.length) {
+        this.isSpeaking = false;
+        this.onEnd();
+        if (onComplete && this.sessionId === currentSession) {
+          onComplete();
+        }
+        return;
+      }
+
+      const clauseText = clauses[clauseIndex++];
+      const u = new SpeechSynthesisUtterance(clauseText);
+      u.lang = 'pl-PL';
+      if (this.polishVoice) {
+        u.voice = this.polishVoice;
+      }
+      u.rate = 0.84;
+      u.pitch = 0.95;
+
+      // Zabezpieczenie przed garbage-collection obiektu Utterance w silniku V8
+      window._activeUtterance = u;
+
+      u.onstart = () => {
+        if (this.sessionId !== currentSession) return;
+        this.isSpeaking = true;
+        this.onStart();
+      };
+
+      u.onend = () => {
+        if (this.sessionId !== currentSession) return;
+        // Drobna pauza między zdaniami modlitwy
+        setTimeout(() => {
+          if (this.sessionId === currentSession) {
+            speakNextClause();
+          }
+        }, 120);
+      };
+
+      u.onerror = (e) => {
+        // Ignoruj błędy wynikające z celowego zatrzymania / pauzy
+        if (e.error === 'canceled' || e.error === 'interrupted' || this.sessionId !== currentSession) {
+          return;
+        }
+        if (this.sessionId === currentSession) {
+          speakNextClause();
+        }
+      };
+
+      try {
+        this.synth.speak(u);
+      } catch (_) {
+        if (this.sessionId === currentSession) {
+          speakNextClause();
+        }
+      }
+    };
+
+    // Krótkie opóźnienie 40ms po cancel(), aby przeglądarka zresetowała wewnętrzny bufor mowy
+    setTimeout(() => {
+      if (this.sessionId === currentSession) {
+        speakNextClause();
+      }
+    }, 40);
   }
 
   stop() {
+    this.sessionId++; // Natychmiastowe unieważnienie wszelkich oczekujących callbacków
     this.isSpeaking = false;
+    window._activeUtterance = null;
     if (this.synth) {
       try {
         this.synth.cancel();
+        if (this.synth.paused) {
+          this.synth.resume();
+        }
       } catch (_) {}
     }
     this.onEnd();
@@ -564,6 +634,10 @@ class KoronkaApp {
 
   startAutoplay() {
     this.isAutoplayActive = true;
+    if (this.autoplayTimeout) {
+      clearTimeout(this.autoplayTimeout);
+      this.autoplayTimeout = null;
+    }
     this.btnAutoplay.classList.add('playing');
     this.iconPlay.classList.add('hidden');
     this.iconPause.classList.remove('hidden');
@@ -574,17 +648,24 @@ class KoronkaApp {
 
   stopAutoplay() {
     this.isAutoplayActive = false;
-    this.btnAutoplay.classList.remove('playing');
-    this.iconPlay.classList.remove('hidden');
-    this.iconPause.classList.add('hidden');
-    this.speech.stop();
     if (this.autoplayTimeout) {
       clearTimeout(this.autoplayTimeout);
       this.autoplayTimeout = null;
     }
+    this.btnAutoplay.classList.remove('playing');
+    this.iconPlay.classList.remove('hidden');
+    this.iconPause.classList.add('hidden');
+    this.speech.stop();
   }
 
   playCurrentStepAudio() {
+    if (!this.isAutoplayActive) return;
+
+    if (this.autoplayTimeout) {
+      clearTimeout(this.autoplayTimeout);
+      this.autoplayTimeout = null;
+    }
+
     const step = PRAYER_STEPS[this.currentStep];
     
     // Jeśli dźwięk jest wyciszony, odczekaj stosowny czas czytania w myślach
@@ -600,7 +681,9 @@ class KoronkaApp {
 
     // Uruchomienie lektora
     this.speech.speak(step.speechText, () => {
-      // Pauza po wypowiedzeniu modlitwy na zadumę i oddech
+      // Wywołanie następuje tylko, gdy dana modlitwa została odczytana w całości
+      if (!this.isAutoplayActive) return;
+
       const pauseDuration = step.type === 'small' ? 1200 : 2000;
       this.autoplayTimeout = setTimeout(() => {
         if (this.isAutoplayActive) {
