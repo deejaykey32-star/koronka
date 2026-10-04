@@ -1,12 +1,12 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "koronka",
+  "name": "abba-koronka",
   "compatibility_date": "2026-05-19",
   "observability": {
     "enabled": true
   },
   "assets": {
-    "directory": "arch"
+    "directory": "."
   },
   "compatibility_flags": [
     "nodejs_compat"

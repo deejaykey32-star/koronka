@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Koronka do Miłosierdzia Bożego</title>
+  
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" type="image/png" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  
+  <!-- Czcionki Google Fonts: Cinzel (sakralny styl) i Inter (czytelność) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="app" class="app-container">
+    
+    <!-- Górny pasek nawigacyjny -->
+    <header class="top-bar">
+      <div class="header-left">
+        <h1 class="app-title">Koronka do Miłosierdzia Bożego</h1>
+        <span class="app-subtitle">Wizerunek wileński • Wilno 1934</span>
+      </div>
+      
+      <div class="header-right">
+        <!-- Przycisk instalacji PWA (widoczny na telefonach/przeglądarkach wspierających) -->
+        <button id="btn-install" class="icon-btn hidden" title="Zainstaluj aplikację na telefonie" aria-label="Zainstaluj aplikację">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span class="btn-text-desktop">Zainstaluj</span>
+        </button>
+
+        <!-- Przycisk schematu edukacyjnego (abbaojcze.pl) -->
+        <button id="btn-schema" class="icon-btn" title="Jak odmawiać Koronkę? (abbaojcze.pl)" aria-label="Schemat Koronki">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span class="btn-text-desktop">Schemat</span>
+        </button>
+
+        <!-- Przycisk dźwięku / wyciszenia -->
+        <button id="btn-sound" class="icon-btn" title="Dźwięk modlitwy" aria-label="Włącz / wyłącz dźwięk">
+          <svg id="icon-sound-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg id="icon-sound-off" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Przełącznik pełnego ekranu -->
+        <button id="btn-fullscreen" class="icon-btn" title="Pełny ekran" aria-label="Pełny ekran">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Główna strefa z wizerunkiem Jezusa Miłosiernego z Wilna -->
+    <main class="image-stage" id="prayer-tap-area">
+      <div class="image-wrapper">
+        <img 
+          src="assets/jezus-milosierny-wilno.jpg" 
+          alt="Jezus Miłosierny - Wizerunek wileński namalowany przez Eugeniusza Kazimirowskiego w 1934 roku" 
+          id="main-image"
+          class="holy-image"
+          draggable="false"
+        >
+        <div class="image-vignette-top"></div>
+        <div class="image-vignette-bottom"></div>
+      </div>
+      
+      <!-- Subtelna wskazówka dotykowa na początku -->
+      <div id="tap-hint" class="tap-hint fade-out-hint">
+        Dotknij ekranu, aby przejść do kolejnego paciorka
+      </div>
+    </main>
+
+    <!-- Dolna strefa modlitwy i kontroli (inspirowana prostotą Rosario) -->
+    <footer class="prayer-dock">
+      
+      <!-- Wskaźnik paciorków (beads indicator) -->
+      <div class="beads-progress-container">
+        <div class="beads-step-info">
+          <span id="bead-part-title" class="bead-part-title">Wprowadzenie</span>
+          <span id="bead-counter" class="bead-counter">Krok 1 / 61</span>
+        </div>
+        
+        <!-- Graficzny wskaźnik dziesiątki -->
+        <div id="beads-bar" class="beads-bar" aria-label="Wskaźnik paciorków">
+          <!-- Generowane dynamicznie w JS -->
+        </div>
+      </div>
+
+      <!-- Karta aktualnego wezwania modlitewnego -->
+      <div class="prayer-card" id="prayer-card">
+        <div class="prayer-header">
+          <div class="prayer-title-group">
+            <span id="prayer-title" class="prayer-title">Znak Krzyża</span>
+            <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta modlitwę">
+              <span></span><span></span><span></span>
+            </div>
+          </div>
+          <div class="prayer-card-actions">
+            <!-- Tryb skupienia / kontemplacji (ukrycie/ściemnienie tekstu) -->
+            <button id="btn-focus-mode" class="card-action-btn" title="Tryb kontemplacji (ukryj tekst)" aria-label="Tryb kontemplacji">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+            <!-- Zwiń / rozwiń pełny tekst -->
+            <button id="btn-toggle-text" class="card-action-btn" title="Zwiń / rozwiń pełny tekst" aria-label="Zwiń / rozwiń tekst">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Krótki, minimalistyczny tekst wezwania -->
+        <p id="prayer-short" class="prayer-short">W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
+        
+        <!-- Opcjonalny pełny tekst modlitwy (zwijany, by nie rozpraszać) -->
+        <div id="prayer-full" class="prayer-full hidden">
+          <p id="prayer-full-text"></p>
+        </div>
+      </div>
+
+      <!-- Panel przycisków nawigacyjnych -->
+      <div class="controls-panel">
+        <!-- Poprzedni paciorek -->
+        <button id="btn-prev" class="control-btn nav-btn" title="Poprzedni paciorek" aria-label="Poprzedni paciorek">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        </button>
+
+        <!-- Główny przycisk nawigacji / następnego paciorka (duży i ergonomiczny) -->
+        <button id="btn-next" class="control-btn primary-btn" title="Kolejny paciorek (lub dotknij ekran)" aria-label="Kolejny paciorek">
+          <span class="btn-primary-inner">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </span>
+        </button>
+
+        <!-- Autoodtwarzanie modlitwy (Play / Pauza) -->
+        <button id="btn-autoplay" class="control-btn autoplay-btn" title="Automatyczne prowadzenie modlitwy" aria-label="Automatyczne prowadzenie">
+          <svg id="icon-play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+          </svg>
+          <svg id="icon-pause" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <rect x="6" y="4" width="4" height="16"></rect>
+            <rect x="14" y="4" width="4" height="16"></rect>
+          </svg>
+        </button>
+
+        <!-- Reset / Restart modlitwy -->
+        <button id="btn-restart" class="control-btn nav-btn" title="Rozpocznij Koronkę od początku" aria-label="Od początku">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+        </button>
+      </div>
+
+    </footer>
+
+    <!-- Okno modalne: Schemat edukacyjny & Odsyłacz do abbaojcze.pl -->
+    <div id="modal-schema" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title">Jak odmawiać Koronkę?</h2>
+          <button id="btn-close-modal" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <p class="modal-intro">
+            Koronkę do Miłosierdzia Bożego podyktował Pan Jezus św. Siostrze Faustynie w Wilnie w dniach 13–14 września 1935 roku jako modlitwę przebłagania i uśmierzenia gniewu Bożego.
+          </p>
+          
+          <div class="schema-steps">
+            <div class="schema-item">
+              <span class="step-num">1</span>
+              <div>
+                <strong>Modlitwy początkowe:</strong> Znak Krzyża, Ojcze nasz, Zdrowaś Maryjo, Wierzę w Boga.
+              </div>
+            </div>
+            
+            <div class="schema-item">
+              <span class="step-num">2</span>
+              <div>
+                <strong>Na dużych paciorkach (5 razy):</strong><br>
+                <em>„Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.”</em>
+              </div>
+            </div>
+            
+            <div class="schema-item">
+              <span class="step-num">3</span>
+              <div>
+                <strong>Na małych paciorkach (10 razy w każdej dziesiątce):</strong><br>
+                <em>„Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.”</em>
+              </div>
+            </div>
+            
+            <div class="schema-item">
+              <span class="step-num">4</span>
+              <div>
+                <strong>Na zakończenie (3 razy):</strong><br>
+                <em>„Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem.”</em>
+              </div>
+            </div>
+
+            <div class="schema-item">
+              <span class="step-num">5</span>
+              <div>
+                <strong>Modlitwa końcowa:</strong><br>
+                <em>„O Krwi i Wodo, któraś wytrysnęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie! Jezu, ufam Tobie (3x).”</em>
+              </div>
+            </div>
+          </div>
+
+          <div class="portal-link-box">
+            <p>Pełne materiały edukacyjne, rozważania oraz schematy w różnych językach znajdziesz na stronie:</p>
+            <a href="https://abbaojcze.pl/" target="_blank" rel="noopener noreferrer" class="portal-btn">
+              <span>Przejdź do abbaojcze.pl</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,655 @@
+/* ========================================================
+   KORONKA DO MIŁOSIERDZIA BOŻEGO 2.0
+   System stylów oparty na godnej, sakralnej estetyce
+   ======================================================== */
+
+:root {
+  --bg-main: #050505;
+  --bg-dock: rgba(10, 10, 10, 0.88);
+  --bg-card: rgba(18, 18, 18, 0.75);
+  
+  --gold-primary: #d4af37;
+  --gold-light: #f3e5ab;
+  --gold-glow: rgba(212, 175, 55, 0.35);
+  --gold-border: rgba(212, 175, 55, 0.28);
+
+  --mercy-red: #c4261d;
+  --mercy-pale: #e2f1f8;
+  
+  --text-main: #f5f2eb;
+  --text-muted: #b8b09f;
+  --text-dim: #7d7565;
+
+  --font-serif: 'Cinzel', Georgia, 'Times New Roman', serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  height: 100dvh;
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Kontener główny aplikacji - wyśrodkowany na desktopie */
+.app-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  margin: 0 auto;
+  background-color: #000000;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.95);
+  overflow: hidden;
+}
+
+/* ========================================================
+   GÓRNY PASEK NAWIGACYJNY
+   ======================================================== */
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(10px + var(--safe-top)) 16px 10px 16px;
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.7) 70%, transparent 100%);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-title {
+  font-family: var(--font-serif);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--gold-light);
+  line-height: 1.2;
+}
+
+.app-subtitle {
+  font-size: 10px;
+  color: var(--text-dim);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  transition: all 0.2s ease;
+}
+
+.icon-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold-primary);
+  color: #ffffff;
+}
+
+.icon-btn:active {
+  transform: scale(0.96);
+}
+
+.btn-text-desktop {
+  display: none;
+}
+
+@media (min-width: 400px) {
+  .btn-text-desktop {
+    display: inline;
+  }
+}
+
+/* ========================================================
+   GŁÓWNY WIZERUNEK JEZUSA MIŁOSIERNEGO (WILNO)
+   ======================================================== */
+.image-stage {
+  flex: 1;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: calc(58px + var(--safe-top));
+  padding-bottom: calc(210px + var(--safe-bottom));
+  cursor: pointer; /* Dotknięcie ekranu przewija paciorek */
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.holy-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Zachowuje pełną postać i napis JEZU, UFAM TOBIE */
+  object-position: center center;
+  pointer-events: none;
+  transition: transform 0.5s ease;
+}
+
+/* Subtelne winiety u góry i dołu dla czytelności napisów */
+.image-vignette-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.image-vignette-bottom {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, transparent 100%);
+  pointer-events: none;
+}
+
+/* Dyskretna wskazówka dotykowa */
+.tap-hint {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid var(--gold-border);
+  color: var(--text-muted);
+  font-size: 12px;
+  padding: 8px 16px;
+  border-radius: 20px;
+  pointer-events: none;
+  text-align: center;
+  backdrop-filter: blur(4px);
+  transition: opacity 1s ease;
+}
+
+.fade-out-hint {
+  animation: fadeOutSlow 4s forwards;
+}
+
+@keyframes fadeOutSlow {
+  0% { opacity: 1; }
+  60% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+/* ========================================================
+   DOLNA STREFA MODLITEWNA (PRAYER DOCK)
+   ======================================================== */
+.prayer-dock {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 14px calc(12px + var(--safe-bottom)) 14px;
+  background: linear-gradient(to top, rgba(5, 5, 5, 0.98) 0%, rgba(8, 8, 8, 0.92) 85%, transparent 100%);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  gap: 8px;
+}
+
+/* Wskaźnik paciorków */
+.beads-progress-container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.beads-step-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.bead-part-title {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+}
+
+.bead-counter {
+  color: var(--text-dim);
+  font-size: 11px;
+  font-feature-settings: 'tnum';
+}
+
+/* Pasek paciorków w dziesiątce */
+.beads-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 3px 0;
+}
+
+.bead-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(212, 175, 55, 0.25);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bead-dot.large {
+  width: 13px;
+  height: 13px;
+  border-width: 1.5px;
+}
+
+.bead-dot.completed {
+  background: var(--gold-border);
+  border-color: var(--gold-primary);
+}
+
+.bead-dot.active {
+  background: var(--gold-primary);
+  border-color: #ffffff;
+  transform: scale(1.35);
+  box-shadow: 0 0 12px var(--gold-primary), 0 0 4px #ffffff;
+}
+
+/* Karta modlitwy */
+.prayer-card {
+  background: var(--bg-card);
+  border: 1px solid var(--gold-border);
+  border-radius: 12px;
+  padding: 8px 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  transition: all 0.3s ease;
+}
+
+.prayer-card.focus-hidden {
+  opacity: 0.2;
+  transform: translateY(10px);
+}
+
+.prayer-card.focus-hidden:hover {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.prayer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.prayer-title-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.prayer-title {
+  font-family: var(--font-serif);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--gold-primary);
+  text-transform: uppercase;
+}
+
+/* Wskaźnik głosu mówiącego w czasie rzeczywistym */
+.voice-wave {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  height: 12px;
+}
+
+.voice-wave span {
+  width: 2px;
+  height: 100%;
+  background-color: var(--gold-primary);
+  border-radius: 2px;
+  animation: wavePulse 0.8s ease-in-out infinite alternate;
+}
+
+.voice-wave span:nth-child(2) { animation-delay: 0.2s; height: 70%; }
+.voice-wave span:nth-child(3) { animation-delay: 0.4s; height: 40%; }
+
+@keyframes wavePulse {
+  0% { height: 20%; opacity: 0.4; }
+  100% { height: 100%; opacity: 1; }
+}
+
+.prayer-card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-action-btn {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+  border-radius: 4px;
+}
+
+.card-action-btn:hover {
+  color: var(--gold-light);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.card-action-btn.active {
+  color: var(--gold-primary);
+}
+
+.prayer-short {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--text-main);
+  text-align: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.prayer-short.fade-out {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.prayer-short.fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.prayer-full {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-muted);
+  max-height: 140px;
+  overflow-y: auto;
+}
+
+/* Panel sterowania */
+.controls-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.control-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.nav-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+}
+
+.nav-btn:hover {
+  background: rgba(212, 175, 55, 0.15);
+  border-color: var(--gold-primary);
+}
+
+.nav-btn:active {
+  transform: scale(0.92);
+}
+
+.autoplay-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+}
+
+.autoplay-btn.playing {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-primary);
+  box-shadow: 0 0 14px var(--gold-glow);
+}
+
+.primary-btn {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f1dc85, #b8860b);
+  border: 2px solid #ffffff;
+  color: #1a1202;
+  box-shadow: 0 0 24px rgba(212, 175, 55, 0.5), 0 4px 12px rgba(0, 0, 0, 0.8);
+}
+
+.primary-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(212, 175, 55, 0.7);
+}
+
+.primary-btn:active {
+  transform: scale(0.94);
+}
+
+/* ========================================================
+   OKNO MODALNE (SCHEMAT I ABBAOJCZE.PL)
+   ======================================================== */
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: fadeIn 0.25s ease;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  background: #111111;
+  border: 1px solid var(--gold-border);
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.9);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.2);
+  background: #141414;
+}
+
+.modal-title {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  color: var(--gold-light);
+  letter-spacing: 0.5px;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 26px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 6px;
+}
+
+.modal-close-btn:hover {
+  color: #ffffff;
+}
+
+.modal-body {
+  padding: 20px;
+  overflow-y: auto;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.modal-intro {
+  font-size: 13px;
+  color: var(--text-main);
+  border-left: 2px solid var(--gold-primary);
+  padding-left: 10px;
+}
+
+.schema-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.schema-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.2);
+  color: var(--gold-light);
+  font-weight: 600;
+  font-size: 11px;
+  flex-shrink: 0;
+  border: 1px solid var(--gold-border);
+}
+
+.portal-link-box {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.12) 0%, rgba(0, 0, 0, 0.5) 100%);
+  border: 1px solid var(--gold-border);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.portal-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--gold-primary);
+  color: #050505;
+  font-weight: 600;
+  font-size: 13px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.portal-btn:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px var(--gold-glow);
+}
+
+/* Narzędziowe */
+.hidden {
+  display: none !important;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

@@ -1,0 +1,28 @@
+{
+  "id": "koronka-milosierdzia-bozego-v2",
+  "name": "Koronka do Miłosierdzia Bożego",
+  "short_name": "Koronka",
+  "description": "Aplikacja do modlitwy Koronką do Miłosierdzia Bożego z wizerunkiem wileńskim Jezusa Miłosiernego namalowanym przez Eugeniusza Kazimirowskiego",
+  "lang": "pl",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#000000",
+  "theme_color": "#0a0a0a",
+  "categories": ["religion", "lifestyle", "education"],
+  "icons": [
+    {
+      "src": "assets/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
