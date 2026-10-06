@@ -1,4 +1,4 @@
-const CACHE_NAME = 'koronka-v2-cache-v4';
+const CACHE_NAME = 'koronka-v2-cache-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -8,7 +8,10 @@ const ASSETS_TO_CACHE = [
   './assets/jezus-milosierny-wilno.jpg',
   './assets/icon-192.png',
   './assets/icon-512.png',
-  './assets/koronka-offline.zip'
+  './assets/koronka-offline.zip',
+  './assets/koronka.apk',
+  './assets/koronka.aab',
+  './assets/koronka.ipa'
 ];
 
 self.addEventListener('install', (event) => {
@@ -35,10 +38,23 @@ self.addEventListener('activate', (event) => {
   self.clients.claim();
 });
 
+// Strategia Network-First: zawsze pobiera najnowszy kod z sieci, a z pamięci podręcznej korzysta w trybie offline
 self.addEventListener('fetch', (event) => {
+  if (event.request.method !== 'GET') return;
+
   event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      return cachedResponse || fetch(event.request);
-    })
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      })
+      .catch(() => {
+        return caches.match(event.request);
+      })
   );
 });

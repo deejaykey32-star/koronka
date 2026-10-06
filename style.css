@@ -398,6 +398,10 @@ html, body {
   border-radius: 4px;
 }
 
+.card-action-btn svg {
+  pointer-events: none;
+}
+
 .card-action-btn:hover {
   color: var(--gold-light);
   background: rgba(255, 255, 255, 0.05);

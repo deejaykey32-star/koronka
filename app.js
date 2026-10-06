@@ -665,6 +665,8 @@ class KoronkaApp {
       this.btnFocusMode.classList.add('active');
       this.btnFocusMode.setAttribute('title', 'Pokaż tekst modlitwy');
       this.btnFocusMode.setAttribute('aria-label', 'Pokaż tekst');
+      if (this.prayerShort) this.prayerShort.style.display = 'none';
+      if (this.prayerFull) this.prayerFull.style.display = 'none';
       if (this.iconEyeOpen && this.iconEyeClosed) {
         this.iconEyeOpen.classList.add('hidden');
         this.iconEyeClosed.classList.remove('hidden');
@@ -674,6 +676,14 @@ class KoronkaApp {
       this.btnFocusMode.classList.remove('active');
       this.btnFocusMode.setAttribute('title', 'Ukryj tekst modlitwy (tryb skupienia)');
       this.btnFocusMode.setAttribute('aria-label', 'Ukryj tekst');
+      if (this.prayerShort) this.prayerShort.style.display = '';
+      if (this.isFullTextOpen && this.prayerFull) {
+        this.prayerFull.style.display = '';
+        this.prayerFull.classList.remove('hidden');
+      } else if (this.prayerFull) {
+        this.prayerFull.style.display = 'none';
+        this.prayerFull.classList.add('hidden');
+      }
       if (this.iconEyeOpen && this.iconEyeClosed) {
         this.iconEyeOpen.classList.remove('hidden');
         this.iconEyeClosed.classList.add('hidden');
@@ -814,6 +824,10 @@ class KoronkaApp {
   }
 
   renderWithTransition() {
+    if (this.isFocusModeActive) {
+      this.render();
+      return;
+    }
     // Płynna animacja tekstu wezwania
     this.prayerShort.classList.add('fade-out');
     setTimeout(() => {
@@ -837,6 +851,13 @@ class KoronkaApp {
     this.prayerTitle.textContent = step.title;
     this.prayerShort.textContent = step.shortText;
     this.prayerFullText.textContent = step.fullText;
+
+    if (this.isFocusModeActive) {
+      if (this.prayerShort) this.prayerShort.style.display = 'none';
+      if (this.prayerFull) this.prayerFull.style.display = 'none';
+    } else {
+      if (this.prayerShort) this.prayerShort.style.display = '';
+    }
 
     // Przycisk "Wstecz" (nieaktywny tylko na 1. kroku)
     this.btnPrev.style.opacity = this.currentStep === 0 ? '0.3' : '1';
@@ -900,9 +921,11 @@ class KoronkaApp {
 document.addEventListener('DOMContentLoaded', () => {
   window.app = new KoronkaApp();
   
-  // Rejestracja Service Workera dla trybu offline
+  // Rejestracja Service Workera dla trybu offline z natychmiastową aktualizacją
   if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js').catch(() => {});
+    navigator.serviceWorker.register('./sw.js').then((reg) => {
+      reg.update();
+    }).catch(() => {});
   }
 
   // Obsługa instalacji aplikacji jako PWA
