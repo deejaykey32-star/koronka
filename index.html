@@ -35,14 +35,14 @@
       </div>
       
       <div class="header-right">
-        <!-- Przycisk instalacji i pobierania (Android, iOS, PWA) -->
-        <button id="btn-install" class="icon-btn" title="Pobierz lub zainstaluj aplikację (Android, iOS, PWA)" aria-label="Pobierz lub zainstaluj aplikację">
+        <!-- Przycisk pobierania plików (APK, AAB, IPA) i PWA -->
+        <button id="btn-install" class="icon-btn" title="Pobierz pliki APK, AAB, IPA lub zainstaluj aplikację" aria-label="Pobierz pliki">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          <span class="btn-text-desktop">Pobierz / PWA</span>
+          <span class="btn-text-desktop">Pobierz pliki</span>
         </button>
 
         <!-- Przycisk schematu edukacyjnego (abbaojcze.pl) -->
@@ -261,7 +261,7 @@
     <div id="modal-install" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card">
         <div class="modal-header">
-          <h2 class="modal-title">Pobierz i zainstaluj aplikację</h2>
+          <h2 class="modal-title">Pobierz pliki instalacyjne i PWA</h2>
           <button id="btn-close-install-modal" class="modal-close-btn" aria-label="Zamknij">&times;</button>
         </div>
         
@@ -270,7 +270,7 @@
           <div id="pwa-quick-install-box" class="install-prompt-banner hidden">
             <div class="banner-content">
               <strong>Zainstaluj jednym kliknięciem</strong>
-              <p>Twoja przeglądarka wspiera bezpośrednią instalację PWA.</p>
+              <p>Twoja przeglądarka wspiera bezpośrednią instalację PWA na ekranie telefonu.</p>
             </div>
             <button id="btn-trigger-pwa" class="portal-btn" style="border: none; cursor: pointer; align-self: flex-start;">
               <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
@@ -291,60 +291,24 @@
             <span>Aplikacja jest już uruchomiona w trybie zainstalowanym.</span>
           </div>
 
-          <!-- Zakładki wyboru platformy -->
+          <!-- Zakładki wyboru: 1. Pliki do pobrania (Domyślnie aktywna!), 2. PWA -->
           <div class="platform-tabs">
-            <button class="tab-btn active" data-tab="tab-pwa">📱 PWA (Zalecane)</button>
-            <button class="tab-btn" data-tab="tab-android">🤖 Android (.apk / .aab)</button>
-            <button class="tab-btn" data-tab="tab-ios">🍏 iOS (.ipa)</button>
+            <button class="tab-btn active" data-tab="tab-files">📦 Pliki do pobrania (APK, AAB, IPA)</button>
+            <button class="tab-btn" data-tab="tab-pwa">📱 PWA (Instalacja na ekranie)</button>
           </div>
 
-          <!-- Zakładka 1: PWA (Uniwersalna) -->
-          <div id="tab-pwa" class="tab-content active">
-            <div class="install-badge">100% offline • Bez instalatorów • Szybka instalacja</div>
-            <p class="modal-intro">
-              Ta aplikacja to nowoczesna <strong>Progressive Web App (PWA)</strong>. Nie wymaga pobierania wielkich plików z zewnętrznych stron ani sklepu z aplikacjami.
-            </p>
-
-            <div class="schema-steps">
-              <div class="schema-item">
-                <span class="step-num">🍏</span>
-                <div>
-                  <strong>Apple iPhone / iPad (iOS w Safari):</strong><br>
-                  1. Otwórz tę stronę w oficjalnej przeglądarce <strong>Safari</strong>.<br>
-                  2. Dotknij ikony <strong>Udostępnij</strong> (niebieski kwadrat ze strzałką w górę na dolnym pasku Safari).<br>
-                  3. Przewiń listę w dół i kliknij <strong>„Do ekranu początkowego”</strong> (Add to Home Screen).<br>
-                  4. Kliknij <strong>„Dodaj”</strong> w prawym górnym rogu.<br>
-                  <em>Gotowe! Koronka pojawi się na pulpicie telefonu, działa na pełnym ekranie i w 100% offline.</em>
-                </div>
-              </div>
-
-              <div class="schema-item">
-                <span class="step-num">🤖</span>
-                <div>
-                  <strong>Google Android (Chrome, Edge, Samsung Internet):</strong><br>
-                  1. Kliknij menu przeglądarki (trzy pionowe kropki ⋮ w prawym górnym rogu).<br>
-                  2. Wybierz opcję <strong>„Zainstaluj aplikację”</strong> lub <strong>„Dodaj do ekranu głównego”</strong>.<br>
-                  3. Potwierdź instalację. Powstanie bezpieczna aplikacja WebAPK z ikoną i trybem offline.
-                </div>
-              </div>
-
-              <div class="schema-item">
-                <span class="step-num">💻</span>
-                <div>
-                  <strong>Komputer PC / Mac / Linux:</strong><br>
-               <!-- Zakładka 2: Android (.apk / .aab) -->
-          <div id="tab-android" class="tab-content">
-            <div class="install-badge">Gotowe pliki instalacyjne dla Androida</div>
-            <p class="modal-intro">
-              Pobierz bezpośrednio gotowy plik instalacyjny <strong>.apk</strong> na telefon lub pakiet <strong>.aab</strong> dla sklepu Google Play.
-            </p>
-
+          <!-- Zakładka 1: Wszystkie pliki do pobrania (Gotowe bezpośrednio bez pośredników) -->
+          <div id="tab-files" class="tab-content active">
+            <div class="install-badge">Bezpośrednie pobieranie • Bez pośredników</div>
+            
             <div class="download-actions">
+              <!-- 1. ANDROID APK -->
               <div class="action-card">
-                <div>
-                  <strong>Pobierz plik instalacyjny (.apk)</strong>
-                  <p>Bezpośredni plik instalacyjny Android (2.8 MB). Pobierz na telefon i kliknij, aby zainstalować aplikację.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: var(--gold-light); font-size: 14px;">🤖 Android (.apk)</strong>
+                  <span class="install-badge">2.8 MB</span>
                 </div>
+                <p>Gotowy, podpisany plik instalacyjny dla telefonów i tabletów z systemem Android. Pobierz i zainstaluj na telefonie.</p>
                 <a href="assets/koronka.apk" download="koronka.apk" class="portal-btn" style="text-align: center; justify-content: center;">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -355,11 +319,13 @@
                 </a>
               </div>
 
+              <!-- 2. ANDROID AAB -->
               <div class="action-card">
-                <div>
-                  <strong>Pobierz pakiet Google Play (.aab)</strong>
-                  <p>Oficjalny pakiet Android App Bundle (2.9 MB) gotowy do wgrania w konsoli deweloperskiej Google Play Console.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: var(--gold-light); font-size: 14px;">📦 Android App Bundle (.aab)</strong>
+                  <span class="install-badge">2.9 MB</span>
                 </div>
+                <p>Oficjalny pakiet Android App Bundle dla sklepu Google Play Console.</p>
                 <a href="assets/koronka.aab" download="koronka.aab" class="portal-btn portal-btn-secondary" style="text-align: center; justify-content: center;">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -370,36 +336,13 @@
                 </a>
               </div>
 
+              <!-- 3. APPLE IOS IPA -->
               <div class="action-card">
-                <div>
-                  <strong>Pobierz paczkę offline (.zip)</strong>
-                  <p>Kompletne pliki aplikacji webowej w archiwum ZIP (436 KB) do użytku lokalnego na dowolnym systemie.</p>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: var(--gold-light); font-size: 14px;">🍏 Apple iOS (.ipa)</strong>
+                  <span class="install-badge">700 KB</span>
                 </div>
-                <a href="assets/koronka-offline.zip" download="koronka-offline.zip" class="portal-btn portal-btn-secondary" style="text-align: center; justify-content: center;">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Pobierz koronka-offline.zip</span>
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Zakładka 3: iOS (.ipa) -->
-          <div id="tab-ios" class="tab-content">
-            <div class="install-badge">Pakiet instalacyjny dla Apple iOS</div>
-            <p class="modal-intro">
-              Bezpośredni pakiet <strong>.ipa</strong> dla iPhone i iPad oraz szybka instalacja bezprzewodowa.
-            </p>
-
-            <div class="download-actions">
-              <div class="action-card">
-                <div>
-                  <strong>Pobierz plik instalacyjny (.ipa)</strong>
-                  <p>Pakiet aplikacji iOS (700 KB). Gotowy do wgrania na iPhone/iPad za pomocą AltStore, Sideloadly lub Apple Configurator.</p>
-                </div>
+                <p>Pakiet aplikacji dla iPhone i iPad. Do instalacji przez AltStore, Sideloadly lub Apple Configurator.</p>
                 <a href="assets/koronka.ipa" download="koronka.ipa" class="portal-btn" style="text-align: center; justify-content: center;">
                   <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
@@ -409,14 +352,60 @@
                   <span>Pobierz koronka.ipa (700 KB)</span>
                 </a>
               </div>
-            </div>
 
-            <div class="schema-steps" style="margin-top: 10px;">
+              <!-- 4. PAKIET OFFLINE ZIP -->
+              <div class="action-card">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                  <strong style="color: var(--gold-light); font-size: 14px;">💻 Paczka offline (.zip)</strong>
+                  <span class="install-badge">436 KB</span>
+                </div>
+                <p>Pełne pliki aplikacji webowej (HTML, CSS, JS, dźwięk, grafiki) do uruchomienia offline na dowolnym komputerze lub telefonie.</p>
+                <a href="assets/koronka-offline.zip" download="koronka-offline.zip" class="portal-btn portal-btn-secondary" style="text-align: center; justify-content: center;">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                  <span>Pobierz koronka-offline.zip (436 KB)</span>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zakładka 2: PWA (Instalacja na ekranie bez pobierania plików) -->
+          <div id="tab-pwa" class="tab-content">
+            <div class="install-badge">Instalacja bezpośrednio z przeglądarki</div>
+            <p class="modal-intro">
+              Jeśli nie chcesz pobierać plików na dysk, możesz dodać aplikację bezpośrednio do ekranu początkowego:
+            </p>
+
+            <div class="schema-steps">
               <div class="schema-item">
                 <span class="step-num">🍏</span>
                 <div>
-                  <strong>Najprostsza instalacja bezpośrednio na iPhone (Safari):</strong><br>
-                  Jeśli nie chcesz używać komputera do wgrywania pliku .ipa, wystarczy otworzyć stronę w <strong>Safari</strong>, kliknąć ikonę <strong>Udostępnij</strong> (kwadrat ze strzałką) i wybrać <strong>„Do ekranu początkowego”</strong>. Aplikacja zainstaluje się natychmiast na Twoim pulpicie i działa w 100% offline!
+                  <strong>Apple iPhone / iPad (Safari):</strong><br>
+                  1. Otwórz tę stronę w przeglądarce <strong>Safari</strong>.<br>
+                  2. Dotknij ikony <strong>Udostępnij</strong> (kwadrat ze strzałką w górę na dolnym pasku).<br>
+                  3. Wybierz <strong>„Do ekranu początkowego”</strong> i kliknij <strong>„Dodaj”</strong>.<br>
+                  <em>Aplikacja pojawi się na pulpicie i działa w 100% offline.</em>
+                </div>
+              </div>
+
+              <div class="schema-item">
+                <span class="step-num">🤖</span>
+                <div>
+                  <strong>Google Android (Chrome / Brave / Edge):</strong><br>
+                  1. Kliknij menu (trzy kropki ⋮ w prawym górnym rogu).<br>
+                  2. Wybierz <strong>„Zainstaluj aplikację”</strong> lub <strong>„Dodaj do ekranu głównego”</strong>.<br>
+                  3. Potwierdź instalację.
+                </div>
+              </div>
+
+              <div class="schema-item">
+                <span class="step-num">💻</span>
+                <div>
+                  <strong>Komputer PC / Mac:</strong><br>
+                  W pasku adresu przeglądarki Chrome/Edge kliknij ikonkę <strong>Zainstaluj</strong> (monitor ze strzałką w dół).
                 </div>
               </div>
             </div>
