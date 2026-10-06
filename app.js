@@ -399,6 +399,15 @@ class KoronkaApp {
     this.btnSchema = document.getElementById('btn-schema');
     this.modalSchema = document.getElementById('modal-schema');
     this.btnCloseModal = document.getElementById('btn-close-modal');
+
+    // Elementy instalacji i pobierania (PWA, Android, iOS)
+    this.btnInstall = document.getElementById('btn-install');
+    this.modalInstall = document.getElementById('modal-install');
+    this.btnCloseInstallModal = document.getElementById('btn-close-install-modal');
+    this.tabBtns = document.querySelectorAll('.platform-tabs .tab-btn');
+    this.tabContents = document.querySelectorAll('#modal-install .tab-content');
+    this.pwaQuickInstallBox = document.getElementById('pwa-quick-install-box');
+    this.pwaAlreadyInstalledBox = document.getElementById('pwa-already-installed-box');
   }
 
   bindEvents() {
@@ -465,6 +474,39 @@ class KoronkaApp {
       }
     });
 
+    // Modal instalacji i pobierania aplikacji
+    if (this.btnInstall) {
+      this.btnInstall.addEventListener('click', () => {
+        this.openInstallModal();
+      });
+    }
+
+    if (this.btnCloseInstallModal) {
+      this.btnCloseInstallModal.addEventListener('click', () => {
+        this.closeInstallModal();
+      });
+    }
+
+    if (this.modalInstall) {
+      this.modalInstall.addEventListener('click', (e) => {
+        if (e.target === this.modalInstall) {
+          this.closeInstallModal();
+        }
+      });
+    }
+
+    // Przełączanie zakładek w oknie instalacji
+    this.tabBtns.forEach((tabBtn) => {
+      tabBtn.addEventListener('click', () => {
+        const targetId = tabBtn.getAttribute('data-tab');
+        this.tabBtns.forEach((b) => b.classList.remove('active'));
+        this.tabContents.forEach((c) => c.classList.remove('active'));
+        tabBtn.classList.add('active');
+        const targetContent = document.getElementById(targetId);
+        if (targetContent) targetContent.classList.add('active');
+      });
+    });
+
     // Klawiatura
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
@@ -473,6 +515,7 @@ class KoronkaApp {
         this.prevStep();
       } else if (e.key === 'Escape') {
         this.closeSchemaModal();
+        this.closeInstallModal();
       }
     });
   }
@@ -739,6 +782,23 @@ class KoronkaApp {
     this.modalSchema.classList.add('hidden');
   }
 
+  checkStandaloneMode() {
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches ||
+                         window.navigator.standalone === true;
+    if (isStandalone && this.pwaAlreadyInstalledBox) {
+      this.pwaAlreadyInstalledBox.classList.remove('hidden');
+    }
+  }
+
+  openInstallModal() {
+    this.checkStandaloneMode();
+    if (this.modalInstall) this.modalInstall.classList.remove('hidden');
+  }
+
+  closeInstallModal() {
+    if (this.modalInstall) this.modalInstall.classList.add('hidden');
+  }
+
   renderWithTransition() {
     // Płynna animacja tekstu wezwania
     this.prayerShort.classList.add('fade-out');
@@ -833,28 +893,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Obsługa instalacji aplikacji jako PWA
   let deferredInstallPrompt = null;
+  const pwaQuickInstallBox = document.getElementById('pwa-quick-install-box');
+  const btnTriggerPwa = document.getElementById('btn-trigger-pwa');
+
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredInstallPrompt = e;
-    const btnInstall = document.getElementById('btn-install');
-    if (btnInstall) {
-      btnInstall.classList.remove('hidden');
-      btnInstall.addEventListener('click', async () => {
-        if (deferredInstallPrompt) {
-          deferredInstallPrompt.prompt();
-          const { outcome } = await deferredInstallPrompt.userChoice;
-          if (outcome === 'accepted') {
-            btnInstall.classList.add('hidden');
-          }
-          deferredInstallPrompt = null;
-        }
-      });
+    if (pwaQuickInstallBox) {
+      pwaQuickInstallBox.classList.remove('hidden');
     }
   });
 
+  if (btnTriggerPwa) {
+    btnTriggerPwa.addEventListener('click', async () => {
+      if (deferredInstallPrompt) {
+        deferredInstallPrompt.prompt();
+        const { outcome } = await deferredInstallPrompt.userChoice;
+        if (outcome === 'accepted') {
+          if (pwaQuickInstallBox) pwaQuickInstallBox.classList.add('hidden');
+        }
+        deferredInstallPrompt = null;
+      }
+    });
+  }
+
   window.addEventListener('appinstalled', () => {
-    const btnInstall = document.getElementById('btn-install');
-    if (btnInstall) btnInstall.classList.add('hidden');
+    if (pwaQuickInstallBox) pwaQuickInstallBox.classList.add('hidden');
+    const alreadyInstalledBox = document.getElementById('pwa-already-installed-box');
+    if (alreadyInstalledBox) alreadyInstalledBox.classList.remove('hidden');
     deferredInstallPrompt = null;
   });
 });

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'koronka-v2-cache-v3';
+const CACHE_NAME = 'koronka-v2-cache-v4';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -7,7 +7,8 @@ const ASSETS_TO_CACHE = [
   './manifest.json',
   './assets/jezus-milosierny-wilno.jpg',
   './assets/icon-192.png',
-  './assets/icon-512.png'
+  './assets/icon-512.png',
+  './assets/koronka-offline.zip'
 ];
 
 self.addEventListener('install', (event) => {

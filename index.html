@@ -6,11 +6,16 @@
   <meta name="theme-color" content="#0a0a0a">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Koronka">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="application-name" content="Koronka">
   <title>Koronka do Miłosierdzia Bożego</title>
   
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/png" href="assets/icon-192.png">
   <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" sizes="192x192" href="assets/icon-192.png">
+  <link rel="apple-touch-icon" sizes="512x512" href="assets/icon-512.png">
   
   <!-- Czcionki Google Fonts: Cinzel (sakralny styl) i Inter (czytelność) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -30,14 +35,14 @@
       </div>
       
       <div class="header-right">
-        <!-- Przycisk instalacji PWA (widoczny na telefonach/przeglądarkach wspierających) -->
-        <button id="btn-install" class="icon-btn hidden" title="Zainstaluj aplikację na telefonie" aria-label="Zainstaluj aplikację">
+        <!-- Przycisk instalacji i pobierania (Android, iOS, PWA) -->
+        <button id="btn-install" class="icon-btn" title="Pobierz lub zainstaluj aplikację (Android, iOS, PWA)" aria-label="Pobierz lub zainstaluj aplikację">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
             <polyline points="7 10 12 15 17 10"></polyline>
             <line x1="12" y1="15" x2="12" y2="3"></line>
           </svg>
-          <span class="btn-text-desktop">Zainstaluj</span>
+          <span class="btn-text-desktop">Pobierz / PWA</span>
         </button>
 
         <!-- Przycisk schematu edukacyjnego (abbaojcze.pl) -->
@@ -248,6 +253,177 @@
               </svg>
             </a>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Okno modalne: Pobieranie i instalacja (Android, iOS, PWA) -->
+    <div id="modal-install" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title">Pobierz i zainstaluj aplikację</h2>
+          <button id="btn-close-install-modal" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Baner szybkiej instalacji (gdy przeglądarka wspiera natywny prompt) -->
+          <div id="pwa-quick-install-box" class="install-prompt-banner hidden">
+            <div class="banner-content">
+              <strong>Zainstaluj jednym kliknięciem</strong>
+              <p>Twoja przeglądarka wspiera bezpośrednią instalację PWA.</p>
+            </div>
+            <button id="btn-trigger-pwa" class="portal-btn" style="border: none; cursor: pointer; align-self: flex-start;">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="7 10 12 15 17 10"></polyline>
+                <line x1="12" y1="15" x2="12" y2="3"></line>
+              </svg>
+              <span>Zainstaluj aplikację teraz</span>
+            </button>
+          </div>
+
+          <!-- Informacja gdy aplikacja już działa w trybie standalone -->
+          <div id="pwa-already-installed-box" class="installed-badge hidden">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Aplikacja jest już uruchomiona w trybie zainstalowanym.</span>
+          </div>
+
+          <!-- Zakładki wyboru platformy -->
+          <div class="platform-tabs">
+            <button class="tab-btn active" data-tab="tab-pwa">📱 PWA (Zalecane)</button>
+            <button class="tab-btn" data-tab="tab-android">🤖 Android (.apk / .aab)</button>
+            <button class="tab-btn" data-tab="tab-ios">🍏 iOS (.ipa)</button>
+          </div>
+
+          <!-- Zakładka 1: PWA (Uniwersalna) -->
+          <div id="tab-pwa" class="tab-content active">
+            <div class="install-badge">100% offline • Bez instalatorów • Szybka instalacja</div>
+            <p class="modal-intro">
+              Ta aplikacja to nowoczesna <strong>Progressive Web App (PWA)</strong>. Nie wymaga pobierania wielkich plików z zewnętrznych stron ani sklepu z aplikacjami.
+            </p>
+
+            <div class="schema-steps">
+              <div class="schema-item">
+                <span class="step-num">🍏</span>
+                <div>
+                  <strong>Apple iPhone / iPad (iOS w Safari):</strong><br>
+                  1. Otwórz tę stronę w oficjalnej przeglądarce <strong>Safari</strong>.<br>
+                  2. Dotknij ikony <strong>Udostępnij</strong> (niebieski kwadrat ze strzałką w górę na dolnym pasku Safari).<br>
+                  3. Przewiń listę w dół i kliknij <strong>„Do ekranu początkowego”</strong> (Add to Home Screen).<br>
+                  4. Kliknij <strong>„Dodaj”</strong> w prawym górnym rogu.<br>
+                  <em>Gotowe! Koronka pojawi się na pulpicie telefonu, działa na pełnym ekranie i w 100% offline.</em>
+                </div>
+              </div>
+
+              <div class="schema-item">
+                <span class="step-num">🤖</span>
+                <div>
+                  <strong>Google Android (Chrome, Edge, Samsung Internet):</strong><br>
+                  1. Kliknij menu przeglądarki (trzy pionowe kropki ⋮ w prawym górnym rogu).<br>
+                  2. Wybierz opcję <strong>„Zainstaluj aplikację”</strong> lub <strong>„Dodaj do ekranu głównego”</strong>.<br>
+                  3. Potwierdź instalację. Powstanie bezpieczna aplikacja WebAPK z ikoną i trybem offline.
+                </div>
+              </div>
+
+              <div class="schema-item">
+                <span class="step-num">💻</span>
+                <div>
+                  <strong>Komputer PC / Mac / Linux:</strong><br>
+                  W przeglądarce Chrome lub Edge kliknij ikonkę <strong>Zainstaluj</strong> (monitor ze strzałką) w pasku adresu URL po prawej stronie.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zakładka 2: Android (.apk / .aab) -->
+          <div id="tab-android" class="tab-content">
+            <div class="install-badge">Pakiety dla systemu Android</div>
+            <p class="modal-intro">
+              Pliki <strong>.apk</strong> (instalacja na telefonie) oraz <strong>.aab</strong> (Android App Bundle do sklepu Google Play).
+            </p>
+
+            <div class="info-alert">
+              <strong>💡 Dlaczego PWA jest bezpieczniejsze i wygodniejsze niż plik .apk?</strong><br>
+              Instalacja PWA (w zakładce obok) tworzy na Androidzie czysty pakiet WebAPK bezpośrednio z przeglądarki bez ostrzeżeń systemu o „plikach z nieznanych źródeł” i bez ryzyka wirusów.
+            </div>
+
+            <div class="download-actions">
+              <div class="action-card">
+                <div>
+                  <strong>Wygeneruj plik .apk i .aab (Google/Microsoft PWABuilder)</strong>
+                  <p>Oficjalne narzędzie Microsoft i Google, które na bieżąco generuje i podpisuje instalatory .apk (dla telefonu) i .aab (do Google Play) z tej aplikacji.</p>
+                </div>
+                <a href="https://www.pwabuilder.com/reportcard?site=https://abba-koronka.pages.dev" target="_blank" rel="noopener noreferrer" class="portal-btn" style="text-align: center; justify-content: center;">
+                  <span>Otwórz generator .apk i .aab</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <line x1="10" y1="14" x2="21" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+
+              <div class="action-card">
+                <div>
+                  <strong>Pobierz kompletną paczkę aplikacji (.zip)</strong>
+                  <p>Archiwum zawiera kompletny kod HTML, style, skrypty, lektora audio i ikony. Możesz rozpakować na telefonie lub PC i używać offline.</p>
+                </div>
+                <a href="assets/koronka-offline.zip" download="koronka-offline.zip" id="btn-download-zip" class="portal-btn portal-btn-secondary" style="text-align: center; justify-content: center;">
+                  <span>Pobierz paczkę ZIP (offline)</span>
+                  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                  </svg>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Zakładka 3: iOS (.ipa) -->
+          <div id="tab-ios" class="tab-content">
+            <div class="install-badge">System Apple iOS (iPhone & iPad)</div>
+            <p class="modal-intro">
+              Dlaczego na iPhone nie pobiera się plików <strong>.ipa</strong> ze strony WWW?
+            </p>
+
+            <div class="info-alert">
+              <strong>🔒 Ograniczenia bezpieczeństwa firmy Apple:</strong><br>
+              System iOS ze względów bezpieczeństwa uniemożliwia bezpośrednią instalację plików <code>.ipa</code> z poziomu przeglądarki bez komputera Mac, programu Xcode i rocznego konta Apple Developer ($99).
+            </div>
+
+            <div class="schema-steps">
+              <div class="schema-item">
+                <span class="step-num">✔</span>
+                <div>
+                  <strong>Oficjalny standard Apple: PWA („Do ekranu początkowego”)</strong><br>
+                  Firma Apple stworzyła standard PWA, by umożliwić bezpłatną instalację aplikacji na iPhone bez pośrednictwa App Store i plików .ipa.
+                  <br><br>
+                  <strong>Instalacja w 3 krokach w Safari:</strong><br>
+                  1. Otwórz stronę w <strong>Safari</strong>.<br>
+                  2. Dotknij ikony <strong>Udostępnij</strong> (kwadrat ze strzałką w górę).<br>
+                  3. Wybierz <strong>„Do ekranu początkowego”</strong> i kliknij <strong>„Dodaj”</strong>.<br><br>
+                  <em>Aplikacja pojawi się obok innych ikon, działa pełnoekranowo i w 100% offline.</em>
+                </div>
+              </div>
+            </div>
+
+            <div class="portal-link-box" style="margin-top: 10px;">
+              <p>Dla deweloperów chcących zbudować pakiet Xcode / .ipa:</p>
+              <a href="https://www.pwabuilder.com/reportcard?site=https://abba-koronka.pages.dev" target="_blank" rel="noopener noreferrer" class="portal-btn">
+                <span>Pobierz projekt iOS w PWABuilder</span>
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                  <polyline points="15 3 21 3 21 9"></polyline>
+                  <line x1="10" y1="14" x2="21" y2="3"></line>
+                </svg>
+              </a>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>

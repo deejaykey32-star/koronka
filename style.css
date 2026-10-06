@@ -644,6 +644,160 @@ html, body {
   box-shadow: 0 4px 15px var(--gold-glow);
 }
 
+.portal-btn-secondary {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border: 1px solid var(--gold-border);
+  cursor: pointer;
+}
+
+.portal-btn-secondary:hover {
+  background: rgba(212, 175, 55, 0.2);
+  color: #ffffff;
+  border-color: var(--gold-primary);
+}
+
+/* Zakładki platform w oknie instalacji */
+.platform-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 4px;
+  border-radius: 10px;
+  border: 1px solid rgba(212, 175, 55, 0.18);
+  margin-bottom: 2px;
+}
+
+.tab-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 500;
+  padding: 8px 6px;
+  border-radius: 7px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.tab-btn:hover {
+  color: var(--gold-light);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.tab-btn.active {
+  background: rgba(212, 175, 55, 0.25);
+  color: #ffffff;
+  font-weight: 600;
+  border: 1px solid var(--gold-border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+.tab-content {
+  display: none;
+  flex-direction: column;
+  gap: 14px;
+  animation: fadeIn 0.2s ease;
+}
+
+.tab-content.active {
+  display: flex;
+}
+
+.install-badge {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  background: rgba(212, 175, 55, 0.15);
+  color: var(--gold-light);
+  padding: 4px 9px;
+  border-radius: 5px;
+  border: 1px solid var(--gold-border);
+}
+
+.install-prompt-banner {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.22) 0%, rgba(30, 25, 10, 0.85) 100%);
+  border: 1px solid var(--gold-primary);
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(212, 175, 55, 0.15);
+}
+
+.install-prompt-banner strong {
+  color: var(--gold-light);
+  font-size: 13px;
+}
+
+.install-prompt-banner p {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.info-alert {
+  background: rgba(255, 255, 255, 0.03);
+  border-left: 3px solid var(--gold-primary);
+  padding: 10px 12px;
+  border-radius: 0 8px 8px 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text-main);
+}
+
+.info-alert strong {
+  color: var(--gold-light);
+}
+
+.download-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.action-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.action-card strong {
+  color: var(--gold-light);
+  font-size: 13px;
+}
+
+.action-card p {
+  font-size: 11px;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: 3px;
+}
+
+.installed-badge {
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  color: #4ade80;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 /* Narzędziowe */
 .hidden {
   display: none !important;
