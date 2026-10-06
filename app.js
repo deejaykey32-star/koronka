@@ -375,6 +375,8 @@ class KoronkaApp {
     this.btnRestart = document.getElementById('btn-restart');
     this.btnToggleText = document.getElementById('btn-toggle-text');
     this.btnFocusMode = document.getElementById('btn-focus-mode');
+    this.iconEyeOpen = document.getElementById('icon-eye-open');
+    this.iconEyeClosed = document.getElementById('icon-eye-closed');
     this.prayerCard = document.getElementById('prayer-card');
     this.prayerTapArea = document.getElementById('prayer-tap-area');
     
@@ -661,9 +663,21 @@ class KoronkaApp {
     if (this.isFocusModeActive) {
       this.prayerCard.classList.add('focus-hidden');
       this.btnFocusMode.classList.add('active');
+      this.btnFocusMode.setAttribute('title', 'Pokaż tekst modlitwy');
+      this.btnFocusMode.setAttribute('aria-label', 'Pokaż tekst');
+      if (this.iconEyeOpen && this.iconEyeClosed) {
+        this.iconEyeOpen.classList.add('hidden');
+        this.iconEyeClosed.classList.remove('hidden');
+      }
     } else {
       this.prayerCard.classList.remove('focus-hidden');
       this.btnFocusMode.classList.remove('active');
+      this.btnFocusMode.setAttribute('title', 'Ukryj tekst modlitwy (tryb skupienia)');
+      this.btnFocusMode.setAttribute('aria-label', 'Ukryj tekst');
+      if (this.iconEyeOpen && this.iconEyeClosed) {
+        this.iconEyeOpen.classList.remove('hidden');
+        this.iconEyeClosed.classList.add('hidden');
+      }
     }
   }
 
