@@ -1,0 +1,8 @@
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "pl.abbaojcze.koronka",
+        "sha256_cert_fingerprints": ["C2:07:40:9D:8D:ED:74:E6:19:C4:4B:CC:50:DC:5B:30:4A:E7:96:EE:68:FD:F4:A3:9E:86:80:61:4B:69:81:AD"]
+      }
+    }]

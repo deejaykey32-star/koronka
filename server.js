@@ -14,7 +14,10 @@ const MIME = {
   '.jpg': 'image/jpeg',
   '.jpeg': 'image/jpeg',
   '.svg': 'image/svg+xml',
-  '.zip': 'application/zip'
+  '.zip': 'application/zip',
+  '.apk': 'application/vnd.android.package-archive',
+  '.aab': 'application/octet-stream',
+  '.ipa': 'application/octet-stream'
 };
 
 const server = http.createServer((req, res) => {
