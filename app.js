@@ -345,6 +345,7 @@ class KoronkaApp {
 
   initElements() {
     // Strefa dotykowa i obraz
+    this.appContainer = document.getElementById('app');
     this.prayerTapArea = document.getElementById('prayer-tap-area');
     this.mainImage = document.getElementById('main-image');
 
@@ -363,7 +364,7 @@ class KoronkaApp {
     this.haloInner = document.getElementById('active-halo-inner');
     this.haloGroup = document.getElementById('active-halo-group');
 
-    // Przyciski nawigacji
+    // Przyciski nawigacji dolnej
     this.btnPrev = document.getElementById('btn-prev');
     this.btnNext = document.getElementById('btn-next');
     this.btnAutoplay = document.getElementById('btn-autoplay');
@@ -371,22 +372,32 @@ class KoronkaApp {
     this.iconPlay = document.getElementById('icon-play');
     this.iconPause = document.getElementById('icon-pause');
 
-    // Akcje karty
+    // Akcje karty modlitwy
     this.btnToggleText = document.getElementById('btn-toggle-text');
     this.btnFocusMode = document.getElementById('btn-focus-mode');
     this.iconEyeOpen = document.getElementById('icon-eye-open');
     this.iconEyeClosed = document.getElementById('icon-eye-closed');
 
-    // Pasek górny
+    // Pasek górny i menu hamburger
+    this.mainTopBar = document.getElementById('main-top-bar');
     this.btnSound = document.getElementById('btn-sound');
     this.iconSoundOn = document.getElementById('icon-sound-on');
     this.iconSoundOff = document.getElementById('icon-sound-off');
-    this.btnFullscreen = document.getElementById('btn-fullscreen');
+    this.btnHamburger = document.getElementById('btn-hamburger');
+    this.dropdownMenu = document.getElementById('dropdown-menu');
+    this.btnShowHeader = document.getElementById('btn-show-header');
+
+    // Pozycje menu hamburger
+    this.menuBtnFullscreen = document.getElementById('menu-btn-fullscreen');
+    this.menuBtnHideHeader = document.getElementById('menu-btn-hide-header');
+    this.menuBtnSchema = document.getElementById('menu-btn-schema');
+    this.menuBtnInstall = document.getElementById('menu-btn-install');
+    this.menuBtnRestart = document.getElementById('menu-btn-restart');
+
+    // Modale
     this.btnSchema = document.getElementById('btn-schema');
     this.modalSchema = document.getElementById('modal-schema');
     this.btnCloseModal = document.getElementById('btn-close-modal');
-
-    // Elementy instalacji i pobierania
     this.btnInstall = document.getElementById('btn-install');
     this.modalInstall = document.getElementById('modal-install');
     this.btnCloseInstallModal = document.getElementById('btn-close-install-modal');
@@ -430,27 +441,101 @@ class KoronkaApp {
       this.toggleFocusMode();
     });
 
-    this.btnSound.addEventListener('click', () => {
-      this.toggleSound();
-    });
+    if (this.btnSound) {
+      this.btnSound.addEventListener('click', () => {
+        this.toggleSound();
+      });
+    }
 
-    this.btnFullscreen.addEventListener('click', () => {
-      this.toggleFullscreen();
-    });
+    // Menu Hamburger
+    if (this.btnHamburger && this.dropdownMenu) {
+      this.btnHamburger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.dropdownMenu.classList.toggle('hidden');
+      });
+    }
 
-    this.btnSchema.addEventListener('click', () => {
-      this.openSchemaModal();
-    });
-
-    this.btnCloseModal.addEventListener('click', () => {
-      this.closeSchemaModal();
-    });
-
-    this.modalSchema.addEventListener('click', (e) => {
-      if (e.target === this.modalSchema) {
-        this.closeSchemaModal();
+    // Zamknięcie menu po kliknięciu poza nim
+    document.addEventListener('click', (e) => {
+      if (this.dropdownMenu && !this.dropdownMenu.classList.contains('hidden')) {
+        if (!e.target.closest('#dropdown-menu') && !e.target.closest('#btn-hamburger')) {
+          this.dropdownMenu.classList.add('hidden');
+        }
       }
     });
+
+    // Pełny ekran / powiększenie widoku z menu
+    if (this.menuBtnFullscreen) {
+      this.menuBtnFullscreen.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
+        this.toggleFullscreen();
+      });
+    }
+
+    // Ukrycie nagłówka dla pełnej kontemplacji
+    if (this.menuBtnHideHeader) {
+      this.menuBtnHideHeader.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
+        if (this.mainTopBar) this.mainTopBar.classList.add('header-hidden');
+        if (this.btnShowHeader) this.btnShowHeader.classList.remove('hidden');
+      });
+    }
+
+    // Przywrócenie ukrytego nagłówka
+    if (this.btnShowHeader) {
+      this.btnShowHeader.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.mainTopBar) this.mainTopBar.classList.remove('header-hidden');
+        this.btnShowHeader.classList.add('hidden');
+      });
+    }
+
+    // Schemat z menu
+    if (this.menuBtnSchema) {
+      this.menuBtnSchema.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
+        this.openSchemaModal();
+      });
+    }
+
+    // Pobierz z menu
+    if (this.menuBtnInstall) {
+      this.menuBtnInstall.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
+        this.openInstallModal();
+      });
+    }
+
+    // Restart z menu
+    if (this.menuBtnRestart) {
+      this.menuBtnRestart.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
+        if (confirm('Czy chcesz rozpocząć Koronkę od początku?')) {
+          this.stopAutoplay();
+          this.goToStep(0);
+        }
+      });
+    }
+
+    // Modale
+    if (this.btnCloseModal) {
+      this.btnCloseModal.addEventListener('click', () => {
+        this.closeSchemaModal();
+      });
+    }
+
+    if (this.modalSchema) {
+      this.modalSchema.addEventListener('click', (e) => {
+        if (e.target === this.modalSchema) {
+          this.closeSchemaModal();
+        }
+      });
+    }
 
     if (this.btnInstall) {
       this.btnInstall.addEventListener('click', () => {
@@ -491,14 +576,12 @@ class KoronkaApp {
       } else if (e.key === 'Escape') {
         this.closeSchemaModal();
         this.closeInstallModal();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
       }
     });
   }
 
-  /**
-   * Obsługa kliknięć bezpośrednio w paciorki na schemacie serca
-   */
-  bindBeadClicks() {
+bindBeadClicks() {
     this.svgBeads.forEach((beadEl) => {
       beadEl.addEventListener('click', (e) => {
         e.stopPropagation();
@@ -777,13 +860,28 @@ class KoronkaApp {
   }
 
   toggleFullscreen() {
-    if (!document.fullscreenElement) {
-      document.documentElement.requestFullscreen().catch(() => {});
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen();
-      }
+    // 1. Zwiększenie widoku w kontenerze aplikacji (działa na desktopie, tablecie i telefonie)
+    if (this.appContainer) {
+      this.appContainer.classList.toggle('expanded-view');
     }
+
+    // 2. Natywny tryb pełnoekranowy przeglądarki
+    try {
+      const isFull = document.fullscreenElement || document.webkitFullscreenElement;
+      if (!isFull) {
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen();
+        }
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen().catch(() => {});
+        } else if (document.webkitExitFullscreen) {
+          document.webkitExitFullscreen();
+        }
+      }
+    } catch (_) {}
   }
 
   openSchemaModal() {

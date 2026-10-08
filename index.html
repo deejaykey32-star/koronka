@@ -22,41 +22,22 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=7">
+  <link rel="stylesheet" href="style.css?v=8">
 </head>
 <body>
   <div id="app" class="app-container">
     
     <!-- Górny pasek nawigacyjny -->
-    <header class="top-bar">
+        <!-- Górny pasek nawigacyjny z menu hamburger i opcją ukrycia -->
+    <header class="top-bar" id="main-top-bar">
       <div class="header-left">
         <h1 class="app-title">Koronka do Miłosierdzia Bożego</h1>
         <span class="app-subtitle">Wizerunek wileński • Wilno 1934</span>
       </div>
       
       <div class="header-right">
-        <!-- Przycisk pobierania plików (APK, AAB, IPA) i PWA -->
-        <button id="btn-install" class="icon-btn" title="Pobierz pliki APK, AAB, IPA lub zainstaluj aplikację" aria-label="Pobierz pliki">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span class="btn-text-desktop">Pobierz pliki</span>
-        </button>
-
-        <!-- Przycisk schematu edukacyjnego (abbaojcze.pl) -->
-        <button id="btn-schema" class="icon-btn" title="Jak odmawiać Koronkę? (abbaojcze.pl)" aria-label="Schemat Koronki">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-          </svg>
-          <span class="btn-text-desktop">Schemat</span>
-        </button>
-
-        <!-- Przycisk dźwięku / wyciszenia -->
-        <button id="btn-sound" class="icon-btn" title="Dźwięk modlitwy" aria-label="Włącz / wyłącz dźwięk">
+        <!-- Przycisk szybkiego wyciszenia -->
+        <button id="btn-sound" class="icon-btn" title="Dźwięk / Wyciszenie" aria-label="Włącz / wyłącz dźwięk">
           <svg id="icon-sound-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
@@ -68,14 +49,70 @@
           </svg>
         </button>
 
-        <!-- Przełącznik pełnego ekranu -->
-        <button id="btn-fullscreen" class="icon-btn" title="Pełny ekran" aria-label="Pełny ekran">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+        <!-- Przycisk Hamburger Menu (zamiast niedziałającej pojedynczej ikony) -->
+        <button id="btn-hamburger" class="icon-btn menu-btn" title="Menu opcji" aria-label="Menu opcji">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"></line>
+            <line x1="3" y1="12" x2="21" y2="12"></line>
+            <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
       </div>
+
+      <!-- Rozwijane Menu Hamburger (Drawer / Dropdown) -->
+      <div id="dropdown-menu" class="dropdown-menu hidden" role="menu">
+        <button id="menu-btn-fullscreen" class="menu-item" role="menuitem">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
+          </svg>
+          <span>Powiększ widok / Pełny ekran</span>
+        </button>
+
+        <button id="menu-btn-hide-header" class="menu-item" role="menuitem">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+            <line x1="1" y1="1" x2="23" y2="23"></line>
+          </svg>
+          <span>Ukryj nagłówek (Tryb kontemplacji)</span>
+        </button>
+
+        <button id="menu-btn-schema" class="menu-item" role="menuitem">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <span>Jak odmawiać Koronkę (abbaojcze.pl)</span>
+        </button>
+
+        <button id="menu-btn-install" class="menu-item" role="menuitem">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span>Pobierz pliki (APK, AAB, IPA, PWA)</span>
+        </button>
+
+        <button id="menu-btn-restart" class="menu-item" role="menuitem">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="1 4 1 10 7 10"></polyline>
+            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+          </svg>
+          <span>Rozpocznij od początku</span>
+        </button>
+      </div>
     </header>
+
+    <!-- Pływający przycisk przywracania ukrytego nagłówka -->
+    <button id="btn-show-header" class="floating-header-btn hidden" title="Pokaż menu nagłówka" aria-label="Pokaż nagłówek">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="3" y1="6" x2="21" y2="6"></line>
+        <line x1="3" y1="12" x2="21" y2="12"></line>
+        <line x1="3" y1="18" x2="21" y2="18"></line>
+      </svg>
+    </button>
+
 
     <!-- Górna pływająca belka aktualnej modlitwy (wzorowana na Rosario) -->
     <div class="prayer-banner" id="prayer-banner">
@@ -142,11 +179,11 @@
       <stop offset="75%" stop-color="#144ec2"/>
       <stop offset="100%" stop-color="#0a2566"/>
     </radialGradient>
-    <radialGradient id="grad-gold-bead" cx="35%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#fff9db"/>
-      <stop offset="25%" stop-color="#ffd700"/>
-      <stop offset="75%" stop-color="#c99718"/>
-      <stop offset="100%" stop-color="#735200"/>
+    <radialGradient id="grad-white-bead" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="35%" stop-color="#f8fafc"/>
+      <stop offset="70%" stop-color="#e2e8f0"/>
+      <stop offset="100%" stop-color="#94a3b8"/>
     </radialGradient>
     <radialGradient id="grad-active-bead" cx="40%" cy="40%" r="60%">
       <stop offset="0%" stop-color="#ffffff"/>
@@ -173,7 +210,7 @@
   </defs>
   <!-- Łańcuszek różańca łączący paciorki -->
   <path class="rosary-chain stem-chain" d="M 231.0 565.0 L 231.0 529.0 L 231.0 503.0 L 231.2 477.0 L 231.1 451.5 L 233.5 429.0"/>
-  <path class="rosary-chain loop-chain" d="M 233.5 429.0 L 214.3 403.0 L 194.8 385.4 L 174.0 370.5 L 151.0 360.0 L 126.0 355.7 L 100.8 357.0 L 75.2 365.6 L 55.2 379.9 L 40.0 400.3 L 27.4 423.0 L 20.6 450.1 L 18.0 476.3 L 18.6 503.0 L 22.9 528.2 L 30.0 553.7 L 38.8 577.4 L 50.1 600.2 L 63.0 623.0 L 77.6 644.2 L 92.8 664.8 L 108.4 684.4 L 126.7 704.7 L 146.3 724.1 L 166.7 744.6 L 189.6 763.9 L 212.0 778.0 L 226.0 782.5 L 236.0 782.5 L 250.0 778.0 L 272.4 763.9 L 295.3 744.6 L 315.7 724.1 L 336.5 705.4 L 353.6 684.4 L 369.4 664.8 L 385.0 644.0 L 399.0 623.0 L 411.9 600.2 L 423.4 577.2 L 433.0 553.4 L 439.4 528.2 L 443.2 502.8 L 443.4 476.6 L 441.5 450.2 L 434.6 423.0 L 422.8 400.8 L 407.0 380.0 L 386.5 364.9 L 361.5 357.1 L 336.0 355.7 L 311.4 359.9 L 287.8 371.0 L 267.2 386.1 L 248.2 403.1 Z"/>
+  <path class="rosary-chain loop-chain" d="M 233.5 429.0 L 214.3 403.0 L 194.8 385.4 L 174.0 370.5 L 151.0 360.0 L 126.0 355.7 L 100.8 357.0 L 75.2 365.6 L 55.2 379.9 L 40.0 400.3 L 27.4 423.0 L 20.6 450.1 L 18.0 476.3 L 18.6 503.0 L 22.9 528.2 L 30.0 553.7 L 38.8 577.4 L 50.1 600.2 L 63.0 623.0 L 77.6 644.2 L 92.8 664.8 L 108.4 684.4 L 126.7 704.7 L 142.0 718.0 L 160.0 735.0 L 178.0 751.0 L 198.0 765.0 L 220.0 776.0 L 242.0 776.0 L 264.0 765.0 L 284.0 751.0 L 302.0 735.0 L 320.0 718.0 L 336.5 705.4 L 353.6 684.4 L 369.4 664.8 L 385.0 644.0 L 399.0 623.0 L 411.9 600.2 L 423.4 577.2 L 433.0 553.4 L 439.4 528.2 L 443.2 502.8 L 443.4 476.6 L 441.5 450.2 L 434.6 423.0 L 422.8 400.8 L 407.0 380.0 L 386.5 364.9 L 361.5 357.1 L 336.0 355.7 L 311.4 359.9 L 287.8 371.0 L 267.2 386.1 L 248.2 403.1 Z"/>
   <!-- Warstwa aureoli aktywnego paciorka -->
   <g id="active-halo-group" class="active-halo-group">
     <circle id="active-halo-outer" class="halo-outer" cx="231" cy="565" r="24"/>
@@ -181,13 +218,9 @@
   </g>
   <!-- Złoty Krzyżyk (Kroki 0 i 66) -->
   <g id="bead-cross" class="bead-item bead-cross" data-step="0" data-id="bead-cross" transform="translate(231, 565)">
-    <!-- Hit area -->
     <rect x="-18" y="-28" width="36" height="56" fill="transparent" class="bead-hit-area"/>
-    <!-- Vertical beam -->
     <rect x="-3" y="-22" width="6" height="42" rx="1.5" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
-    <!-- Horizontal beam -->
     <rect x="-14" y="-13" width="28" height="6" rx="1.5" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
-    <!-- Corpus figure hint -->
     <path d="M 0 -11 L 0 5 M -7 -8 L 7 -8 M 0 5 L -3 14 M 0 5 L 3 14" stroke="#544105" stroke-width="1.2" stroke-linecap="round"/>
   </g>
   <!-- Paciorki Różańca / Koronki -->
@@ -300,43 +333,43 @@
       <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-1" class="bead-item bead-small" data-step="27" data-id="bead-dec3-1" data-decade="3" transform="translate(146.3, 724.1)">
+    <g id="bead-dec3-1" class="bead-item bead-small" data-step="27" data-id="bead-dec3-1" data-decade="3" transform="translate(142.0, 718.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-2" class="bead-item bead-small" data-step="28" data-id="bead-dec3-2" data-decade="3" transform="translate(166.7, 744.6)">
+    <g id="bead-dec3-2" class="bead-item bead-small" data-step="28" data-id="bead-dec3-2" data-decade="3" transform="translate(160.0, 735.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-3" class="bead-item bead-small" data-step="29" data-id="bead-dec3-3" data-decade="3" transform="translate(189.6, 763.9)">
+    <g id="bead-dec3-3" class="bead-item bead-small" data-step="29" data-id="bead-dec3-3" data-decade="3" transform="translate(178.0, 751.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-4" class="bead-item bead-small" data-step="30" data-id="bead-dec3-4" data-decade="3" transform="translate(212.0, 778.0)">
+    <g id="bead-dec3-4" class="bead-item bead-small" data-step="30" data-id="bead-dec3-4" data-decade="3" transform="translate(198.0, 765.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-5" class="bead-item bead-small" data-step="31" data-id="bead-dec3-5" data-decade="3" transform="translate(226.0, 782.5)">
+    <g id="bead-dec3-5" class="bead-item bead-small" data-step="31" data-id="bead-dec3-5" data-decade="3" transform="translate(220.0, 776.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-6" class="bead-item bead-small" data-step="32" data-id="bead-dec3-6" data-decade="3" transform="translate(236.0, 782.5)">
+    <g id="bead-dec3-6" class="bead-item bead-small" data-step="32" data-id="bead-dec3-6" data-decade="3" transform="translate(242.0, 776.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-7" class="bead-item bead-small" data-step="33" data-id="bead-dec3-7" data-decade="3" transform="translate(250.0, 778.0)">
+    <g id="bead-dec3-7" class="bead-item bead-small" data-step="33" data-id="bead-dec3-7" data-decade="3" transform="translate(264.0, 765.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-8" class="bead-item bead-small" data-step="34" data-id="bead-dec3-8" data-decade="3" transform="translate(272.4, 763.9)">
+    <g id="bead-dec3-8" class="bead-item bead-small" data-step="34" data-id="bead-dec3-8" data-decade="3" transform="translate(284.0, 751.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-9" class="bead-item bead-small" data-step="35" data-id="bead-dec3-9" data-decade="3" transform="translate(295.3, 744.6)">
+    <g id="bead-dec3-9" class="bead-item bead-small" data-step="35" data-id="bead-dec3-9" data-decade="3" transform="translate(302.0, 735.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
-    <g id="bead-dec3-10" class="bead-item bead-small" data-step="36" data-id="bead-dec3-10" data-decade="3" transform="translate(315.7, 724.1)">
+    <g id="bead-dec3-10" class="bead-item bead-small" data-step="36" data-id="bead-dec3-10" data-decade="3" transform="translate(320.0, 718.0)">
       <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
       <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
     </g>
@@ -445,9 +478,7 @@
       <!-- Wstęga wileńska "JEZU UFAM TOBIE" -->
       <div class="sacred-ribbon-container">
         <div class="sacred-ribbon">
-          <span class="ribbon-tail left"></span>
           <span class="ribbon-content">JEZU, UFAM TOBIE</span>
-          <span class="ribbon-tail right"></span>
         </div>
       </div>
 
@@ -489,6 +520,7 @@
         </button>
       </div>
     </footer>
+
 
 
     <!-- Okno modalne: Schemat edukacyjny & Odsyłacz do abbaojcze.pl -->
@@ -720,6 +752,6 @@
 
   </div>
 
-  <script src="app.js?v=7"></script>
+  <script src="app.js?v=8"></script>
 </body>
 </html>

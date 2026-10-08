@@ -63,6 +63,9 @@ html, body {
 /* ========================================================
    GÓRNY PASEK NAWIGACYJNY
    ======================================================== */
+/* ========================================================
+   GÓRNY PASEK NAWIGACYJNY & MENU HAMBURGER
+   ======================================================== */
 .top-bar {
   position: absolute;
   top: 0;
@@ -72,110 +75,140 @@ html, body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(10px + var(--safe-top)) 16px 10px 16px;
-  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.95) 0%, rgba(5, 5, 5, 0.7) 70%, transparent 100%);
+  padding: calc(8px + var(--safe-top)) 14px 8px 14px;
+  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.96) 0%, rgba(5, 5, 5, 0.75) 75%, transparent 100%);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
 }
 
-.header-left {
-  display: flex;
-  flex-direction: column;
+.top-bar.header-hidden {
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
 }
 
-.app-title {
-  font-family: var(--font-serif);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  color: var(--gold-light);
-  line-height: 1.2;
-}
-
-.app-subtitle {
-  font-size: 10px;
-  color: var(--text-dim);
-  letter-spacing: 0.8px;
-  text-transform: uppercase;
-  margin-top: 2px;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.icon-btn {
-  background: rgba(255, 255, 255, 0.06);
+.floating-header-btn {
+  position: absolute;
+  top: calc(8px + var(--safe-top));
+  right: 12px;
+  z-index: 52;
+  background: rgba(12, 12, 12, 0.8);
   border: 1px solid var(--gold-border);
   color: var(--gold-light);
-  border-radius: 8px;
-  padding: 6px 10px;
-  cursor: pointer;
-  display: inline-flex;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  font-size: 12px;
-  font-family: var(--font-sans);
+  justify-content: center;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
   transition: all 0.2s ease;
 }
 
-.icon-btn:hover {
-  background: rgba(212, 175, 55, 0.15);
-  border-color: var(--gold-primary);
+.floating-header-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
   color: #ffffff;
 }
 
-.icon-btn:active {
-  transform: scale(0.96);
+.dropdown-menu {
+  position: absolute;
+  top: calc(52px + var(--safe-top));
+  right: 12px;
+  background: rgba(12, 12, 12, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--gold-border);
+  border-radius: 14px;
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.85);
+  padding: 8px 6px;
+  min-width: 255px;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  animation: dropdownFadeIn 0.2s ease forwards;
 }
 
-.btn-text-desktop {
-  display: none;
+@keyframes dropdownFadeIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-@media (min-width: 400px) {
-  .btn-text-desktop {
-    display: inline;
-  }
+.menu-item {
+  background: transparent;
+  border: none;
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background 0.15s ease, color 0.15s ease;
 }
 
-/* ========================================================
-   GŁÓWNY WIZERUNEK JEZUSA MIŁOSIERNEGO (WILNO)
-   ======================================================== */
+.menu-item:hover {
+  background: rgba(212, 175, 55, 0.18);
+  color: var(--gold-light);
+}
+
+.menu-item svg {
+  color: var(--gold-primary);
+  flex-shrink: 0;
+}
+
+/* Powiększenie widoku aplikacji */
+.app-container.expanded-view {
+  max-width: 100% !important;
+  width: 100% !important;
+  box-shadow: none;
+}
+
 /* ========================================================
    GŁÓWNY WIZERUNEK JEZUSA MIŁOSIERNEGO (WILNO) & SCHEMAT SERCA
+   Zabezpieczenie przed ucięciem głowy i nóg!
    ======================================================== */
 .image-stage {
   flex: 1;
-  position: absolute;
-  inset: 0;
+  position: relative;
   width: 100%;
   height: 100%;
+  min-height: 0;
   overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer; /* Dotknięcie ekranu przewija paciorek */
+  padding-top: calc(54px + var(--safe-top));
+  padding-bottom: calc(72px + var(--safe-bottom));
+  cursor: pointer;
   z-index: 10;
 }
 
 .image-wrapper {
   position: relative;
-  width: 100%;
   height: 100%;
-  max-width: 480px;
+  max-height: 100%;
+  width: auto;
+  max-width: 100%;
+  aspect-ratio: 460 / 1024;
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  margin: 0 auto;
+  overflow: visible;
 }
 
 .holy-image {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* Wypełnia ekran, postać Jezusa powiększona i wykadrowana jak w Rosario */
+  object-fit: contain; /* Nigdy nie ucina głowy ani nóg Pana Jezusa! */
   object-position: center center;
   pointer-events: none;
   transition: transform 0.5s ease;
@@ -187,8 +220,8 @@ html, body {
   top: 0;
   left: 0;
   right: 0;
-  height: 110px;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
+  height: 90px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0.3) 60%, transparent 100%);
   pointer-events: none;
   z-index: 12;
 }
@@ -198,8 +231,8 @@ html, body {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 140px;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.5) 60%, transparent 100%);
+  height: 110px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.4) 60%, transparent 100%);
   pointer-events: none;
   z-index: 12;
 }
@@ -209,8 +242,7 @@ html, body {
    ======================================================== */
 .rosary-heart-svg {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   pointer-events: none;
@@ -239,15 +271,19 @@ html, body {
   transition: fill 0.35s ease, filter 0.35s ease, transform 0.25s ease;
 }
 
-/* Odmówione paciorki: rozświetlone złoto postępu */
+/* Odmówione paciorki: perłowo-białe (z czerwonych i niebieskich zmieniają się na białe!) */
 .bead-item.completed .bead-circle {
-  fill: url(#grad-gold-bead) !important;
-  filter: drop-shadow(0 0 4px rgba(255, 215, 0, 0.7)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+  fill: url(#grad-white-bead) !important;
+  stroke: rgba(255, 255, 255, 0.95);
+  stroke-width: 0.8;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.9)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
 }
 
 .bead-item.completed.bead-large .bead-circle {
-  fill: url(#grad-gold-bead) !important;
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.85)) drop-shadow(0 1px 2px rgba(0, 0, 0, 0.8));
+  fill: url(#grad-white-bead) !important;
+  stroke: #ffffff;
+  stroke-width: 1.2;
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.95)) drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
 }
 
 /* Aktywny paciorek: lśniący błękit/biel + halo */
@@ -267,7 +303,7 @@ html, body {
 }
 
 .bead-cross.completed {
-  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.7));
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
 }
 
 /* Aureola aktywnego paciorka */
