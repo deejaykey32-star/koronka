@@ -1,7 +1,6 @@
 /**
  * Koronka do Miłosierdzia Bożego 2.0
- * Architektura Etapu 2 (Nawigacja gestami, koraliki, haptyka)
- * i Etapu 3 (Warstwa foniczna, synteza głosu lektora, dzwonek sakralny)
+ * Schemat Serca Różańcowego zgodny z aplikacją Rosario i wizerunkiem wileńskim Kazimirowskiego (1934)
  */
 
 'use strict';
@@ -14,12 +13,13 @@ const PRAYER_STEPS = [
   {
     part: 'Wprowadzenie',
     title: 'Znak Krzyża',
-    shortText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    shortText: '+ W imię Ojca, i Syna i Ducha Świętego. Amen.',
     fullText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
     speechText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
     type: 'cross',
     decade: 0,
-    beadIndex: 0
+    beadIndex: 0,
+    beadId: 'bead-cross'
   },
   {
     part: 'Modlitwy wstępne',
@@ -27,9 +27,10 @@ const PRAYER_STEPS = [
     shortText: 'Ojcze nasz, któryś jest w niebie...',
     fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje; przyjdź królestwo Twoje; bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj; i odpuść nam nasze winy, jako i my odpuszczamy naszym winowajcom; i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
     speechText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje; przyjdź królestwo Twoje; bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj; i odpuść nam nasze winy, jako i my odpuszczamy naszym winowajcom; i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
-    type: 'intro',
+    type: 'large',
     decade: 0,
-    beadIndex: 1
+    beadIndex: 1,
+    beadId: 'bead-stem-large'
   },
   {
     part: 'Modlitwy wstępne',
@@ -37,9 +38,10 @@ const PRAYER_STEPS = [
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi teraz i w godzinę śmierci naszej. Amen.',
     speechText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi teraz i w godzinę śmierci naszej. Amen.',
-    type: 'intro',
+    type: 'small',
     decade: 0,
-    beadIndex: 2
+    beadIndex: 2,
+    beadId: 'bead-stem-red-1'
   },
   {
     part: 'Modlitwy wstępne',
@@ -47,15 +49,22 @@ const PRAYER_STEPS = [
     shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
     fullText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi. I w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał; wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego; stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
     speechText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi. I w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał; wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego; stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
-    type: 'intro',
+    type: 'small',
     decade: 0,
-    beadIndex: 3
+    beadIndex: 3,
+    beadId: 'bead-stem-red-2'
   }
 ];
 
-// Generowanie 5 dziesiątek
+// Generowanie 5 dziesiątek ze schematem serca (kierunek: góra -> lewa strona -> dół -> prawa strona -> góra)
 for (let d = 1; d <= 5; d++) {
   // Duży paciorek (Ojcze Przedwieczny)
+  let largeBeadId = 'bead-connector';
+  if (d === 2) largeBeadId = 'bead-large-2';
+  else if (d === 3) largeBeadId = 'bead-large-3';
+  else if (d === 4) largeBeadId = 'bead-large-4';
+  else if (d === 5) largeBeadId = 'bead-large-5';
+
   PRAYER_STEPS.push({
     part: `Dziesiątka ${d} z 5`,
     title: 'Ojcze Przedwieczny (duży paciorek)',
@@ -64,7 +73,8 @@ for (let d = 1; d <= 5; d++) {
     speechText: 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.',
     type: 'large',
     decade: d,
-    beadIndex: 0
+    beadIndex: 0,
+    beadId: largeBeadId
   });
 
   // 10 małych paciorków (Dla Jego bolesnej męki)
@@ -77,7 +87,8 @@ for (let d = 1; d <= 5; d++) {
       speechText: 'Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.',
       type: 'small',
       decade: d,
-      beadIndex: b
+      beadIndex: b,
+      beadId: `bead-dec${d}-${b}`
     });
   }
 }
@@ -92,7 +103,8 @@ for (let s = 1; s <= 3; s++) {
     speechText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem.',
     type: 'holyGod',
     decade: 6,
-    beadIndex: s
+    beadIndex: s,
+    beadId: 'bead-connector'
   });
 }
 
@@ -105,7 +117,8 @@ PRAYER_STEPS.push({
   speechText: 'O Krwi i Wodo, któraś wytrysnęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie!',
   type: 'closing',
   decade: 6,
-  beadIndex: 4
+  beadIndex: 4,
+  beadId: 'bead-stem-large'
 });
 
 // 3x Jezu ufam Tobie
@@ -118,7 +131,8 @@ for (let j = 1; j <= 3; j++) {
     speechText: 'Jezu, ufam Tobie!',
     type: 'closing',
     decade: 6,
-    beadIndex: 4 + j
+    beadIndex: 4 + j,
+    beadId: 'bead-cross'
   });
 }
 
@@ -126,17 +140,19 @@ for (let j = 1; j <= 3; j++) {
 PRAYER_STEPS.push({
   part: 'Zakończenie',
   title: 'Znak Krzyża',
-  shortText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
+  shortText: '+ W imię Ojca, i Syna i Ducha Świętego. Amen.',
   fullText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
   speechText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
   type: 'cross',
   decade: 6,
-  beadIndex: 8
+  beadIndex: 8,
+  beadId: 'bead-cross'
 });
 
 
 // ========================================================
 // 2. SYNTEZATOR SAKRALNEGO DŹWIĘKU (WEB AUDIO API)
+// Subtelny, nieinwazyjny ton o niskim poziomie głośności
 // ========================================================
 class SacredChimePlayer {
   constructor() {
@@ -156,16 +172,16 @@ class SacredChimePlayer {
   }
 
   /**
-   * Generuje harmonijny, ciepły ton sakralnego dzwonka/gongu
+   * Generuje bardzo delikatny, ciepły ton (głośność stonowana do skupienia)
    */
-  playBell(freq = 587.33, duration = 2.2) {
+  playBell(freq = 587.33, duration = 1.8) {
     try {
       this.initContext();
       if (!this.ctx) return;
 
       const now = this.ctx.currentTime;
-      const harmonics = [1.0, 2.02, 3.01, 4.2];
-      const gains = [0.4, 0.2, 0.08, 0.04];
+      const harmonics = [1.0, 2.02, 3.01];
+      const gains = [0.08, 0.03, 0.01]; // Cichy i dyskretny
 
       harmonics.forEach((mult, index) => {
         const osc = this.ctx.createOscillator();
@@ -175,9 +191,7 @@ class SacredChimePlayer {
         osc.frequency.setValueAtTime(freq * mult, now);
 
         gainNode.gain.setValueAtTime(0.001, now);
-        // Szybki atak
-        gainNode.gain.exponentialRampToValueAtTime(gains[index], now + 0.015);
-        // Płynne, naturalne wybrzmiewanie
+        gainNode.gain.exponentialRampToValueAtTime(gains[index], now + 0.02);
         gainNode.gain.exponentialRampToValueAtTime(0.0001, now + duration);
 
         osc.connect(gainNode);
@@ -186,9 +200,7 @@ class SacredChimePlayer {
         osc.start(now);
         osc.stop(now + duration);
       });
-    } catch (e) {
-      // Ignoruj błędy audio na zablokowanych urządzeniach
-    }
+    } catch (_) {}
   }
 }
 
@@ -203,7 +215,7 @@ class SpeechEngine {
     this.onEnd = onEnd || (() => {});
     this.polishVoice = null;
     this.isSpeaking = false;
-    this.sessionId = 0; // Unikalny identyfikator aktywnej sesji mowy zapobiegający wyścigom
+    this.sessionId = 0;
     
     this.loadVoices();
     if (this.synth && this.synth.onvoiceschanged !== undefined) {
@@ -215,18 +227,12 @@ class SpeechEngine {
     if (!this.synth) return;
     try {
       const voices = this.synth.getVoices();
-      // Szukanie polskiego głosu
       this.polishVoice = voices.find(v => v.lang === 'pl-PL' || v.lang === 'pl_PL')
         || voices.find(v => v.lang && v.lang.startsWith('pl'))
         || null;
     } catch (_) {}
   }
 
-  /**
-   * Dzieli długie modlitwy na naturalne części liturgiczne.
-   * Zapobiega to znanemu błędowi silnika Chromium (Chrome/Edge/Android),
-   * który ucina wypowiedzi trwające dłużej niż 15 sekund.
-   */
   splitIntoClauses(text) {
     if (!text) return [];
     const matches = text.match(/[^.!?;\n]+[.!?;\n]+/g) || [text];
@@ -239,7 +245,6 @@ class SpeechEngine {
   }
 
   speak(text, onComplete) {
-    // Natychmiast zatrzymaj poprzednią mowę i unieważnij poprzednią sesję
     this.stop();
 
     if (!this.synth || !text) {
@@ -251,158 +256,137 @@ class SpeechEngine {
     const clauses = this.splitIntoClauses(text);
     let clauseIndex = 0;
 
-    // Reset stanu syntezatora w przeglądarce
-    try {
-      if (this.synth.paused) {
-        this.synth.resume();
-      }
-    } catch (_) {}
+    this.isSpeaking = true;
+    this.onStart();
 
     const speakNextClause = () => {
-      // Jeśli sesja została unieważniona (np. wciśnięto Pauzę lub Dalej), przerwij natychmiast
-      if (this.sessionId !== currentSession) return;
+      if (currentSession !== this.sessionId || !this.isSpeaking) return;
 
       if (clauseIndex >= clauses.length) {
         this.isSpeaking = false;
         this.onEnd();
-        if (onComplete && this.sessionId === currentSession) {
-          onComplete();
-        }
+        if (onComplete) onComplete();
         return;
       }
 
-      const clauseText = clauses[clauseIndex++];
-      const u = new SpeechSynthesisUtterance(clauseText);
-      u.lang = 'pl-PL';
-      if (this.polishVoice) {
-        u.voice = this.polishVoice;
-      }
-      u.rate = 0.84;
-      u.pitch = 0.95;
+      const phrase = clauses[clauseIndex++];
+      const utterance = new SpeechSynthesisUtterance(phrase);
+      utterance.lang = 'pl-PL';
+      if (this.polishVoice) utterance.voice = this.polishVoice;
+      utterance.rate = 0.90; // Spokojne tempo modlitwy
+      utterance.pitch = 1.0;
 
-      // Zabezpieczenie przed garbage-collection obiektu Utterance w silniku V8
-      window._activeUtterance = u;
-
-      u.onstart = () => {
-        if (this.sessionId !== currentSession) return;
-        this.isSpeaking = true;
-        this.onStart();
-      };
-
-      u.onend = () => {
-        if (this.sessionId !== currentSession) return;
-        // Drobna pauza między zdaniami modlitwy
-        setTimeout(() => {
-          if (this.sessionId === currentSession) {
-            speakNextClause();
+      let clauseEnded = false;
+      const finishClause = () => {
+        if (!clauseEnded) {
+          clauseEnded = true;
+          if (currentSession === this.sessionId && this.isSpeaking) {
+            setTimeout(speakNextClause, 120);
           }
-        }, 120);
+        }
       };
 
-      u.onerror = (e) => {
-        // Ignoruj błędy wynikające z celowego zatrzymania / pauzy
-        if (e.error === 'canceled' || e.error === 'interrupted' || this.sessionId !== currentSession) {
-          return;
-        }
-        if (this.sessionId === currentSession) {
-          speakNextClause();
+      utterance.onend = finishClause;
+      utterance.onerror = (e) => {
+        if (e.error !== 'interrupted' && e.error !== 'canceled') {
+          finishClause();
         }
       };
 
       try {
-        this.synth.speak(u);
+        if (this.synth.paused) this.synth.resume();
+        this.synth.speak(utterance);
       } catch (_) {
-        if (this.sessionId === currentSession) {
-          speakNextClause();
-        }
+        finishClause();
       }
     };
 
-    // Krótkie opóźnienie 40ms po cancel(), aby przeglądarka zresetowała wewnętrzny bufor mowy
-    setTimeout(() => {
-      if (this.sessionId === currentSession) {
-        speakNextClause();
-      }
-    }, 40);
+    speakNextClause();
   }
 
   stop() {
-    this.sessionId++; // Natychmiastowe unieważnienie wszelkich oczekujących callbacków
+    this.sessionId++;
     this.isSpeaking = false;
-    window._activeUtterance = null;
+    this.onEnd();
     if (this.synth) {
       try {
         this.synth.cancel();
-        if (this.synth.paused) {
-          this.synth.resume();
-        }
       } catch (_) {}
     }
-    this.onEnd();
   }
 }
 
 
 // ========================================================
-// 4. GŁÓWNA KLASA APLIKACJI KORONKI
+// 4. GŁÓWNY KONTROLER APLIKACJI KORONKA 2.0
 // ========================================================
 class KoronkaApp {
   constructor() {
     this.currentStep = 0;
     this.isFullTextOpen = false;
-    this.isFocusModeActive = false;
     this.isAutoplayActive = false;
-    this.autoplayTimeout = null;
+    this.isFocusModeActive = false;
     this.isMuted = false;
+    this.autoplayTimeout = null;
 
-    // Inicjalizacja podsystemów
+    // Moduły audio i lektora
     this.chime = new SacredChimePlayer();
     this.speech = new SpeechEngine(
       () => this.onSpeechStart(),
       () => this.onSpeechEnd()
     );
 
-    this.cacheDOMElements();
+    this.initElements();
     this.bindEvents();
     this.bindTouchGestures();
+    this.bindBeadClicks();
     this.render();
   }
 
-  cacheDOMElements() {
-    this.btnPrev = document.getElementById('btn-prev');
-    this.btnNext = document.getElementById('btn-next');
-    this.btnAutoplay = document.getElementById('btn-autoplay');
-    this.btnRestart = document.getElementById('btn-restart');
-    this.btnToggleText = document.getElementById('btn-toggle-text');
-    this.btnFocusMode = document.getElementById('btn-focus-mode');
-    this.iconEyeOpen = document.getElementById('icon-eye-open');
-    this.iconEyeClosed = document.getElementById('icon-eye-closed');
-    this.prayerCard = document.getElementById('prayer-card');
+  initElements() {
+    // Strefa dotykowa i obraz
     this.prayerTapArea = document.getElementById('prayer-tap-area');
-    
-    this.beadPartTitle = document.getElementById('bead-part-title');
-    this.beadCounter = document.getElementById('bead-counter');
-    this.beadsBar = document.getElementById('beads-bar');
-    
-    this.prayerTitle = document.getElementById('prayer-title');
+    this.mainImage = document.getElementById('main-image');
+
+    // Górna belka modlitewna
+    this.prayerCard = document.getElementById('prayer-card');
+    this.prayerStepBadge = document.getElementById('prayer-step-badge');
     this.prayerShort = document.getElementById('prayer-short');
     this.prayerFull = document.getElementById('prayer-full');
     this.prayerFullText = document.getElementById('prayer-full-text');
     this.voiceWave = document.getElementById('voice-wave');
-    
+
+    // Schemat SVG
+    this.rosarySvg = document.getElementById('rosary-heart-svg');
+    this.svgBeads = document.querySelectorAll('.bead-item');
+    this.haloOuter = document.getElementById('active-halo-outer');
+    this.haloInner = document.getElementById('active-halo-inner');
+    this.haloGroup = document.getElementById('active-halo-group');
+
+    // Przyciski nawigacji
+    this.btnPrev = document.getElementById('btn-prev');
+    this.btnNext = document.getElementById('btn-next');
+    this.btnAutoplay = document.getElementById('btn-autoplay');
+    this.btnRestart = document.getElementById('btn-restart');
     this.iconPlay = document.getElementById('icon-play');
     this.iconPause = document.getElementById('icon-pause');
-    
+
+    // Akcje karty
+    this.btnToggleText = document.getElementById('btn-toggle-text');
+    this.btnFocusMode = document.getElementById('btn-focus-mode');
+    this.iconEyeOpen = document.getElementById('icon-eye-open');
+    this.iconEyeClosed = document.getElementById('icon-eye-closed');
+
+    // Pasek górny
     this.btnSound = document.getElementById('btn-sound');
     this.iconSoundOn = document.getElementById('icon-sound-on');
     this.iconSoundOff = document.getElementById('icon-sound-off');
-    
     this.btnFullscreen = document.getElementById('btn-fullscreen');
     this.btnSchema = document.getElementById('btn-schema');
     this.modalSchema = document.getElementById('modal-schema');
     this.btnCloseModal = document.getElementById('btn-close-modal');
 
-    // Elementy instalacji i pobierania (PWA, Android, iOS)
+    // Elementy instalacji i pobierania
     this.btnInstall = document.getElementById('btn-install');
     this.modalInstall = document.getElementById('modal-install');
     this.btnCloseInstallModal = document.getElementById('btn-close-install-modal');
@@ -413,7 +397,6 @@ class KoronkaApp {
   }
 
   bindEvents() {
-    // Nawigacja przyciskami
     this.btnNext.addEventListener('click', (e) => {
       e.stopPropagation();
       this.handleUserAdvance();
@@ -424,7 +407,6 @@ class KoronkaApp {
       this.prevStep();
     });
 
-    // Reset modlitwy
     this.btnRestart.addEventListener('click', (e) => {
       e.stopPropagation();
       if (confirm('Czy chcesz rozpocząć Koronkę od początku?')) {
@@ -433,35 +415,29 @@ class KoronkaApp {
       }
     });
 
-    // Autoodtwarzanie (Wersja foniczna)
     this.btnAutoplay.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleAutoplay();
     });
 
-    // Rozwijanie pełnego tekstu modlitwy
     this.btnToggleText.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleFullText();
     });
 
-    // Tryb kontemplacji (ukrycie/ściemnienie tekstu dla skupienia na wizerunku)
     this.btnFocusMode.addEventListener('click', (e) => {
       e.stopPropagation();
       this.toggleFocusMode();
     });
 
-    // Dźwięk / Wyciszenie
     this.btnSound.addEventListener('click', () => {
       this.toggleSound();
     });
 
-    // Pełny ekran
     this.btnFullscreen.addEventListener('click', () => {
       this.toggleFullscreen();
     });
 
-    // Modal schematu edukacyjnego
     this.btnSchema.addEventListener('click', () => {
       this.openSchemaModal();
     });
@@ -476,7 +452,6 @@ class KoronkaApp {
       }
     });
 
-    // Modal instalacji i pobierania aplikacji
     if (this.btnInstall) {
       this.btnInstall.addEventListener('click', () => {
         this.openInstallModal();
@@ -497,7 +472,6 @@ class KoronkaApp {
       });
     }
 
-    // Przełączanie zakładek w oknie instalacji
     this.tabBtns.forEach((tabBtn) => {
       tabBtn.addEventListener('click', () => {
         const targetId = tabBtn.getAttribute('data-tab');
@@ -509,7 +483,6 @@ class KoronkaApp {
       });
     });
 
-    // Klawiatura
     window.addEventListener('keydown', (e) => {
       if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
         this.handleUserAdvance();
@@ -523,8 +496,23 @@ class KoronkaApp {
   }
 
   /**
-   * Obsługa gestów dotykowych (Swipe na telefonach i tabletach)
+   * Obsługa kliknięć bezpośrednio w paciorki na schemacie serca
    */
+  bindBeadClicks() {
+    this.svgBeads.forEach((beadEl) => {
+      beadEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const stepIdx = parseInt(beadEl.getAttribute('data-step'), 10);
+        if (!isNaN(stepIdx)) {
+          if (this.speech.isSpeaking) {
+            this.speech.stop();
+          }
+          this.goToStep(stepIdx);
+        }
+      });
+    });
+  }
+
   bindTouchGestures() {
     let startX = 0;
     let startY = 0;
@@ -546,35 +534,30 @@ class KoronkaApp {
         const absDiffX = Math.abs(diffX);
         const absDiffY = Math.abs(diffY);
 
-        // Wykrywanie przesunięcia (Swipe)
         if (absDiffX > 45 && absDiffX > absDiffY && elapsed < 600) {
           if (diffX < 0) {
-            // Swipe w lewo -> Dalej
             this.handleUserAdvance();
           } else {
-            // Swipe w prawo -> Wstecz
             this.prevStep();
           }
           return;
         }
 
-        // Zwykłe dotknięcie ekranu (Tap) bez przesunięcia -> Dalej
         if (absDiffX < 15 && absDiffY < 15) {
+          // Kliknięto w pusty obszar obrazu
+          if (e.target.closest('.bead-item')) return;
           this.handleUserAdvance();
         }
       }
     }, { passive: true });
 
-    // Obsługa kliknięcia myszą na desktopie
     this.prayerTapArea.addEventListener('click', (e) => {
-      // Ignoruj jeśli kliknięto w modal
-      if (e.target.closest('.modal-card')) return;
+      if (e.target.closest('.modal-card') || e.target.closest('.bead-item')) return;
       this.handleUserAdvance();
     });
   }
 
   handleUserAdvance() {
-    // Jeśli użytkownik ręcznie przeskakuje, a lektor mówił, ucisz lektora i idź dalej
     if (this.speech.isSpeaking) {
       this.speech.stop();
     }
@@ -585,12 +568,8 @@ class KoronkaApp {
     if (this.currentStep < PRAYER_STEPS.length - 1) {
       this.goToStep(this.currentStep + 1);
     } else {
-      // Zakończenie całej Koronki
       this.stopAutoplay();
       this.triggerHaptic('finish');
-      if (!this.isMuted) {
-        this.chime.playBell(587.33, 3.5);
-      }
     }
   }
 
@@ -604,45 +583,57 @@ class KoronkaApp {
   }
 
   goToStep(index) {
-    // Anuluj oczekujące przejście autoodtwarzania
     if (this.autoplayTimeout) {
       clearTimeout(this.autoplayTimeout);
       this.autoplayTimeout = null;
     }
 
+    const prevStep = this.currentStep;
     this.currentStep = Math.max(0, Math.min(index, PRAYER_STEPS.length - 1));
     const step = PRAYER_STEPS[this.currentStep];
+    const prevStepObj = PRAYER_STEPS[prevStep];
 
-    // Haptyka i dźwięki akcentujące
-    this.triggerHaptic(step.type);
-    if (!this.isMuted) {
-      if (step.type === 'large') {
-        this.chime.playBell(440, 2.5); // Niski, uroczysty dzwonek na Ojcze Przedwieczny
-      } else if (step.type === 'cross' || step.type === 'holyGod') {
-        this.chime.playBell(523.25, 2.0);
-      }
+    // Sprawdzenie zakończenia dziesiątki:
+    // Przejście z 10. paciorka danej dziesiątki (beadIndex === 10) do kolejnego kroku
+    const isDecadeFinished = prevStepObj && 
+      prevStepObj.decade >= 1 && 
+      prevStepObj.decade <= 5 && 
+      prevStepObj.beadIndex === 10 && 
+      (step.beadIndex === 0 || step.decade > prevStepObj.decade);
+
+    if (isDecadeFinished) {
+      // Zgodnie z życzeniem użytkownika: "Po ukończeniu każdej dziesiątki zamiast dźwięku który jest za głośny lepiej jak pojawią się lekkie wibracje."
+      this.triggerHaptic('decade-finish');
+    } else {
+      // Przy przełączaniu na poszczególne paciorki: lekka wibracja
+      this.triggerHaptic(step.type);
     }
 
-    // Płynne odświeżenie widoku
     this.renderWithTransition();
 
-    // Jeśli autoodtwarzanie jest włączone, zainicjuj mowę lub timer
     if (this.isAutoplayActive) {
       this.playCurrentStepAudio();
     }
   }
 
+  /**
+   * System haptyczny (wibracje):
+   * - Po ukończeniu każdej dziesiątki: wyraźne podwójne wibracje (bez głośnego dźwięku)
+   * - Przy każdym paciorku: lekki impuls sygnalizujący postęp
+   */
   triggerHaptic(type) {
     if (!('vibrate' in navigator)) return;
     try {
-      if (type === 'large') {
-        navigator.vibrate([40, 60, 40]);
-      } else if (type === 'cross') {
-        navigator.vibrate([35, 50, 35]);
+      if (type === 'decade-finish') {
+        // Zasygnalizowanie ukończenia dziesiątki: przyjemny, podwójny impuls
+        navigator.vibrate([45, 60, 45]);
+      } else if (type === 'large' || type === 'cross') {
+        navigator.vibrate([30, 40, 30]);
       } else if (type === 'finish') {
-        navigator.vibrate([60, 70, 60, 70, 110]);
+        navigator.vibrate([50, 60, 50, 60, 100]);
       } else {
-        navigator.vibrate(25); // Krótkie, delikatne tapnięcie paciorka
+        // Każdy zwykły paciorek: lekka, dyskretna wibracja
+        navigator.vibrate(22);
       }
     } catch (_) {}
   }
@@ -735,9 +726,8 @@ class KoronkaApp {
 
     const step = PRAYER_STEPS[this.currentStep];
     
-    // Jeśli dźwięk jest wyciszony, odczekaj stosowny czas czytania w myślach
     if (this.isMuted) {
-      const waitTime = step.type === 'small' ? 3500 : 7000;
+      const waitTime = step.type === 'small' ? 3200 : 6500;
       this.autoplayTimeout = setTimeout(() => {
         if (this.isAutoplayActive) {
           this.nextStep();
@@ -746,12 +736,10 @@ class KoronkaApp {
       return;
     }
 
-    // Uruchomienie lektora
     this.speech.speak(step.speechText, () => {
-      // Wywołanie następuje tylko, gdy dana modlitwa została odczytana w całości
       if (!this.isAutoplayActive) return;
 
-      const pauseDuration = step.type === 'small' ? 1200 : 2000;
+      const pauseDuration = step.type === 'small' ? 1000 : 1800;
       this.autoplayTimeout = setTimeout(() => {
         if (this.isAutoplayActive) {
           this.nextStep();
@@ -828,27 +816,18 @@ class KoronkaApp {
       this.render();
       return;
     }
-    // Płynna animacja tekstu wezwania
-    this.prayerShort.classList.add('fade-out');
+    this.prayerShort.style.opacity = '0.3';
     setTimeout(() => {
       this.render();
-      this.prayerShort.classList.remove('fade-out');
-      this.prayerShort.classList.add('fade-in');
-      setTimeout(() => {
-        this.prayerShort.classList.remove('fade-in');
-      }, 200);
-    }, 150);
+      this.prayerShort.style.opacity = '1';
+    }, 120);
   }
 
   render() {
     const step = PRAYER_STEPS[this.currentStep];
     
-    // Tytuły i licznik
-    this.beadPartTitle.textContent = step.part;
-    this.beadCounter.textContent = `${this.currentStep + 1} / ${PRAYER_STEPS.length}`;
-    
-    // Karta modlitwy
-    this.prayerTitle.textContent = step.title;
+    // Tytuł i licznik
+    this.prayerStepBadge.textContent = `${step.part} • ${this.currentStep + 1} / ${PRAYER_STEPS.length}`;
     this.prayerShort.textContent = step.shortText;
     this.prayerFullText.textContent = step.fullText;
 
@@ -863,57 +842,52 @@ class KoronkaApp {
     this.btnPrev.style.opacity = this.currentStep === 0 ? '0.3' : '1';
     this.btnPrev.style.pointerEvents = this.currentStep === 0 ? 'none' : 'auto';
 
-    // Renderowanie koralików (beads bar) w zależności od sekcji
-    this.renderBeadsBar(step);
+    // Aktualizacja paciorków w schemacie serca SVG
+    this.renderHeartRosary(step);
   }
 
-  renderBeadsBar(step) {
-    this.beadsBar.innerHTML = '';
-    
-    // 1. Modlitwy wstępne (4 koraliki)
-    if (step.decade === 0) {
-      for (let i = 0; i < 4; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'bead-dot';
-        if (i === 0) dot.classList.add('large'); // Krzyż
-        if (i < this.currentStep) dot.classList.add('completed');
-        if (i === this.currentStep) dot.classList.add('active');
-        this.beadsBar.appendChild(dot);
-      }
-      return;
-    }
+  /**
+   * Aktualizuje schemat serca:
+   * - Przesuwa aureolę pod aktywny paciorek
+   * - Zmienia kolory paciorków (odmówione -> złote, bieżący -> błękitno-biały z aureolą, pozostałe -> czerwone/niebieskie)
+   */
+  renderHeartRosary(step) {
+    if (!this.svgBeads || this.svgBeads.length === 0) return;
 
-    // 2. Dziesiątki (1 duży paciorek + 10 małych)
-    if (step.decade >= 1 && step.decade <= 5) {
-      // Duży paciorek (Ojcze Przedwieczny)
-      const largeDot = document.createElement('div');
-      largeDot.className = 'bead-dot large';
-      if (step.beadIndex > 0) largeDot.classList.add('completed');
-      if (step.beadIndex === 0) largeDot.classList.add('active');
-      this.beadsBar.appendChild(largeDot);
-
-      // 10 małych paciorków
-      for (let i = 1; i <= 10; i++) {
-        const smallDot = document.createElement('div');
-        smallDot.className = 'bead-dot';
-        if (i < step.beadIndex) smallDot.classList.add('completed');
-        if (i === step.beadIndex) smallDot.classList.add('active');
-        this.beadsBar.appendChild(smallDot);
-      }
-      return;
-    }
-
-    // 3. Zakończenie (3x Święty Boże + O Krwi i Wodo + 3x Jezu Ufam + Krzyż = 8 kroków)
-    if (step.decade === 6) {
-      for (let i = 1; i <= 8; i++) {
-        const dot = document.createElement('div');
-        dot.className = 'bead-dot';
-        if (i === 8) dot.classList.add('large'); // Znak Krzyża
-        if (i < step.beadIndex) dot.classList.add('completed');
-        if (i === step.beadIndex) dot.classList.add('active');
-        this.beadsBar.appendChild(dot);
+    // Przesunięcie aureoli aktywnego paciorka
+    const activeEl = document.getElementById(step.beadId);
+    if (activeEl) {
+      const transform = activeEl.getAttribute('transform');
+      if (transform) {
+        const match = transform.match(/translate\(([^,]+),\s*([^)]+)\)/);
+        if (match) {
+          const cx = parseFloat(match[1]);
+          const cy = parseFloat(match[2]);
+          if (this.haloOuter) {
+            this.haloOuter.setAttribute('cx', cx);
+            this.haloOuter.setAttribute('cy', cy);
+          }
+          if (this.haloInner) {
+            this.haloInner.setAttribute('cx', cx);
+            this.haloInner.setAttribute('cy', cy);
+          }
+        }
       }
     }
+
+    // Aktualizacja stanów paciorków
+    this.svgBeads.forEach((beadEl) => {
+      const beadStep = parseInt(beadEl.getAttribute('data-step'), 10);
+      beadEl.classList.remove('completed', 'active', 'pending');
+
+      if (beadEl.id === step.beadId) {
+        beadEl.classList.add('active');
+      } else if (beadStep < this.currentStep) {
+        beadEl.classList.add('completed');
+      } else {
+        beadEl.classList.add('pending');
+      }
+    });
   }
 }
 
@@ -921,14 +895,12 @@ class KoronkaApp {
 document.addEventListener('DOMContentLoaded', () => {
   window.app = new KoronkaApp();
   
-  // Rejestracja Service Workera dla trybu offline z natychmiastową aktualizacją
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('./sw.js').then((reg) => {
       reg.update();
     }).catch(() => {});
   }
 
-  // Obsługa instalacji aplikacji jako PWA
   let deferredInstallPrompt = null;
   const pwaQuickInstallBox = document.getElementById('pwa-quick-install-box');
   const btnTriggerPwa = document.getElementById('btn-trigger-pwa');
@@ -961,4 +933,3 @@ document.addEventListener('DOMContentLoaded', () => {
     deferredInstallPrompt = null;
   });
 });
-

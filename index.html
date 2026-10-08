@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=6">
+  <link rel="stylesheet" href="style.css?v=7">
 </head>
 <body>
   <div id="app" class="app-container">
@@ -77,52 +77,16 @@
       </div>
     </header>
 
-    <!-- Główna strefa z wizerunkiem Jezusa Miłosiernego z Wilna -->
-    <main class="image-stage" id="prayer-tap-area">
-      <div class="image-wrapper">
-        <img 
-          src="assets/jezus-milosierny-wilno.jpg" 
-          alt="Jezus Miłosierny - Wizerunek wileński namalowany przez Eugeniusza Kazimirowskiego w 1934 roku" 
-          id="main-image"
-          class="holy-image"
-          draggable="false"
-        >
-        <div class="image-vignette-top"></div>
-        <div class="image-vignette-bottom"></div>
-      </div>
-      
-      <!-- Subtelna wskazówka dotykowa na początku -->
-      <div id="tap-hint" class="tap-hint fade-out-hint">
-        Dotknij ekranu, aby przejść do kolejnego paciorka
-      </div>
-    </main>
-
-    <!-- Dolna strefa modlitwy i kontroli (inspirowana prostotą Rosario) -->
-    <footer class="prayer-dock">
-      
-      <!-- Wskaźnik paciorków (beads indicator) -->
-      <div class="beads-progress-container">
-        <div class="beads-step-info">
-          <span id="bead-part-title" class="bead-part-title">Wprowadzenie</span>
-          <span id="bead-counter" class="bead-counter">Krok 1 / 61</span>
-        </div>
-        
-        <!-- Graficzny wskaźnik dziesiątki -->
-        <div id="beads-bar" class="beads-bar" aria-label="Wskaźnik paciorków">
-          <!-- Generowane dynamicznie w JS -->
-        </div>
-      </div>
-
-      <!-- Karta aktualnego wezwania modlitewnego -->
+    <!-- Górna pływająca belka aktualnej modlitwy (wzorowana na Rosario) -->
+    <div class="prayer-banner" id="prayer-banner">
       <div class="prayer-card" id="prayer-card">
-        <div class="prayer-header">
-          <div class="prayer-title-group">
-            <span id="prayer-title" class="prayer-title">Znak Krzyża</span>
+        <div class="prayer-card-header">
+          <span id="prayer-step-badge" class="prayer-step-badge">Wprowadzenie • 1 / 67</span>
+          <div class="prayer-card-actions">
+            <!-- Wskaźnik głosu lektora -->
             <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta modlitwę">
               <span></span><span></span><span></span>
             </div>
-          </div>
-          <div class="prayer-card-actions">
             <!-- Tryb skupienia / kontemplacji (ukrycie/pokazanie tekstu) -->
             <button id="btn-focus-mode" class="card-action-btn" title="Ukryj tekst modlitwy (tryb skupienia)" aria-label="Ukryj tekst">
               <svg id="icon-eye-open" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -143,12 +107,347 @@
           </div>
         </div>
         
-        <!-- Krótki, minimalistyczny tekst wezwania -->
-        <p id="prayer-short" class="prayer-short">W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
+        <!-- Główny tekst bieżącego wezwania -->
+        <p id="prayer-short" class="prayer-short-text">+ W imię Ojca, i Syna i Ducha Świętego. Amen.</p>
         
-        <!-- Opcjonalny pełny tekst modlitwy (zwijany, by nie rozpraszać) -->
+        <!-- Opcjonalny pełny tekst modlitwy (zwijany) -->
         <div id="prayer-full" class="prayer-full hidden">
           <p id="prayer-full-text"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Główna strefa z wizerunkiem wileńskim Kazimirowskiego oraz schematem serca -->
+    <main class="image-stage" id="prayer-tap-area">
+      <div class="image-wrapper">
+        <img 
+          src="assets/jezus-milosierny-wilno.jpg" 
+          alt="Jezus Miłosierny - Wizerunek wileński namalowany przez Eugeniusza Kazimirowskiego w 1934 roku" 
+          id="main-image"
+          class="holy-image"
+          draggable="false"
+        >
+        <!-- Interaktywny schemat serca różańcowego (identyczny jak w Rosario) -->
+<svg id="rosary-heart-svg" class="rosary-heart-svg" viewBox="0 0 460 1024" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="grad-red-bead" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ff7b7b"/>
+      <stop offset="30%" stop-color="#e01818"/>
+      <stop offset="75%" stop-color="#940505"/>
+      <stop offset="100%" stop-color="#4d0000"/>
+    </radialGradient>
+    <radialGradient id="grad-blue-bead" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#b8e2ff"/>
+      <stop offset="30%" stop-color="#3d8bfd"/>
+      <stop offset="75%" stop-color="#144ec2"/>
+      <stop offset="100%" stop-color="#0a2566"/>
+    </radialGradient>
+    <radialGradient id="grad-gold-bead" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#fff9db"/>
+      <stop offset="25%" stop-color="#ffd700"/>
+      <stop offset="75%" stop-color="#c99718"/>
+      <stop offset="100%" stop-color="#735200"/>
+    </radialGradient>
+    <radialGradient id="grad-active-bead" cx="40%" cy="40%" r="60%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="45%" stop-color="#6ee7ff"/>
+      <stop offset="85%" stop-color="#0099ff"/>
+      <stop offset="100%" stop-color="#0055b3"/>
+    </radialGradient>
+    <linearGradient id="grad-gold-cross" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff6cc"/>
+      <stop offset="40%" stop-color="#d4af37"/>
+      <stop offset="80%" stop-color="#997a15"/>
+      <stop offset="100%" stop-color="#544105"/>
+    </linearGradient>
+    <filter id="bead-shadow" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.8"/>
+    </filter>
+    <filter id="active-glow" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Łańcuszek różańca łączący paciorki -->
+  <path class="rosary-chain stem-chain" d="M 231.0 565.0 L 231.0 529.0 L 231.0 503.0 L 231.2 477.0 L 231.1 451.5 L 233.5 429.0"/>
+  <path class="rosary-chain loop-chain" d="M 233.5 429.0 L 214.3 403.0 L 194.8 385.4 L 174.0 370.5 L 151.0 360.0 L 126.0 355.7 L 100.8 357.0 L 75.2 365.6 L 55.2 379.9 L 40.0 400.3 L 27.4 423.0 L 20.6 450.1 L 18.0 476.3 L 18.6 503.0 L 22.9 528.2 L 30.0 553.7 L 38.8 577.4 L 50.1 600.2 L 63.0 623.0 L 77.6 644.2 L 92.8 664.8 L 108.4 684.4 L 126.7 704.7 L 146.3 724.1 L 166.7 744.6 L 189.6 763.9 L 212.0 778.0 L 226.0 782.5 L 236.0 782.5 L 250.0 778.0 L 272.4 763.9 L 295.3 744.6 L 315.7 724.1 L 336.5 705.4 L 353.6 684.4 L 369.4 664.8 L 385.0 644.0 L 399.0 623.0 L 411.9 600.2 L 423.4 577.2 L 433.0 553.4 L 439.4 528.2 L 443.2 502.8 L 443.4 476.6 L 441.5 450.2 L 434.6 423.0 L 422.8 400.8 L 407.0 380.0 L 386.5 364.9 L 361.5 357.1 L 336.0 355.7 L 311.4 359.9 L 287.8 371.0 L 267.2 386.1 L 248.2 403.1 Z"/>
+  <!-- Warstwa aureoli aktywnego paciorka -->
+  <g id="active-halo-group" class="active-halo-group">
+    <circle id="active-halo-outer" class="halo-outer" cx="231" cy="565" r="24"/>
+    <circle id="active-halo-inner" class="halo-inner" cx="231" cy="565" r="16"/>
+  </g>
+  <!-- Złoty Krzyżyk (Kroki 0 i 66) -->
+  <g id="bead-cross" class="bead-item bead-cross" data-step="0" data-id="bead-cross" transform="translate(231, 565)">
+    <!-- Hit area -->
+    <rect x="-18" y="-28" width="36" height="56" fill="transparent" class="bead-hit-area"/>
+    <!-- Vertical beam -->
+    <rect x="-3" y="-22" width="6" height="42" rx="1.5" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
+    <!-- Horizontal beam -->
+    <rect x="-14" y="-13" width="28" height="6" rx="1.5" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
+    <!-- Corpus figure hint -->
+    <path d="M 0 -11 L 0 5 M -7 -8 L 7 -8 M 0 5 L -3 14 M 0 5 L 3 14" stroke="#544105" stroke-width="1.2" stroke-linecap="round"/>
+  </g>
+  <!-- Paciorki Różańca / Koronki -->
+  <g id="beads-group" class="beads-group">
+    <g id="bead-stem-large" class="bead-item bead-large" data-step="1" data-id="bead-stem-large" data-decade="0" transform="translate(231.0, 529.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-stem-red-1" class="bead-item bead-small" data-step="2" data-id="bead-stem-red-1" data-decade="0" transform="translate(231.0, 503.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-stem-red-2" class="bead-item bead-small" data-step="3" data-id="bead-stem-red-2" data-decade="0" transform="translate(231.2, 477.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-stem-red-3" class="bead-item bead-small" data-step="3" data-id="bead-stem-red-3" data-decade="0" transform="translate(231.1, 451.5)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-connector" class="bead-item bead-large bead-connector" data-step="4" data-id="bead-connector" data-decade="1" transform="translate(233.5, 429.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-1" class="bead-item bead-small" data-step="5" data-id="bead-dec1-1" data-decade="1" transform="translate(214.3, 403.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-2" class="bead-item bead-small" data-step="6" data-id="bead-dec1-2" data-decade="1" transform="translate(194.8, 385.4)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-3" class="bead-item bead-small" data-step="7" data-id="bead-dec1-3" data-decade="1" transform="translate(174.0, 370.5)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-4" class="bead-item bead-small" data-step="8" data-id="bead-dec1-4" data-decade="1" transform="translate(151.0, 360.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-5" class="bead-item bead-small" data-step="9" data-id="bead-dec1-5" data-decade="1" transform="translate(126.0, 355.7)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-6" class="bead-item bead-small" data-step="10" data-id="bead-dec1-6" data-decade="1" transform="translate(100.8, 357.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-7" class="bead-item bead-small" data-step="11" data-id="bead-dec1-7" data-decade="1" transform="translate(75.2, 365.6)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-8" class="bead-item bead-small" data-step="12" data-id="bead-dec1-8" data-decade="1" transform="translate(55.2, 379.9)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-9" class="bead-item bead-small" data-step="13" data-id="bead-dec1-9" data-decade="1" transform="translate(40.0, 400.3)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec1-10" class="bead-item bead-small" data-step="14" data-id="bead-dec1-10" data-decade="1" transform="translate(27.4, 423.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-large-2" class="bead-item bead-large" data-step="15" data-id="bead-large-2" data-decade="2" transform="translate(20.6, 450.1)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-1" class="bead-item bead-small" data-step="16" data-id="bead-dec2-1" data-decade="2" transform="translate(18.0, 476.3)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-2" class="bead-item bead-small" data-step="17" data-id="bead-dec2-2" data-decade="2" transform="translate(18.6, 503.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-3" class="bead-item bead-small" data-step="18" data-id="bead-dec2-3" data-decade="2" transform="translate(22.9, 528.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-4" class="bead-item bead-small" data-step="19" data-id="bead-dec2-4" data-decade="2" transform="translate(30.0, 553.7)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-5" class="bead-item bead-small" data-step="20" data-id="bead-dec2-5" data-decade="2" transform="translate(38.8, 577.4)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-6" class="bead-item bead-small" data-step="21" data-id="bead-dec2-6" data-decade="2" transform="translate(50.1, 600.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-7" class="bead-item bead-small" data-step="22" data-id="bead-dec2-7" data-decade="2" transform="translate(63.0, 623.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-8" class="bead-item bead-small" data-step="23" data-id="bead-dec2-8" data-decade="2" transform="translate(77.6, 644.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-9" class="bead-item bead-small" data-step="24" data-id="bead-dec2-9" data-decade="2" transform="translate(92.8, 664.8)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec2-10" class="bead-item bead-small" data-step="25" data-id="bead-dec2-10" data-decade="2" transform="translate(108.4, 684.4)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-large-3" class="bead-item bead-large" data-step="26" data-id="bead-large-3" data-decade="3" transform="translate(126.7, 704.7)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-1" class="bead-item bead-small" data-step="27" data-id="bead-dec3-1" data-decade="3" transform="translate(146.3, 724.1)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-2" class="bead-item bead-small" data-step="28" data-id="bead-dec3-2" data-decade="3" transform="translate(166.7, 744.6)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-3" class="bead-item bead-small" data-step="29" data-id="bead-dec3-3" data-decade="3" transform="translate(189.6, 763.9)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-4" class="bead-item bead-small" data-step="30" data-id="bead-dec3-4" data-decade="3" transform="translate(212.0, 778.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-5" class="bead-item bead-small" data-step="31" data-id="bead-dec3-5" data-decade="3" transform="translate(226.0, 782.5)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-6" class="bead-item bead-small" data-step="32" data-id="bead-dec3-6" data-decade="3" transform="translate(236.0, 782.5)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-7" class="bead-item bead-small" data-step="33" data-id="bead-dec3-7" data-decade="3" transform="translate(250.0, 778.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-8" class="bead-item bead-small" data-step="34" data-id="bead-dec3-8" data-decade="3" transform="translate(272.4, 763.9)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-9" class="bead-item bead-small" data-step="35" data-id="bead-dec3-9" data-decade="3" transform="translate(295.3, 744.6)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec3-10" class="bead-item bead-small" data-step="36" data-id="bead-dec3-10" data-decade="3" transform="translate(315.7, 724.1)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-large-4" class="bead-item bead-large" data-step="37" data-id="bead-large-4" data-decade="4" transform="translate(336.5, 705.4)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-1" class="bead-item bead-small" data-step="38" data-id="bead-dec4-1" data-decade="4" transform="translate(353.6, 684.4)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-2" class="bead-item bead-small" data-step="39" data-id="bead-dec4-2" data-decade="4" transform="translate(369.4, 664.8)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-3" class="bead-item bead-small" data-step="40" data-id="bead-dec4-3" data-decade="4" transform="translate(385.0, 644.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-4" class="bead-item bead-small" data-step="41" data-id="bead-dec4-4" data-decade="4" transform="translate(399.0, 623.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-5" class="bead-item bead-small" data-step="42" data-id="bead-dec4-5" data-decade="4" transform="translate(411.9, 600.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-6" class="bead-item bead-small" data-step="43" data-id="bead-dec4-6" data-decade="4" transform="translate(423.4, 577.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-7" class="bead-item bead-small" data-step="44" data-id="bead-dec4-7" data-decade="4" transform="translate(433.0, 553.4)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-8" class="bead-item bead-small" data-step="45" data-id="bead-dec4-8" data-decade="4" transform="translate(439.4, 528.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-9" class="bead-item bead-small" data-step="46" data-id="bead-dec4-9" data-decade="4" transform="translate(443.2, 502.8)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec4-10" class="bead-item bead-small" data-step="47" data-id="bead-dec4-10" data-decade="4" transform="translate(443.4, 476.6)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-large-5" class="bead-item bead-large" data-step="48" data-id="bead-large-5" data-decade="5" transform="translate(441.5, 450.2)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-1" class="bead-item bead-small" data-step="49" data-id="bead-dec5-1" data-decade="5" transform="translate(434.6, 423.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-2" class="bead-item bead-small" data-step="50" data-id="bead-dec5-2" data-decade="5" transform="translate(422.8, 400.8)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-3" class="bead-item bead-small" data-step="51" data-id="bead-dec5-3" data-decade="5" transform="translate(407.0, 380.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-4" class="bead-item bead-small" data-step="52" data-id="bead-dec5-4" data-decade="5" transform="translate(386.5, 364.9)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-5" class="bead-item bead-small" data-step="53" data-id="bead-dec5-5" data-decade="5" transform="translate(361.5, 357.1)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-6" class="bead-item bead-small" data-step="54" data-id="bead-dec5-6" data-decade="5" transform="translate(336.0, 355.7)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-7" class="bead-item bead-small" data-step="55" data-id="bead-dec5-7" data-decade="5" transform="translate(311.4, 359.9)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-8" class="bead-item bead-small" data-step="56" data-id="bead-dec5-8" data-decade="5" transform="translate(287.8, 371.0)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-9" class="bead-item bead-small" data-step="57" data-id="bead-dec5-9" data-decade="5" transform="translate(267.2, 386.1)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+    <g id="bead-dec5-10" class="bead-item bead-small" data-step="58" data-id="bead-dec5-10" data-decade="5" transform="translate(248.2, 403.1)">
+      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
+      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+    </g>
+  </g>
+</svg>
+        <div class="image-vignette-top"></div>
+        <div class="image-vignette-bottom"></div>
+      </div>
+      
+      <!-- Subtelna wskazówka dotykowa na początku -->
+      <div id="tap-hint" class="tap-hint fade-out-hint">
+        Dotknij ekranu lub paciorka, aby kontynuować modlitwę
+      </div>
+    </main>
+
+    <!-- Dolna strefa: wstęga "JEZU UFAM TOBIE" oraz ergonomiczne przyciski -->
+    <footer class="prayer-dock">
+      <!-- Wstęga wileńska "JEZU UFAM TOBIE" -->
+      <div class="sacred-ribbon-container">
+        <div class="sacred-ribbon">
+          <span class="ribbon-tail left"></span>
+          <span class="ribbon-content">JEZU, UFAM TOBIE</span>
+          <span class="ribbon-tail right"></span>
         </div>
       </div>
 
@@ -161,7 +460,7 @@
           </svg>
         </button>
 
-        <!-- Główny przycisk nawigacji / następnego paciorka (duży i ergonomiczny) -->
+        <!-- Główny przycisk nawigacji / następnego paciorka -->
         <button id="btn-next" class="control-btn primary-btn" title="Kolejny paciorek (lub dotknij ekran)" aria-label="Kolejny paciorek">
           <span class="btn-primary-inner">
             <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -189,8 +488,8 @@
           </svg>
         </button>
       </div>
-
     </footer>
+
 
     <!-- Okno modalne: Schemat edukacyjny & Odsyłacz do abbaojcze.pl -->
     <div id="modal-schema" class="modal-overlay hidden" role="dialog" aria-modal="true">
@@ -421,6 +720,6 @@
 
   </div>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>
