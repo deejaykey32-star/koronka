@@ -401,6 +401,10 @@ class KoronkaApp {
     this.btnInstall = document.getElementById('btn-install');
     this.modalInstall = document.getElementById('modal-install');
     this.btnCloseInstallModal = document.getElementById('btn-close-install-modal');
+    this.btnMap = document.getElementById('btn-map');
+    this.menuBtnMap = document.getElementById('menu-btn-map');
+    this.modalMap = document.getElementById('modal-map');
+    this.btnCloseMapModal = document.getElementById('btn-close-map-modal');
     this.tabBtns = document.querySelectorAll('.platform-tabs .tab-btn');
     this.tabContents = document.querySelectorAll('#modal-install .tab-content');
     this.pwaQuickInstallBox = document.getElementById('pwa-quick-install-box');
@@ -557,6 +561,35 @@ class KoronkaApp {
       });
     }
 
+    // Modal: Mapa Pielgrzymki
+    if (this.btnMap) {
+      this.btnMap.addEventListener('click', () => {
+        this.openMapModal();
+      });
+    }
+
+    if (this.menuBtnMap) {
+      this.menuBtnMap.addEventListener('click', (e) => {
+        e.stopPropagation();
+        if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
+        this.openMapModal();
+      });
+    }
+
+    if (this.btnCloseMapModal) {
+      this.btnCloseMapModal.addEventListener('click', () => {
+        this.closeMapModal();
+      });
+    }
+
+    if (this.modalMap) {
+      this.modalMap.addEventListener('click', (e) => {
+        if (e.target === this.modalMap) {
+          this.closeMapModal();
+        }
+      });
+    }
+
     this.tabBtns.forEach((tabBtn) => {
       tabBtn.addEventListener('click', () => {
         const targetId = tabBtn.getAttribute('data-tab');
@@ -576,6 +609,7 @@ class KoronkaApp {
       } else if (e.key === 'Escape') {
         this.closeSchemaModal();
         this.closeInstallModal();
+        this.closeMapModal();
         if (this.dropdownMenu) this.dropdownMenu.classList.add('hidden');
       }
     });
@@ -907,6 +941,14 @@ bindBeadClicks() {
 
   closeInstallModal() {
     if (this.modalInstall) this.modalInstall.classList.add('hidden');
+  }
+
+  openMapModal() {
+    if (this.modalMap) this.modalMap.classList.remove('hidden');
+  }
+
+  closeMapModal() {
+    if (this.modalMap) this.modalMap.classList.add('hidden');
   }
 
   renderWithTransition() {

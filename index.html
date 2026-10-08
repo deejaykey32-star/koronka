@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=8">
+  <link rel="stylesheet" href="style.css?v=9">
 </head>
 <body>
   <div id="app" class="app-container">
@@ -49,6 +49,15 @@
           </svg>
         </button>
 
+        <!-- Przycisk Mapa Pielgrzymki -->
+        <button id="btn-map" class="icon-btn" title="Mapa pielgrzymki (Częstochowa ➔ Kraków)" aria-label="Mapa pielgrzymki">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          <span class="btn-text-desktop">Mapa</span>
+        </button>
         <!-- Przycisk Hamburger Menu (zamiast niedziałającej pojedynczej ikony) -->
         <button id="btn-hamburger" class="icon-btn menu-btn" title="Menu opcji" aria-label="Menu opcji">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -76,6 +85,14 @@
           <span>Ukryj nagłówek (Tryb kontemplacji)</span>
         </button>
 
+        <button id="menu-btn-map" class="menu-item" role="menuitem">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+            <line x1="8" y1="2" x2="8" y2="18"></line>
+            <line x1="16" y1="6" x2="16" y2="22"></line>
+          </svg>
+          <span>🗺️ Mapa pielgrzymki (Częstochowa ➔ Kraków)</span>
+        </button>
         <button id="menu-btn-schema" class="menu-item" role="menuitem">
           <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="12" cy="12" r="10"></circle>
@@ -592,6 +609,208 @@
       </div>
     </div>
 
+    <!-- Okno modalne: Mapa i Plan Pielgrzymki (Częstochowa ➔ Kraków Łagiewniki) -->
+    <div id="modal-map" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card modal-card-large">
+        <div class="modal-header">
+          <h2 class="modal-title">🗺️ Mapa i Plan Pielgrzymki</h2>
+          <button id="btn-close-map-modal" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+        </div>
+        
+        <div class="modal-body">
+          <!-- Główny przycisk otwierający mapę w Google Maps -->
+          <div class="portal-link-box map-portal-box">
+            <p style="font-weight: 600; color: #ffffff; font-size: 14px;">Interaktywna mapa trasy w Google Maps:</p>
+            <a href="https://maps.app.goo.gl/uR3ZLw8bfjs3eceTA?g_st=ac" target="_blank" rel="noopener noreferrer" class="portal-btn map-main-btn">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2">
+                <polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon>
+                <line x1="8" y1="2" x2="8" y2="18"></line>
+                <line x1="16" y1="6" x2="16" y2="22"></line>
+              </svg>
+              <span>Otwórz mapę pielgrzymki w Google Maps</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+                <polyline points="15 3 21 3 21 9"></polyline>
+                <line x1="10" y1="14" x2="21" y2="3"></line>
+              </svg>
+            </a>
+            <span style="font-size: 11px; color: var(--text-dim);">Link bezpośredni: https://maps.app.goo.gl/uR3ZLw8bfjs3eceTA</span>
+          </div>
+
+          <!-- Wprowadzenie -->
+          <div class="modal-intro">
+            Oto propozycja kompleksowego planu takiego wydarzenia – może to być forma gwiaździstej pielgrzymki lub pieszego rajdu. Trasa z Częstochowy do Krakowa idealnie pokrywa się z malowniczym <strong>Szlakiem Orlich Gniazd</strong> (Jura Krakowsko-Częstochowska), co czyni ten 7-dniowy marsz niezwykle atrakcyjnym.
+          </div>
+          <p style="font-size: 12px; color: var(--text-muted);">
+            Poniżej znajduje się pełny harmonogram z podziałem na dojście/dojazd do Częstochowy, wspólny 7-dniowy szlak oraz powroty.
+          </p>
+
+          <!-- ETAP I -->
+          <div class="itinerary-stage-card">
+            <div class="stage-badge">ETAP I</div>
+            <h3 class="stage-title">Ścieżki do Częstochowy (Zgrupowanie do 17/18 czerwca)</h3>
+            <p style="font-size: 12px; margin-bottom: 8px;">
+              Uczestnicy mogą dotrzeć do Częstochowy w formie pieszej (własne, wcześniejsze wymarsze) lub zorganizowanym transportem, by 18 czerwca rano wspólnie wyruszyć na szlak.
+            </p>
+
+            <strong style="color: var(--gold-light); font-size: 12px; display: block; margin-top: 6px;">Z miast w Polsce (opcje piesze lub dojazdowe):</strong>
+            <div class="route-city-list">
+              <div class="route-city-item">
+                <strong>1. Warszawa (ok. 220 km):</strong>
+                <ul>
+                  <li><em>Opcja piesza:</em> Wymarsz ok. 9 czerwca (9 dni drogi).</li>
+                  <li><em>Opcja transportowa:</em> Wyjazd 17 czerwca wieczorem (pociąg IC/Pendolino) lub autokarem.</li>
+                </ul>
+              </div>
+
+              <div class="route-city-item">
+                <strong>2. Wrocław (ok. 170 km):</strong>
+                <ul>
+                  <li><em>Opcja piesza:</em> Wymarsz ok. 11 czerwca (7 dni drogi).</li>
+                  <li><em>Opcja transportowa:</em> Szybki dojazd pociągiem bezpośrednim lub autostradą A4 i A1 (ok. 2-2,5h).</li>
+                </ul>
+              </div>
+
+              <div class="route-city-item">
+                <strong>3. Opole (ok. 100 km):</strong>
+                <ul>
+                  <li><em>Opcja piesza:</em> Wymarsz ok. 14 czerwca (4 dni drogi przez urokliwe lasy lublinieckie).</li>
+                  <li><em>Opcja transportowa:</em> Pociąg lub autokar (ok. 1,5h).</li>
+                </ul>
+              </div>
+
+              <div class="route-city-item">
+                <strong>4. Ruda Śląska (ok. 65 km):</strong>
+                <ul>
+                  <li><em>Opcja piesza:</em> Wymarsz ok. 15 czerwca (3 dni drogi).</li>
+                  <li><em>Opcja transportowa:</em> Dojazd Kolejami Śląskimi lub autokarem (ok. 1h).</li>
+                </ul>
+              </div>
+            </div>
+
+            <strong style="color: var(--gold-light); font-size: 12px; display: block; margin-top: 10px;">Ścieżki spoza granic Polski (dojazd i integracja):</strong>
+            <p style="font-size: 12px; color: var(--text-dim); margin-bottom: 6px;">
+              Dla grup zagranicznych punktem zbornym będzie dworzec lub jasnogórskie błonia w Częstochowie (17 czerwca):
+            </p>
+            <div class="route-city-list">
+              <div class="route-city-item">
+                <strong>5. Praga (Czechy):</strong> Autokar przez Ostrawę i Gliwice prosto do Częstochowy (ok. 5-6 godzin).
+              </div>
+              <div class="route-city-item">
+                <strong>6. Berlin (Niemcy):</strong> Pociąg do Poznania/Wrocławia, a następnie przesiadka do Częstochowy, lub bezpośredni autokar.
+              </div>
+              <div class="route-city-item">
+                <strong>7. Lwów (Ukraina) / Wilno (Litwa):</strong> Zorganizowane grupy autokarowe docierające do Częstochowy dzień przed wymarszem, z noclegiem w domach pielgrzyma.
+              </div>
+            </div>
+          </div>
+
+          <!-- ETAP II -->
+          <div class="itinerary-stage-card">
+            <div class="stage-badge stage-badge-highlight">ETAP II</div>
+            <h3 class="stage-title">Wspólny Szlak (18–24 czerwca)</h3>
+            <div class="route-highlight-box">
+              <strong>Trasa:</strong> Jasna Góra (Częstochowa) ➔ Szlak Orlich Gniazd ➔ Ojców ➔ Łagiewniki<br>
+              <em>Całkowity dystans to około 120-130 km podzielony na 7 zrównoważonych dni.</em>
+            </div>
+
+            <div class="days-list">
+              <!-- Dzień 1 -->
+              <div class="day-item">
+                <div class="day-header">
+                  <span class="day-pill">Dzień 1 • 18 czerwca</span>
+                  <span class="day-route">Częstochowa ➔ Złoty Potok (ok. 24 km)</span>
+                </div>
+                <p><em>Przebieg:</em> Ranny apel pod Jasną Górą. Wyjście z miasta w stronę ruin zamku w Olsztynie. Wejście na jurajskie ścieżki i nocleg w okolicach Złotego Potoku.</p>
+              </div>
+
+              <!-- Dzień 2 -->
+              <div class="day-item">
+                <div class="day-header">
+                  <span class="day-pill">Dzień 2 • 19 czerwca</span>
+                  <span class="day-route">Złoty Potok ➔ Mirów / Bobolice (ok. 18 km)</span>
+                </div>
+                <p><em>Przebieg:</em> Trasa wiedzie przez rezerwat Parkowe. Mijamy Pustynię Siedlecką i docieramy pod zrekonstruowany zamek w Bobolicach oraz ruiny w Mirowie.</p>
+              </div>
+
+              <!-- Dzień 3 -->
+              <div class="day-item">
+                <div class="day-header">
+                  <span class="day-pill">Dzień 3 • 20 czerwca</span>
+                  <span class="day-route">Bobolice ➔ Kroczyce / Podlesice (ok. 15 km)</span>
+                </div>
+                <p><em>Przebieg:</em> Nieco lżejszy dzień na regenerację. Przejście przez Skalne Miasto na Górze Zborów – jeden z najpiękniejszych widokowo fragmentów Jury.</p>
+              </div>
+
+              <!-- Dzień 4 -->
+              <div class="day-item">
+                <div class="day-header">
+                  <span class="day-pill">Dzień 4 • 21 czerwca</span>
+                  <span class="day-route">Podlesice ➔ Ogrodzieniec / Podzamcze (ok. 20 km)</span>
+                </div>
+                <p><em>Przebieg:</em> Trasa prowadzi do ruin największego jurajskiego zamku – Ogrodzieńca. Nocleg w okolicach Podzamcza u stóp majestatycznych skał.</p>
+              </div>
+
+              <!-- Dzień 5 -->
+              <div class="day-item">
+                <div class="day-header">
+                  <span class="day-pill">Dzień 5 • 22 czerwca</span>
+                  <span class="day-route">Ogrodzieniec ➔ Bydlin / Klucze (ok. 22 km)</span>
+                </div>
+                <p><em>Przebieg:</em> Przez Smoleń (zamek) i Pilicę, przekraczając granicę województw (ze śląskiego do małopolskiego).</p>
+              </div>
+
+              <!-- Dzień 6 -->
+              <div class="day-item">
+                <div class="day-header">
+                  <span class="day-pill">Dzień 6 • 23 czerwca</span>
+                  <span class="day-route">Bydlin ➔ Ojców (ok. 22 km)</span>
+                </div>
+                <p><em>Przebieg:</em> Marsz przez Sułoszową, obok Zamku w Pieskowej Skale i słynnej Maczugi Herkulesa. Wejście do serca Ojcowskiego Parku Narodowego (Dolina Prądnika). Nocleg w Ojcowie, przygotowanie do finałowego etapu.</p>
+              </div>
+
+              <!-- Dzień 7 -->
+              <div class="day-item day-item-final">
+                <div class="day-header">
+                  <span class="day-pill day-pill-gold">Dzień 7 • 24 czerwca</span>
+                  <span class="day-route">Ojców ➔ Kraków-Łagiewniki (ok. 38 km) – Wielki Finał</span>
+                </div>
+                <p><em>Przebieg:</em> Bardzo wczesna pobudka. Trasa prowadzi z Ojcowa przez podkrakowskie wsie (np. Giebułtów, Zielonki) prosto w miejską tkankę Krakowa. Uczestnicy omijają ścisłe centrum (lub przechodzą przez Błonia) i kierują się na południe miasta.</p>
+                <p style="margin-top: 4px; color: var(--gold-light);"><em>Finał:</em> Uroczyste wejście do Sanktuarium Bożego Miłosierdzia w Łagiewnikach w godzinach popołudniowych/wieczornych. Msza święta lub apel podsumowujący.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ETAP III -->
+          <div class="itinerary-stage-card">
+            <div class="stage-badge">ETAP III</div>
+            <h3 class="stage-title">Rozesłanie i Powroty (24 i 25 czerwca)</h3>
+            <p style="font-size: 12px; margin-bottom: 8px;">
+              Po osiągnięciu celu w Łagiewnikach, uczestnicy mogą skorzystać z doskonałej infrastruktury komunikacyjnej Krakowa, by wrócić do domów. Obok Sanktuarium znajduje się stacja kolejowa <strong>Kraków Łagiewniki</strong>.
+            </p>
+
+            <div class="route-city-list">
+              <div class="route-city-item">
+                <strong>Kierunek Warszawa / Zagranica (Berlin, Praga):</strong> Bezpośrednie pociągi Pendolino/IC z Krakowa Głównego. Uczestnicy mogą podjechać z Łagiewnik do Dworca Głównego szybką koleją aglomeracyjną (ok. 15 min).
+              </div>
+              <div class="route-city-item">
+                <strong>Kierunek Wrocław / Opole / Ruda Śląska:</strong> Pociągi z Dworca Głównego jadące magistralą E30. Do Rudy Śląskiej i Opola pociągi docierają w 1,5 do 2 godzin.
+              </div>
+              <div class="route-city-item">
+                <strong>Autokary zorganizowane:</strong> Z racji dużego parkingu przy Sanktuarium w Łagiewnikach, to idealne miejsce na podstawienie autokarów, które zabiorą zwarte grupy bezpośrednio do ich miast i krajów.
+              </div>
+            </div>
+
+            <p style="font-size: 12px; margin-top: 8px; color: var(--text-dim);">
+              Część grup może zdecydować się na pozostanie w Krakowie na noc z 24 na 25 czerwca (w domach pielgrzyma w Łagiewnikach lub w krakowskich szkołach/hostelach), by kolejnego dnia zwiedzić miasto i na spokojnie wyruszyć w drogę powrotną.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
     <!-- Okno modalne: Pobieranie i instalacja (Android, iOS, PWA) -->
     <div id="modal-install" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card">
@@ -752,6 +971,6 @@
 
   </div>
 
-  <script src="app.js?v=8"></script>
+  <script src="app.js?v=9"></script>
 </body>
 </html>
