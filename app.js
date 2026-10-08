@@ -56,7 +56,7 @@ const PRAYER_STEPS = [
   }
 ];
 
-// Generowanie 5 dziesiątek ze schematem serca (kierunek: góra -> lewa strona -> dół -> prawa strona -> góra)
+// Generowanie 5 dziesiątek ze schematem serca (kierunek: z lewej na prawo / zgodnie ze wskazówkami zegara: góra -> prawa strona -> dół -> lewa strona -> góra)
 for (let d = 1; d <= 5; d++) {
   // Duży paciorek (Ojcze Przedwieczny)
   let largeBeadId = 'bead-connector';
@@ -112,9 +112,9 @@ for (let s = 1; s <= 3; s++) {
 PRAYER_STEPS.push({
   part: 'Zakończenie',
   title: 'O Krwi i Wodo',
-  shortText: 'O Krwi i Wodo, któraś wytrysnęła z Najświętszego Serca Jezusowego...',
-  fullText: 'O Krwi i Wodo, któraś wytrysnęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie!',
-  speechText: 'O Krwi i Wodo, któraś wytrysnęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie!',
+  shortText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego...',
+  fullText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie!',
+  speechText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie!',
   type: 'closing',
   decade: 6,
   beadIndex: 4,
@@ -704,22 +704,22 @@ bindBeadClicks() {
 
   /**
    * System haptyczny (wibracje):
-   * - Po ukończeniu każdej dziesiątki: wyraźne podwójne wibracje (bez głośnego dźwięku)
-   * - Przy każdym paciorku: lekki impuls sygnalizujący postęp
+   * - Po ukończeniu każdej dziesiątki: wyraźny, silniejszy podwójny impuls (120ms, 80ms pauzy, 160ms)
+   * - Przy każdym poszczególnym paciorku: wyczuwalny impuls 45ms sygnalizujący postęp modlitwy
    */
   triggerHaptic(type) {
     if (!('vibrate' in navigator)) return;
     try {
       if (type === 'decade-finish') {
-        // Zasygnalizowanie ukończenia dziesiątki: przyjemny, podwójny impuls
-        navigator.vibrate([45, 60, 45]);
+        // Wyraźne zasygnalizowanie ukończenia dziesiątki
+        navigator.vibrate([120, 80, 160]);
       } else if (type === 'large' || type === 'cross') {
-        navigator.vibrate([30, 40, 30]);
+        navigator.vibrate([60, 50, 60]);
       } else if (type === 'finish') {
-        navigator.vibrate([50, 60, 50, 60, 100]);
+        navigator.vibrate([80, 60, 80, 60, 200]);
       } else {
-        // Każdy zwykły paciorek: lekka, dyskretna wibracja
-        navigator.vibrate(22);
+        // Każdy pojedynczy mały paciorek: wyczuwalny impuls
+        navigator.vibrate(45);
       }
     } catch (_) {}
   }
