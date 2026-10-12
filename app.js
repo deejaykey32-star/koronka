@@ -270,6 +270,7 @@ function generateRosarySteps() {
 // ========================================================
 const AppState = {
   mode: 'koronka', // 'koronka' lub 'rozaniec'
+  textMode: 'full', // 'full' (pełny), 'collapsed' (zwinięty), 'hidden' (ukryty)
   steps: generateDivineMercySteps(),
   currentIndex: 0, // 0 do 60 (co daje krok 1 do 61)
   isPlaying: false,
@@ -764,7 +765,40 @@ function loadState() {
         resumeBanner.classList.remove('hidden');
       }
     }
+    // 6. Zapamiętany tryb widoczności tekstu (pełny / zwinięty / ukryty)
+    const savedTextMode = localStorage.getItem('koronka_text_mode');
+    if (savedTextMode && ['full', 'collapsed', 'hidden'].includes(savedTextMode)) {
+      setTextMode(savedTextMode);
+    }
   } catch (e) {}
+}
+
+function setTextMode(mode) {
+  AppState.textMode = mode;
+  try {
+    localStorage.setItem('koronka_text_mode', mode);
+  } catch (e) {}
+
+  const header = document.getElementById('prayer-tap-text-area');
+  const btnRestore = document.getElementById('btn-restore-text');
+  const btnCollapse = document.getElementById('btn-text-collapse');
+
+  if (!header) return;
+
+  if (mode === 'hidden') {
+    header.classList.remove('collapsed');
+    header.classList.add('text-hidden');
+    if (btnRestore) btnRestore.classList.remove('hidden');
+  } else if (mode === 'collapsed') {
+    header.classList.add('collapsed');
+    header.classList.remove('text-hidden');
+    if (btnRestore) btnRestore.classList.add('hidden');
+    if (btnCollapse) btnCollapse.setAttribute('title', 'Rozwiń tekst modlitwy');
+  } else {
+    header.classList.remove('collapsed', 'text-hidden');
+    if (btnRestore) btnRestore.classList.add('hidden');
+    if (btnCollapse) btnCollapse.setAttribute('title', 'Zwiń tekst modlitwy');
+  }
 }
 
 function applySettingsToUI() {
@@ -892,10 +926,59 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // 2. Kliknięcie tekstu modlitwy przechodzi dalej
-  document.getElementById('prayer-tap-text-area').addEventListener('click', () => {
+  // 2. Kliknięcie tekstu modlitwy przechodzi dalej (z pominięciem kontrolek)
+  document.getElementById('prayer-tap-text-area').addEventListener('click', (e) => {
+    if (e.target.closest('.text-controls')) return;
     goToNextStep();
   });
+
+  // Kontrolki tekstu modlitwy (Aa rozmiar, zwiń, ukryj)
+  const btnTextSize = document.getElementById('btn-text-size-down');
+  const btnCollapse = document.getElementById('btn-text-collapse');
+  const btnHide = document.getElementById('btn-text-hide');
+  const btnRestore = document.getElementById('btn-restore-text');
+
+  if (btnTextSize) {
+    btnTextSize.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const SIZES = [18, 20, 24, 28, 32];
+      const idx = SIZES.indexOf(AppState.settings.fontSize);
+      AppState.settings.fontSize = SIZES[(idx + 1) % SIZES.length];
+      applySettingsToUI();
+      saveSettings();
+    });
+  }
+
+  if (btnCollapse) {
+    btnCollapse.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const nextMode = AppState.textMode === 'collapsed' ? 'full' : 'collapsed';
+      setTextMode(nextMode);
+    });
+  }
+
+  if (btnHide) {
+    btnHide.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setTextMode('hidden');
+    });
+  }
+
+  if (btnRestore) {
+    btnRestore.addEventListener('click', (e) => {
+      e.stopPropagation();
+      setTextMode('full');
+    });
+  }
+
+  // Kliknięcie w obszar wizerunku przechodzi dalej (idealne zwłaszcza przy ukrytym tekście)
+  const prayerStage = document.getElementById('prayer-stage');
+  if (prayerStage) {
+    prayerStage.addEventListener('click', (e) => {
+      if (e.target.closest('.bead-item') || e.target.closest('#btn-restore-text')) return;
+      goToNextStep();
+    });
+  }
 
   // 3. Przyciski dolnego docku
   document.getElementById('btn-next').addEventListener('click', () => goToNextStep());
@@ -1049,6 +1132,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=26').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=27').catch(() => {});
   });
 }

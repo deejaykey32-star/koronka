@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=23">
+  <link rel="stylesheet" href="style.css?v=24">
 </head>
 <body>
   <div id="app" class="app-container">
@@ -99,11 +99,22 @@
 
     <!-- 2. Tekst modlitwy nad wizerunkiem, większą czcionką (co najmniej 20sp z możliwością powiększenia) -->
     <section class="prayer-stage-header" id="prayer-tap-text-area" role="button" tabindex="0" aria-label="Dotknij, aby przejść do następnego paciorka">
-      <!-- 7. Dyskretny wskaźnik postępu nad tekstem -->
+      <!-- 7. Dyskretny wskaźnik postępu nad tekstem + kontrolki widoczności tekstu -->
       <div class="prayer-meta-row">
         <span id="prayer-progress-indicator" class="prayer-progress-indicator">Wprowadzenie · Krok 1 z 61</span>
         <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta na głos">
           <span></span><span></span><span></span>
+        </div>
+        <div class="text-controls">
+          <button id="btn-text-size-down" class="text-ctrl-btn" title="Zmień rozmiar tekstu" aria-label="Zmień rozmiar tekstu">
+            <span class="text-ctrl-label">Aa</span>
+          </button>
+          <button id="btn-text-collapse" class="text-ctrl-btn" title="Zwiń/Rozwiń tekst" aria-label="Zwiń tekst">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+          </button>
+          <button id="btn-text-hide" class="text-ctrl-btn" title="Ukryj tekst modlitwy" aria-label="Ukryj tekst">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+          </button>
         </div>
       </div>
 
@@ -120,6 +131,11 @@
 
     <!-- 4 & 5. Główna strefa z wizerunkiem przesuniętym niżej i powiększonym schematem serca -->
     <main class="image-stage" id="prayer-stage">
+      <!-- Przycisk przywracania tekstu (widoczny gdy panel tekstowy jest ukryty) -->
+      <button id="btn-restore-text" class="btn-restore-text hidden" title="Pokaż tekst modlitwy" aria-label="Pokaż tekst modlitwy">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+        <span>Tekst</span>
+      </button>
       <div class="image-wrapper" id="image-wrapper">
         <!-- Wizerunek Jezusa Miłosiernego (Wilno 1934 Kazimirowski) - z zachowaniem proporcji -->
         <img 
@@ -310,7 +326,7 @@
       
       <!-- Subtelna wskazówka dotykowa -->
       <div id="tap-hint" class="tap-hint">
-        Dotknij tekstu, paciorka lub przycisku „Dalej”
+        Dotknij ekranu, paciorka lub przycisku „Dalej”
       </div>
     </main>
 
@@ -676,6 +692,6 @@
 
   </div>
 
-  <script src="app.js?v=26"></script>
+  <script src="app.js?v=27"></script>
 </body>
 </html>

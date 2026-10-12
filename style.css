@@ -215,7 +215,7 @@ html, body {
    ======================================================== */
 .prayer-stage-header {
   flex-shrink: 0;
-  padding: 10px 16px 8px 16px;
+  padding: 6px 14px 6px 14px;
   background: linear-gradient(180deg, rgba(8, 8, 8, 0.95) 0%, rgba(8, 8, 8, 0.8) 85%, transparent 100%);
   display: flex;
   flex-direction: column;
@@ -224,15 +224,16 @@ html, body {
   cursor: pointer;
   z-index: 30;
   border-bottom: 1px solid rgba(212, 175, 55, 0.1);
+  transition: all 0.3s ease;
 }
 
 /* 7. Dyskretny wskaźnik postępu nad tekstem */
 .prayer-meta-row {
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 8px;
   margin-bottom: 4px;
+  width: 100%;
 }
 
 .prayer-progress-indicator {
@@ -273,11 +274,12 @@ html, body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 75px;
-  max-height: 165px;
+  min-height: 50px;
+  max-height: 130px;
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: rgba(212, 175, 55, 0.4) transparent;
+  transition: all 0.3s ease;
 }
 
 .prayer-title-discrete {
@@ -322,6 +324,96 @@ html, body {
 .intention-tag {
   font-weight: 700;
   color: var(--gold-primary);
+}
+
+/* ========================================================
+   KONTROLKI TEKSTU (ZWIŃ / UKRYJ / ROZMIAR)
+   ======================================================== */
+.text-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.text-ctrl-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--text-muted);
+  border-radius: 6px;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+}
+
+.text-ctrl-btn:hover {
+  background: rgba(212, 175, 55, 0.2);
+  border-color: var(--gold-border);
+  color: var(--gold-light);
+}
+
+.text-ctrl-btn:active {
+  transform: scale(0.9);
+}
+
+.text-ctrl-label {
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* Zwinięty tekst – widać tylko pasek meta z postępem */
+.prayer-stage-header.collapsed {
+  padding-bottom: 4px;
+  border-bottom-color: rgba(212, 175, 55, 0.2);
+}
+
+.prayer-stage-header.collapsed .prayer-text-container {
+  display: none;
+}
+
+.prayer-stage-header.collapsed #btn-text-collapse svg {
+  transform: rotate(180deg);
+}
+
+/* Ukryty tekst – cały panel znika */
+.prayer-stage-header.text-hidden {
+  display: none !important;
+}
+
+/* Przycisk przywracania tekstu (pływający na wizerunku) */
+.btn-restore-text {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 25;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+  border-radius: 18px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+  animation: fadeIn 0.3s ease;
+}
+
+.btn-restore-text:hover {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: var(--gold-primary);
 }
 
 /* ========================================================
