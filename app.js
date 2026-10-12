@@ -26,46 +26,46 @@ function generateDivineMercySteps() {
     beadId: 'bead-cross'
   });
 
-  // Krok 2: Paciorek wstępny 1 (Ojcze nasz)
+  // Krok 2: Duży niebieski paciorek na początku różańca (Ojcze nasz)
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Paciorek 1/3)',
+    title: 'Modlitwa Pańska (Duży paciorek)',
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
     speechText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
-    type: 'small',
+    type: 'large',
     decade: 0,
     beadNumber: 2,
-    beadId: 'bead-stem-1'
+    beadId: 'bead-stem-large'
   });
 
-  // Krok 3: Paciorek wstępny 2 (Zdrowaś Maryjo)
+  // Krok 3: Pierwszy mniejszy czerwony paciorek (Zdrowaś Maryjo)
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Pozdrowienie Anielskie (Paciorek 2/3)',
+    title: 'Pozdrowienie Anielskie (Paciorek 1/3)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
     speechText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
     type: 'small',
     decade: 0,
     beadNumber: 3,
-    beadId: 'bead-stem-2'
+    beadId: 'bead-stem-red-1'
   });
 
-  // Krok 4: Paciorek wstępny 3 (Wierzę w Boga)
+  // Krok 4: Drugi mniejszy czerwony paciorek (Wierzę w Boga)
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Skład Apostolski (Paciorek 3/3)',
+    title: 'Skład Apostolski (Paciorek 2/3)',
     shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
     fullText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
     speechText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
     type: 'small',
     decade: 0,
     beadNumber: 4,
-    beadId: 'bead-stem-3'
+    beadId: 'bead-stem-red-2'
   });
 
   // 5 dziesiątek (Kroki 5–59)
@@ -155,37 +155,51 @@ function generateRosarySteps() {
     type: 'cross', decade: 0, beadNumber: 1, beadId: 'bead-cross'
   });
 
+  // Krok 2: Duży niebieski paciorek (Ojcze nasz)
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
     title: 'Ojcze nasz (o pomnożenie wiary)',
     shortText: 'Ojcze nasz, któryś jest w niebie...',
-    fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
+    fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
     speechText: 'Ojcze nasz, któryś jest w niebie...',
-    type: 'small', decade: 0, beadNumber: 2, beadId: 'bead-stem-1'
+    type: 'large', decade: 0, beadNumber: 2, beadId: 'bead-stem-large'
   });
 
+  // Krok 3: 1. mały czerwony paciorek (Zdrowaś Maryjo o wiarę)
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: '3x Zdrowaś Maryjo (Wiara, Nadzieja, Miłość)',
+    title: 'Zdrowaś Maryjo (o cnotę Wiary)',
     shortText: 'Zdrowaś Maryjo, łaski pełna...',
-    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą... o cnotę Wiary, Nadziei i Miłości.',
+    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen. – o przymnożenie Wiary.',
     speechText: 'Zdrowaś Maryjo, łaski pełna...',
-    type: 'small', decade: 0, beadNumber: 3, beadId: 'bead-stem-2'
+    type: 'small', decade: 0, beadNumber: 3, beadId: 'bead-stem-red-1'
   });
 
+  // Krok 4: 2. mały czerwony paciorek (Zdrowaś Maryjo o nadzieję)
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Chwała Ojcu & O mój Jezu',
-    shortText: 'Chwała Ojcu i Synowi, i Duchowi Świętemu...',
-    fullText: 'Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen. O mój Jezu, przebacz nam nasze grzechy...',
-    speechText: 'Chwała Ojcu i Synowi, i Duchowi Świętemu...',
-    type: 'small', decade: 0, beadNumber: 4, beadId: 'bead-stem-3'
+    title: 'Zdrowaś Maryjo (o cnotę Nadziei)',
+    shortText: 'Zdrowaś Maryjo, łaski pełna...',
+    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen. – o ugruntowanie Nadziei.',
+    speechText: 'Zdrowaś Maryjo, łaski pełna...',
+    type: 'small', decade: 0, beadNumber: 4, beadId: 'bead-stem-red-2'
   });
 
-  let cur = 5;
+  // Krok 5: 3. mały czerwony paciorek (Zdrowaś Maryjo o miłość & Chwała Ojcu)
+  steps.push({
+    stepIndex: 5,
+    part: 'Modlitwy wstępne',
+    title: 'Zdrowaś Maryjo (o cnotę Miłości) & Chwała Ojcu',
+    shortText: 'Zdrowaś Maryjo... Chwała Ojcu...',
+    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą... – o rozpalenie Miłości. Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen.',
+    speechText: 'Zdrowaś Maryjo... Chwała Ojcu...',
+    type: 'small', decade: 0, beadNumber: 5, beadId: 'bead-stem-red-3'
+  });
+
+  let cur = 6;
   for (let d = 1; d <= 5; d++) {
     let largeBeadId = 'bead-connector';
     if (d === 2) largeBeadId = 'bead-large-2';
@@ -217,7 +231,7 @@ function generateRosarySteps() {
   }
 
   steps.push({
-    stepIndex: 60,
+    stepIndex: cur++,
     part: 'Zakończenie',
     title: 'Chwała Ojcu & Modlitwa Fatimska',
     shortText: 'Chwała Ojcu... O mój Jezu...',
@@ -227,7 +241,7 @@ function generateRosarySteps() {
   });
 
   steps.push({
-    stepIndex: 61,
+    stepIndex: cur++,
     part: 'Zakończenie',
     title: 'Pod Twoją obronę & Znak Krzyża',
     shortText: 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko...',
