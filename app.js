@@ -337,7 +337,8 @@ const chime = new SacredChime();
 
 // ========================================================
 // 4. ZRÓŻNICOWANA WIBRACJA HAPTYCZNA DLA SENIORÓW I MODLITWY W KIESZENI
-// Inne wibracje dla czerwonych dużych paciorków i inne dla niebieskich małych paciorków
+// Pierwszy duży paciorek jest niebieski, a kolejne 3 czerwone.
+// W dziesiątkach duże paciorki są czerwone, a małe niebieskie.
 // ========================================================
 function triggerHaptic(typeOrStep = 'small') {
   if (!AppState.settings.vibration || !('vibrate' in navigator)) return;
@@ -348,12 +349,12 @@ function triggerHaptic(typeOrStep = 'small') {
       // 1. Złoty Krzyżyk: uroczysty Znak Krzyża / zakończenie Koronki (trzykrotna wibracja)
       navigator.vibrate([60, 40, 60, 40, 100]);
     } else if (type === 'large' || type === 'holyGod') {
-      // 2. Czerwone duże paciorki (Ojcze Przedwieczny, Ojcze nasz, Święty Boże):
+      // 2. Duże paciorki (1. duży niebieski paciorek Ojcze nasz, duże czerwone paciorki dziesiątek Ojcze Przedwieczny, Święty Boże):
       // Wyraźny, głęboki podwójny impuls (75ms wibracji, 50ms przerwy, 75ms wibracji)
-      // Pozwala osobie modlącej się bez patrzenia na ekran natychmiast wyczuć początek nowej dziesiątki
+      // Pozwala osobie modlącej się bez patrzenia na ekran natychmiast wyczuć duży paciorek
       navigator.vibrate([75, 50, 75]);
     } else {
-      // 3. Niebieskie małe paciorki (Dla Jego bolesnej męki, Zdrowaś Maryjo):
+      // 3. Małe paciorki (3 czerwone paciorki wstępne, 10 niebieskich paciorków dziesiątek):
       // Krótki, pojedynczy i subtelny impuls (30ms), potwierdzający zaliczenie paciorka
       navigator.vibrate(30);
     }
@@ -880,8 +881,14 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.bead-item').forEach(item => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();
-      const stepNum = parseInt(item.getAttribute('data-step') || '1', 10);
-      goToStep(stepNum - 1);
+      const beadId = item.id;
+      const stepIdx = AppState.steps.findIndex(s => s.beadId === beadId);
+      if (stepIdx !== -1) {
+        goToStep(stepIdx);
+      } else {
+        const stepNum = parseInt(item.getAttribute('data-step') || '1', 10);
+        goToStep(stepNum - 1);
+      }
     });
   });
 
@@ -1042,6 +1049,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=24').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=25').catch(() => {});
   });
 }
