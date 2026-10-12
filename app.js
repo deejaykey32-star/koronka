@@ -34,7 +34,7 @@ function generateDivineMercySteps() {
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
     speechText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
-    type: 'large',
+    type: 'small',
     decade: 0,
     beadNumber: 2,
     beadId: 'bead-stem-1'
@@ -162,7 +162,7 @@ function generateRosarySteps() {
     shortText: 'Ojcze nasz, któryś jest w niebie...',
     fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     speechText: 'Ojcze nasz, któryś jest w niebie...',
-    type: 'large', decade: 0, beadNumber: 2, beadId: 'bead-stem-1'
+    type: 'small', decade: 0, beadNumber: 2, beadId: 'bead-stem-1'
   });
 
   steps.push({
