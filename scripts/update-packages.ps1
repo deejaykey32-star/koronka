@@ -109,8 +109,22 @@ Write-Host " -> Utworzono koronka-offline.zip (Rozmiar: $([math]::Round($zipSize
 # 2. STATUS PAKIETU: koronka.ipa (Apple iOS)
 # ========================================================
 $ipaPath = Join-Path $assetsDir "koronka.ipa"
-Write-Host "`n[2/4] Weryfikacja pakietu Apple iOS: $ipaPath ..." -ForegroundColor Yellow
+Write-Host "`n[2/4] Aktualizacja pakietu Apple iOS: $ipaPath ..." -ForegroundColor Yellow
 if (Test-Path $ipaPath) {
+    # Podmiana plików aplikacji internetowej wewnątrz pakietu na bieżącą wersję
+    $ipaZip = [System.IO.Compression.ZipFile]::Open($ipaPath, [System.IO.Compression.ZipArchiveMode]::Update)
+    $appDir = "Payload/Koronka.app"
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/index.html" -SourceFilePath $indexPath
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/style.css" -SourceFilePath $stylePath
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/app.js" -SourceFilePath $appPath
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/sw.js" -SourceFilePath $swPath
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/manifest.json" -SourceFilePath $manifestPath
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/icon-192.png" -SourceFilePath $icon192
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/icon-512.png" -SourceFilePath $icon512
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/jezus-milosierny-wilno.jpg" -SourceFilePath $jezusImg
+    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/matka-boza.jpg" -SourceFilePath $maryImg
+    $ipaZip.Dispose()
+
     $ipaSize = (Get-Item $ipaPath).Length / 1KB
     Write-Host " -> Pakiet koronka.ipa gotowy i poprawny (Rozmiar: $([math]::Round($ipaSize, 1)) KB)" -ForegroundColor Green
 } else {
