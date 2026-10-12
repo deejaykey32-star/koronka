@@ -1,7 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "abba-koronka",
+  "name": "koronka2",
   "pages_build_output_dir": ".",
   "compatibility_date": "2026-05-19"
 }
-

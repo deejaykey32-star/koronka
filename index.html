@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <meta name="theme-color" content="#0a0a0a">
+  <meta name="theme-color" content="#050505">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Koronka">
@@ -17,542 +17,542 @@
   <link rel="apple-touch-icon" sizes="192x192" href="assets/icon-192.png">
   <link rel="apple-touch-icon" sizes="512x512" href="assets/icon-512.png">
   
-  <!-- Czcionki Google Fonts: Cinzel (sakralny styl) i Inter (czytelność) -->
+  <!-- Czcionki Google Fonts: Cinzel (sakralny dostojny styl) i Inter (najwyższa czytelność dla seniorów) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=11">
+  <link rel="stylesheet" href="style.css?v=20">
 </head>
 <body>
   <div id="app" class="app-container">
     
-    <!-- Górny pasek nawigacyjny z menu hamburger i opcją ukrycia -->
+    <!-- 1. Górny pasek z małym nagłówkiem „Koronka” i symbolem promieni miłosierdzia -->
     <header class="top-bar" id="main-top-bar">
       <div class="header-left">
-        <h1 class="app-title">Koronka do Miłosierdzia Bożego</h1>
+        <!-- Biało-czerwony symbol promieni miłosierdzia zamiast długich słów -->
+        <div class="divine-rays-icon" title="Promienie Miłosierdzia Bożego" aria-label="Promienie Miłosierdzia">
+          <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
+            <circle cx="16" cy="7" r="3.5" fill="#ffd700" />
+            <!-- Promień blady / jasnoniebieski (usprawiedliwienie dusz) -->
+            <path d="M14 10 L6 29 L11 29 L15 11 Z" fill="url(#grad-pale-ray)" opacity="0.95"/>
+            <!-- Promień czerwony (krew / życie dusz) -->
+            <path d="M18 10 L26 29 L21 29 L17 11 Z" fill="url(#grad-red-ray)" opacity="0.95"/>
+            <defs>
+              <linearGradient id="grad-pale-ray" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="50%" stop-color="#bfe3ff"/>
+                <stop offset="100%" stop-color="#70b8ff"/>
+              </linearGradient>
+              <linearGradient id="grad-red-ray" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#ff7a7a"/>
+                <stop offset="50%" stop-color="#e01b1b"/>
+                <stop offset="100%" stop-color="#940505"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1 class="app-title" id="app-title-text">Koronka</h1>
       </div>
       
       <div class="header-right">
-        <!-- Przycisk szybkiego wyciszenia -->
-        <button id="btn-sound" class="icon-btn" title="Dźwięk / Wyciszenie" aria-label="Włącz / wyłącz dźwięk">
-          <svg id="icon-sound-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Przełącznik trybu: Koronka <-> Różaniec -->
+        <button id="btn-switch-mode" class="mode-switch-btn" title="Przełącz modlitwę: Koronka / Różaniec" aria-label="Przełącz Koronka lub Różaniec">
+          <span id="mode-label" class="mode-label">Różaniec</span>
+        </button>
+
+        <!-- Przycisk Lektora audio / mowy -->
+        <button id="btn-audio" class="icon-btn" title="Lektor czytający modlitwę" aria-label="Lektor audio">
+          <svg id="icon-voice-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
           </svg>
-          <svg id="icon-sound-off" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <svg id="icon-voice-off" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
             <line x1="23" y1="9" x2="17" y2="15"></line>
             <line x1="17" y1="9" x2="23" y2="15"></line>
           </svg>
         </button>
 
-
-        <!-- Przycisk Hamburger Menu (zamiast niedziałającej pojedynczej ikony) -->
-        <button id="btn-hamburger" class="icon-btn menu-btn" title="Menu opcji" aria-label="Menu opcji">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Menu / Ustawienia -->
+        <button id="btn-settings" class="icon-btn" title="Ustawienia i menu" aria-label="Ustawienia i menu">
+          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
             <line x1="3" y1="6" x2="21" y2="6"></line>
             <line x1="3" y1="12" x2="21" y2="12"></line>
             <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
       </div>
-
-      <!-- Rozwijane Menu Hamburger (Drawer / Dropdown) -->
-      <div id="dropdown-menu" class="dropdown-menu hidden" role="menu">
-        <button id="menu-btn-fullscreen" class="menu-item" role="menuitem">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path>
-          </svg>
-          <span>Powiększ widok / Pełny ekran</span>
-        </button>
-
-        <button id="menu-btn-hide-header" class="menu-item" role="menuitem">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-            <line x1="1" y1="1" x2="23" y2="23"></line>
-          </svg>
-          <span>Ukryj nagłówek (Tryb kontemplacji)</span>
-        </button>
-
-        <button id="menu-btn-schema" class="menu-item" role="menuitem">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <circle cx="12" cy="12" r="10"></circle>
-            <line x1="12" y1="16" x2="12" y2="12"></line>
-            <line x1="12" y1="8" x2="12.01" y2="8"></line>
-          </svg>
-          <span>Jak odmawiać Koronkę (abbaojcze.pl)</span>
-        </button>
-
-        <button id="menu-btn-install" class="menu-item" role="menuitem">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-            <polyline points="7 10 12 15 17 10"></polyline>
-            <line x1="12" y1="15" x2="12" y2="3"></line>
-          </svg>
-          <span>Pobierz pliki (APK, AAB, IPA, PWA)</span>
-        </button>
-
-        <button id="menu-btn-restart" class="menu-item" role="menuitem">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="1 4 1 10 7 10"></polyline>
-            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
-          </svg>
-          <span>Rozpocznij od początku</span>
-        </button>
-      </div>
     </header>
 
-    <!-- Pływający przycisk przywracania ukrytego nagłówka -->
-    <button id="btn-show-header" class="floating-header-btn hidden" title="Pokaż menu nagłówka" aria-label="Pokaż nagłówek">
-      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="3" y1="6" x2="21" y2="6"></line>
-        <line x1="3" y1="12" x2="21" y2="12"></line>
-        <line x1="3" y1="18" x2="21" y2="18"></line>
-      </svg>
-    </button>
-
-
-    <!-- Górna pływająca belka aktualnej modlitwy (wzorowana na Rosario) -->
-    <div class="prayer-banner" id="prayer-banner">
-      <div class="prayer-card" id="prayer-card">
-        <div class="prayer-card-header">
-          <span id="prayer-step-badge" class="prayer-step-badge">Wprowadzenie • 1 / 67</span>
-          <div class="prayer-card-actions">
-            <!-- Wskaźnik głosu lektora -->
-            <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta modlitwę">
-              <span></span><span></span><span></span>
-            </div>
-            <!-- Tryb skupienia / kontemplacji (ukrycie/pokazanie tekstu) -->
-            <button id="btn-focus-mode" class="card-action-btn" title="Ukryj tekst modlitwy (tryb skupienia)" aria-label="Ukryj tekst">
-              <svg id="icon-eye-open" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-                <circle cx="12" cy="12" r="3"></circle>
-              </svg>
-              <svg id="icon-eye-closed" class="hidden" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
-                <line x1="1" y1="1" x2="23" y2="23"></line>
-              </svg>
-            </button>
-            <!-- Zwiń / rozwiń pełny tekst -->
-            <button id="btn-toggle-text" class="card-action-btn" title="Zwiń / rozwiń pełny tekst" aria-label="Zwiń / rozwiń tekst">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <polyline points="6 9 12 15 18 9"></polyline>
-              </svg>
-            </button>
-          </div>
-        </div>
-        
-        <!-- Główny tekst bieżącego wezwania -->
-        <p id="prayer-short" class="prayer-short-text">+ W imię Ojca, i Syna i Ducha Świętego. Amen.</p>
-        
-        <!-- Opcjonalny pełny tekst modlitwy (zwijany) -->
-        <div id="prayer-full" class="prayer-full hidden">
-          <p id="prayer-full-text"></p>
-        </div>
+    <!-- Baner wznawiania modlitwy (gdy użytkownik przerwał lub wrócił po telefonie) -->
+    <div id="resume-banner" class="resume-banner hidden">
+      <div class="resume-info">
+        <span class="resume-title">Poprzednia modlitwa:</span>
+        <span id="resume-step-text" class="resume-step">Krok 14 z 61</span>
+      </div>
+      <div class="resume-actions">
+        <button id="btn-resume-continue" class="resume-btn primary">Kontynuuj</button>
+        <button id="btn-resume-restart" class="resume-btn secondary">Od nowa</button>
       </div>
     </div>
 
-    <!-- Główna strefa z wizerunkiem wileńskim Kazimirowskiego oraz schematem serca -->
-    <main class="image-stage" id="prayer-tap-area">
-      <div class="image-wrapper">
-        <img 
-          src="assets/jezus-milosierny-wilno.jpg" 
-          alt="Jezus Miłosierny - Wizerunek wileński namalowany przez Eugeniusza Kazimirowskiego w 1934 roku" 
-          id="main-image"
-          class="holy-image"
-          draggable="false"
-        >
-        <!-- Interaktywny schemat serca różańcowego (identyczny jak w Rosario) -->
-<svg id="rosary-heart-svg" class="rosary-heart-svg" viewBox="0 0 460 1024" preserveAspectRatio="xMidYMid meet">
-  <defs>
-    <radialGradient id="grad-red-bead" cx="35%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#ff7b7b"/>
-      <stop offset="30%" stop-color="#e01818"/>
-      <stop offset="75%" stop-color="#940505"/>
-      <stop offset="100%" stop-color="#4d0000"/>
-    </radialGradient>
-    <radialGradient id="grad-blue-bead" cx="35%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#b8e2ff"/>
-      <stop offset="30%" stop-color="#3d8bfd"/>
-      <stop offset="75%" stop-color="#144ec2"/>
-      <stop offset="100%" stop-color="#0a2566"/>
-    </radialGradient>
-    <radialGradient id="grad-white-bead" cx="35%" cy="35%" r="65%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="35%" stop-color="#f8fafc"/>
-      <stop offset="70%" stop-color="#e2e8f0"/>
-      <stop offset="100%" stop-color="#94a3b8"/>
-    </radialGradient>
-    <radialGradient id="grad-active-bead" cx="40%" cy="40%" r="60%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="45%" stop-color="#6ee7ff"/>
-      <stop offset="85%" stop-color="#0099ff"/>
-      <stop offset="100%" stop-color="#0055b3"/>
-    </radialGradient>
-    <linearGradient id="grad-gold-cross" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fff6cc"/>
-      <stop offset="40%" stop-color="#d4af37"/>
-      <stop offset="80%" stop-color="#997a15"/>
-      <stop offset="100%" stop-color="#544105"/>
-    </linearGradient>
-    <filter id="bead-shadow" x="-30%" y="-30%" width="160%" height="160%">
-      <feDropShadow dx="0" dy="1.5" stdDeviation="1.5" flood-color="#000000" flood-opacity="0.8"/>
-    </filter>
-    <filter id="active-glow" x="-80%" y="-80%" width="260%" height="260%">
-      <feGaussianBlur stdDeviation="6" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
-    </filter>
-  </defs>
-  <!-- Łańcuszek różańca łączący paciorki -->
-  <path class="rosary-chain stem-chain" d="M 231.0 565.0 L 231.0 529.0 L 231.0 503.0 L 231.2 477.0 L 231.1 451.5 L 233.5 429.0"/>
-  <path class="rosary-chain loop-chain" d="M 233.5 429.0 L 248.2 403.1 L 267.2 386.1 L 287.8 371.0 L 311.4 359.9 L 336.0 355.7 L 361.5 357.1 L 386.5 364.9 L 407.0 380.0 L 422.8 400.8 L 434.6 423.0 L 441.5 450.2 L 443.4 476.6 L 443.2 502.8 L 439.4 528.2 L 433.0 553.4 L 423.4 577.2 L 411.9 600.2 L 399.0 623.0 L 385.0 644.0 L 369.4 664.8 L 353.6 684.4 L 336.5 705.4 L 320.0 718.0 L 302.0 735.0 L 284.0 751.0 L 264.0 765.0 L 242.0 776.0 L 220.0 776.0 L 198.0 765.0 L 178.0 751.0 L 160.0 735.0 L 142.0 718.0 L 126.7 704.7 L 108.4 684.4 L 92.8 664.8 L 77.6 644.2 L 63.0 623.0 L 50.1 600.2 L 38.8 577.4 L 30.0 553.7 L 22.9 528.2 L 18.6 503.0 L 18.0 476.3 L 20.6 450.1 L 27.4 423.0 L 40.0 400.3 L 55.2 379.9 L 75.2 365.6 L 100.8 357.0 L 126.0 355.7 L 151.0 360.0 L 174.0 370.5 L 194.8 385.4 L 214.3 403.0 Z"/>
-  <!-- Warstwa aureoli aktywnego paciorka -->
-  <g id="active-halo-group" class="active-halo-group">
-    <circle id="active-halo-outer" class="halo-outer" cx="231" cy="565" r="24"/>
-    <circle id="active-halo-inner" class="halo-inner" cx="231" cy="565" r="16"/>
-  </g>
-  <!-- Złoty Krzyżyk (Kroki 0 i 66) -->
-  <g id="bead-cross" class="bead-item bead-cross" data-step="0" data-id="bead-cross" transform="translate(231, 565)">
-    <rect x="-18" y="-28" width="36" height="56" fill="transparent" class="bead-hit-area"/>
-    <rect x="-3" y="-22" width="6" height="42" rx="1.5" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
-    <rect x="-14" y="-13" width="28" height="6" rx="1.5" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
-    <path d="M 0 -11 L 0 5 M -7 -8 L 7 -8 M 0 5 L -3 14 M 0 5 L 3 14" stroke="#544105" stroke-width="1.2" stroke-linecap="round"/>
-  </g>
-  <!-- Paciorki Różańca / Koronki -->
-  <g id="beads-group" class="beads-group">
-    <g id="bead-stem-large" class="bead-item bead-large" data-step="1" data-id="bead-stem-large" data-decade="0" transform="translate(231.0, 529.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-stem-red-1" class="bead-item bead-small" data-step="2" data-id="bead-stem-red-1" data-decade="0" transform="translate(231.0, 503.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-stem-red-2" class="bead-item bead-small" data-step="3" data-id="bead-stem-red-2" data-decade="0" transform="translate(231.2, 477.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-stem-red-3" class="bead-item bead-small" data-step="3" data-id="bead-stem-red-3" data-decade="0" transform="translate(231.1, 451.5)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-connector" class="bead-item bead-large bead-connector" data-step="4" data-id="bead-connector" data-decade="1" transform="translate(233.5, 429.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-1" class="bead-item bead-small" data-step="5" data-id="bead-dec1-1" data-decade="1" transform="translate(248.2, 403.1)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-2" class="bead-item bead-small" data-step="6" data-id="bead-dec1-2" data-decade="1" transform="translate(267.2, 386.1)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-3" class="bead-item bead-small" data-step="7" data-id="bead-dec1-3" data-decade="1" transform="translate(287.8, 371.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-4" class="bead-item bead-small" data-step="8" data-id="bead-dec1-4" data-decade="1" transform="translate(311.4, 359.9)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-5" class="bead-item bead-small" data-step="9" data-id="bead-dec1-5" data-decade="1" transform="translate(336.0, 355.7)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-6" class="bead-item bead-small" data-step="10" data-id="bead-dec1-6" data-decade="1" transform="translate(361.5, 357.1)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-7" class="bead-item bead-small" data-step="11" data-id="bead-dec1-7" data-decade="1" transform="translate(386.5, 364.9)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-8" class="bead-item bead-small" data-step="12" data-id="bead-dec1-8" data-decade="1" transform="translate(407.0, 380.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-9" class="bead-item bead-small" data-step="13" data-id="bead-dec1-9" data-decade="1" transform="translate(422.8, 400.8)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec1-10" class="bead-item bead-small" data-step="14" data-id="bead-dec1-10" data-decade="1" transform="translate(434.6, 423.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-large-2" class="bead-item bead-large" data-step="15" data-id="bead-large-2" data-decade="2" transform="translate(441.5, 450.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-1" class="bead-item bead-small" data-step="16" data-id="bead-dec2-1" data-decade="2" transform="translate(443.4, 476.6)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-2" class="bead-item bead-small" data-step="17" data-id="bead-dec2-2" data-decade="2" transform="translate(443.2, 502.8)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-3" class="bead-item bead-small" data-step="18" data-id="bead-dec2-3" data-decade="2" transform="translate(439.4, 528.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-4" class="bead-item bead-small" data-step="19" data-id="bead-dec2-4" data-decade="2" transform="translate(433.0, 553.4)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-5" class="bead-item bead-small" data-step="20" data-id="bead-dec2-5" data-decade="2" transform="translate(423.4, 577.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-6" class="bead-item bead-small" data-step="21" data-id="bead-dec2-6" data-decade="2" transform="translate(411.9, 600.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-7" class="bead-item bead-small" data-step="22" data-id="bead-dec2-7" data-decade="2" transform="translate(399.0, 623.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-8" class="bead-item bead-small" data-step="23" data-id="bead-dec2-8" data-decade="2" transform="translate(385.0, 644.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-9" class="bead-item bead-small" data-step="24" data-id="bead-dec2-9" data-decade="2" transform="translate(369.4, 664.8)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec2-10" class="bead-item bead-small" data-step="25" data-id="bead-dec2-10" data-decade="2" transform="translate(353.6, 684.4)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-large-3" class="bead-item bead-large" data-step="26" data-id="bead-large-3" data-decade="3" transform="translate(336.5, 705.4)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-1" class="bead-item bead-small" data-step="27" data-id="bead-dec3-1" data-decade="3" transform="translate(320.0, 718.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-2" class="bead-item bead-small" data-step="28" data-id="bead-dec3-2" data-decade="3" transform="translate(302.0, 735.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-3" class="bead-item bead-small" data-step="29" data-id="bead-dec3-3" data-decade="3" transform="translate(284.0, 751.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-4" class="bead-item bead-small" data-step="30" data-id="bead-dec3-4" data-decade="3" transform="translate(264.0, 765.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-5" class="bead-item bead-small" data-step="31" data-id="bead-dec3-5" data-decade="3" transform="translate(242.0, 776.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-6" class="bead-item bead-small" data-step="32" data-id="bead-dec3-6" data-decade="3" transform="translate(220.0, 776.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-7" class="bead-item bead-small" data-step="33" data-id="bead-dec3-7" data-decade="3" transform="translate(198.0, 765.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-8" class="bead-item bead-small" data-step="34" data-id="bead-dec3-8" data-decade="3" transform="translate(178.0, 751.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-9" class="bead-item bead-small" data-step="35" data-id="bead-dec3-9" data-decade="3" transform="translate(160.0, 735.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec3-10" class="bead-item bead-small" data-step="36" data-id="bead-dec3-10" data-decade="3" transform="translate(142.0, 718.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-large-4" class="bead-item bead-large" data-step="37" data-id="bead-large-4" data-decade="4" transform="translate(126.7, 704.7)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-1" class="bead-item bead-small" data-step="38" data-id="bead-dec4-1" data-decade="4" transform="translate(108.4, 684.4)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-2" class="bead-item bead-small" data-step="39" data-id="bead-dec4-2" data-decade="4" transform="translate(92.8, 664.8)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-3" class="bead-item bead-small" data-step="40" data-id="bead-dec4-3" data-decade="4" transform="translate(77.6, 644.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-4" class="bead-item bead-small" data-step="41" data-id="bead-dec4-4" data-decade="4" transform="translate(63.0, 623.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-5" class="bead-item bead-small" data-step="42" data-id="bead-dec4-5" data-decade="4" transform="translate(50.1, 600.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-6" class="bead-item bead-small" data-step="43" data-id="bead-dec4-6" data-decade="4" transform="translate(38.8, 577.4)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-7" class="bead-item bead-small" data-step="44" data-id="bead-dec4-7" data-decade="4" transform="translate(30.0, 553.7)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-8" class="bead-item bead-small" data-step="45" data-id="bead-dec4-8" data-decade="4" transform="translate(22.9, 528.2)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-9" class="bead-item bead-small" data-step="46" data-id="bead-dec4-9" data-decade="4" transform="translate(18.6, 503.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec4-10" class="bead-item bead-small" data-step="47" data-id="bead-dec4-10" data-decade="4" transform="translate(18.0, 476.3)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-large-5" class="bead-item bead-large" data-step="48" data-id="bead-large-5" data-decade="5" transform="translate(20.6, 450.1)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="11.5" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-1" class="bead-item bead-small" data-step="49" data-id="bead-dec5-1" data-decade="5" transform="translate(27.4, 423.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-2" class="bead-item bead-small" data-step="50" data-id="bead-dec5-2" data-decade="5" transform="translate(40.0, 400.3)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-3" class="bead-item bead-small" data-step="51" data-id="bead-dec5-3" data-decade="5" transform="translate(55.2, 379.9)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-4" class="bead-item bead-small" data-step="52" data-id="bead-dec5-4" data-decade="5" transform="translate(75.2, 365.6)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-5" class="bead-item bead-small" data-step="53" data-id="bead-dec5-5" data-decade="5" transform="translate(100.8, 357.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-6" class="bead-item bead-small" data-step="54" data-id="bead-dec5-6" data-decade="5" transform="translate(126.0, 355.7)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-7" class="bead-item bead-small" data-step="55" data-id="bead-dec5-7" data-decade="5" transform="translate(151.0, 360.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-8" class="bead-item bead-small" data-step="56" data-id="bead-dec5-8" data-decade="5" transform="translate(174.0, 370.5)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-9" class="bead-item bead-small" data-step="57" data-id="bead-dec5-9" data-decade="5" transform="translate(194.8, 385.4)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-    <g id="bead-dec5-10" class="bead-item bead-small" data-step="58" data-id="bead-dec5-10" data-decade="5" transform="translate(214.3, 403.0)">
-      <circle class="bead-hit-area" cx="0" cy="0" r="16" fill="transparent"/>
-      <circle class="bead-circle" cx="0" cy="0" r="8.2" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
-    </g>
-  </g>
-</svg>
-        <div class="image-vignette-top"></div>
-        <div class="image-vignette-bottom"></div>
-      </div>
-      
-      <!-- Subtelna wskazówka dotykowa na początku -->
-      <div id="tap-hint" class="tap-hint fade-out-hint">
-        Dotknij ekranu lub paciorka, aby kontynuować modlitwę
-      </div>
-    </main>
-
-    <!-- Dolna strefa: wstęga "JEZU UFAM TOBIE" oraz ergonomiczne przyciski -->
-    <footer class="prayer-dock">
-      <!-- Wstęga wileńska "JEZU UFAM TOBIE" -->
-      <div class="sacred-ribbon-container">
-        <div class="sacred-ribbon">
-          <span class="ribbon-content">JEZU, UFAM TOBIE</span>
+    <!-- 2. Tekst modlitwy nad wizerunkiem, większą czcionką (co najmniej 20sp z możliwością powiększenia) -->
+    <section class="prayer-stage-header" id="prayer-tap-text-area" role="button" tabindex="0" aria-label="Dotknij, aby przejść do następnego paciorka">
+      <!-- 7. Dyskretny wskaźnik postępu nad tekstem -->
+      <div class="prayer-meta-row">
+        <span id="prayer-progress-indicator" class="prayer-progress-indicator">Wprowadzenie · Krok 1 z 61</span>
+        <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta na głos">
+          <span></span><span></span><span></span>
         </div>
       </div>
 
-      <!-- Panel przycisków nawigacyjnych -->
+      <!-- Główny tekst modlitwy - duża, przejrzysta czcionka, nigdy nie przycięta -->
+      <div class="prayer-text-container" id="prayer-text-container">
+        <h2 id="prayer-title" class="prayer-title-discrete">Znak Krzyża</h2>
+        <p id="prayer-text" class="prayer-text">+ W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
+        <div id="prayer-intention-box" class="prayer-intention-box hidden">
+          <span class="intention-tag">Intencja:</span>
+          <span id="prayer-intention-display" class="intention-display">Za pokój i o Miłosierdzie Boże dla całego świata</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 & 5. Główna strefa z wizerunkiem przesuniętym niżej i powiększonym schematem serca -->
+    <main class="image-stage" id="prayer-stage">
+      <div class="image-wrapper" id="image-wrapper">
+        <!-- Wizerunek Jezusa Miłosiernego (Wilno 1934 Kazimirowski) - z zachowaniem proporcji -->
+        <img 
+          src="assets/jezus-milosierny-wilno.jpg" 
+          alt="Jezus Miłosierny - Wizerunek wileński namalowany przez Eugeniusza Kazimirowskiego w 1934 roku" 
+          id="holy-image-jesus"
+          class="holy-image holy-image-jesus"
+          draggable="false"
+        >
+        <!-- Wizerunek Maryjny do trybu różańcowego -->
+        <img 
+          src="assets/matka-boza.jpg" 
+          alt="Matka Boża Różańcowa" 
+          id="holy-image-mary"
+          class="holy-image holy-image-mary hidden"
+          draggable="false"
+        >
+
+        <!-- 5. Powiększony proporcjonalnie schemat serca różańcowego -->
+        <!-- 6. Z 3 paciorkami na sznurku (usunięty czwarty paciorek) -->
+        <svg id="rosary-heart-svg" class="rosary-heart-svg" viewBox="0 0 460 1024" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <radialGradient id="grad-red-bead" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#ff9191"/>
+              <stop offset="30%" stop-color="#e01818"/>
+              <stop offset="75%" stop-color="#940505"/>
+              <stop offset="100%" stop-color="#4a0000"/>
+            </radialGradient>
+            <radialGradient id="grad-blue-bead" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#cbe6ff"/>
+              <stop offset="30%" stop-color="#2d82ff"/>
+              <stop offset="75%" stop-color="#1149be"/>
+              <stop offset="100%" stop-color="#07205a"/>
+            </radialGradient>
+            <radialGradient id="grad-white-bead" cx="35%" cy="35%" r="65%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="35%" stop-color="#f8fafc"/>
+              <stop offset="70%" stop-color="#cbd5e1"/>
+              <stop offset="100%" stop-color="#64748b"/>
+            </radialGradient>
+            <radialGradient id="grad-active-bead" cx="40%" cy="40%" r="60%">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="40%" stop-color="#80ebff"/>
+              <stop offset="85%" stop-color="#00aaff"/>
+              <stop offset="100%" stop-color="#0055b3"/>
+            </radialGradient>
+            <linearGradient id="grad-gold-cross" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#fff8d6"/>
+              <stop offset="35%" stop-color="#e6be44"/>
+              <stop offset="75%" stop-color="#a67c13"/>
+              <stop offset="100%" stop-color="#5a4103"/>
+            </linearGradient>
+            <filter id="bead-shadow" x="-35%" y="-35%" width="170%" height="170%">
+              <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000000" flood-opacity="0.85"/>
+            </filter>
+            <filter id="active-glow" x="-100%" y="-100%" width="300%" height="300%">
+              <feGaussianBlur stdDeviation="8" result="blur"/>
+              <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+
+          <!-- Łańcuszek łączący krzyżyk i 3 paciorki wstępne do łącznika -->
+          <path class="rosary-chain stem-chain" d="M 231.0 565.0 L 231.0 530.0 L 231.0 495.0 L 231.0 460.0 L 233.5 429.0"/>
+          
+          <!-- Pętla w kształcie serca łącząca 5 dziesiątek -->
+          <path class="rosary-chain loop-chain" d="M 233.5 429.0 L 248.2 403.1 L 267.2 386.1 L 287.8 371.0 L 311.4 359.9 L 336.0 355.7 L 361.5 357.1 L 386.5 364.9 L 407.0 380.0 L 422.8 400.8 L 434.6 423.0 L 441.5 450.2 L 443.4 476.6 L 443.2 502.8 L 439.4 528.2 L 433.0 553.4 L 423.4 577.2 L 411.9 600.2 L 399.0 623.0 L 385.0 644.0 L 369.4 664.8 L 353.6 684.4 L 336.5 705.4 L 320.0 718.0 L 302.0 735.0 L 284.0 751.0 L 264.0 765.0 L 242.0 776.0 L 220.0 776.0 L 198.0 765.0 L 178.0 751.0 L 160.0 735.0 L 142.0 718.0 L 126.7 704.7 L 108.4 684.4 L 92.8 664.8 L 77.6 644.2 L 63.0 623.0 L 50.1 600.2 L 38.8 577.4 L 30.0 553.7 L 22.9 528.2 L 18.6 503.0 L 18.0 476.3 L 20.6 450.1 L 27.4 423.0 L 40.0 400.3 L 55.2 379.9 L 75.2 365.6 L 100.8 357.0 L 126.0 355.7 L 151.0 360.0 L 174.0 370.5 L 194.8 385.4 L 214.3 403.0 Z"/>
+
+          <!-- Aureola / Podświetlenie aktywnego paciorka -->
+          <g id="active-halo-group" class="active-halo-group">
+            <circle id="active-halo-outer" class="halo-outer" cx="231" cy="565" r="28"/>
+            <circle id="active-halo-inner" class="halo-inner" cx="231" cy="565" r="18"/>
+          </g>
+
+          <!-- 1. Złoty Krzyżyk (Kroki 1 i 61) -->
+          <g id="bead-cross" class="bead-item bead-cross" data-step="1" data-id="bead-cross" transform="translate(231, 565)">
+            <rect x="-24" y="-32" width="48" height="64" fill="transparent" class="bead-hit-area"/>
+            <rect x="-3.5" y="-24" width="7" height="46" rx="2" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
+            <rect x="-16" y="-14" width="32" height="7" rx="2" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
+            <path d="M 0 -12 L 0 6 M -8 -7 L 8 -7 M 0 6 L -3.5 16 M 0 6 L 3.5 16" stroke="#4d3701" stroke-width="1.3" stroke-linecap="round"/>
+          </g>
+
+          <!-- Paciorki modlitw wstępnych: Dokładnie 3 paciorki zgodnie z abbaojcze.pl -->
+          <g id="beads-group" class="beads-group">
+            <!-- Wstępny 1: Ojcze nasz (duży paciorek) -->
+            <g id="bead-stem-1" class="bead-item bead-large" data-step="2" data-id="bead-stem-1" data-decade="0" transform="translate(231.0, 530.0)">
+              <circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/>
+              <circle class="bead-circle" cx="0" cy="0" r="12" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+            </g>
+            <!-- Wstępny 2: Zdrowaś Maryjo -->
+            <g id="bead-stem-2" class="bead-item bead-small" data-step="3" data-id="bead-stem-2" data-decade="0" transform="translate(231.0, 495.0)">
+              <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+              <circle class="bead-circle" cx="0" cy="0" r="9" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+            </g>
+            <!-- Wstępny 3: Wierzę w Boga -->
+            <g id="bead-stem-3" class="bead-item bead-small" data-step="4" data-id="bead-stem-3" data-decade="0" transform="translate(231.0, 460.0)">
+              <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+              <circle class="bead-circle" cx="0" cy="0" r="9" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+            </g>
+
+            <!-- Łącznik Serca: Krok 5 - 1. Dziesiątka (Ojcze Przedwieczny) oraz Krok 60 (Święty Boże) -->
+            <g id="bead-connector" class="bead-item bead-large bead-connector" data-step="5" data-id="bead-connector" data-decade="1" transform="translate(233.5, 429.0)">
+              <circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/>
+              <circle class="bead-circle" cx="0" cy="0" r="12" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+            </g>
+
+            <!-- DZIESIĄTKA 1 (10 małych paciorków) -->
+            <g id="bead-dec1-1" class="bead-item bead-small" data-step="6" data-id="bead-dec1-1" data-decade="1" transform="translate(248.2, 403.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-2" class="bead-item bead-small" data-step="7" data-id="bead-dec1-2" data-decade="1" transform="translate(267.2, 386.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-3" class="bead-item bead-small" data-step="8" data-id="bead-dec1-3" data-decade="1" transform="translate(287.8, 371.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-4" class="bead-item bead-small" data-step="9" data-id="bead-dec1-4" data-decade="1" transform="translate(311.4, 359.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-5" class="bead-item bead-small" data-step="10" data-id="bead-dec1-5" data-decade="1" transform="translate(336.0, 355.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-6" class="bead-item bead-small" data-step="11" data-id="bead-dec1-6" data-decade="1" transform="translate(361.5, 357.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-7" class="bead-item bead-small" data-step="12" data-id="bead-dec1-7" data-decade="1" transform="translate(386.5, 364.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-8" class="bead-item bead-small" data-step="13" data-id="bead-dec1-8" data-decade="1" transform="translate(407.0, 380.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-9" class="bead-item bead-small" data-step="14" data-id="bead-dec1-9" data-decade="1" transform="translate(422.8, 400.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-10" class="bead-item bead-small" data-step="15" data-id="bead-dec1-10" data-decade="1" transform="translate(434.6, 423.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+
+            <!-- DZIESIĄTKA 2 (1 duży + 10 małych) -->
+            <g id="bead-large-2" class="bead-item bead-large" data-step="16" data-id="bead-large-2" data-decade="2" transform="translate(441.5, 450.2)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="12" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-1" class="bead-item bead-small" data-step="17" data-id="bead-dec2-1" data-decade="2" transform="translate(443.4, 476.6)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-2" class="bead-item bead-small" data-step="18" data-id="bead-dec2-2" data-decade="2" transform="translate(443.2, 502.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-3" class="bead-item bead-small" data-step="19" data-id="bead-dec2-3" data-decade="2" transform="translate(439.4, 528.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-4" class="bead-item bead-small" data-step="20" data-id="bead-dec2-4" data-decade="2" transform="translate(433.0, 553.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-5" class="bead-item bead-small" data-step="21" data-id="bead-dec2-5" data-decade="2" transform="translate(423.4, 577.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-6" class="bead-item bead-small" data-step="22" data-id="bead-dec2-6" data-decade="2" transform="translate(411.9, 600.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-7" class="bead-item bead-small" data-step="23" data-id="bead-dec2-7" data-decade="2" transform="translate(399.0, 623.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-8" class="bead-item bead-small" data-step="24" data-id="bead-dec2-8" data-decade="2" transform="translate(385.0, 644.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-9" class="bead-item bead-small" data-step="25" data-id="bead-dec2-9" data-decade="2" transform="translate(369.4, 664.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-10" class="bead-item bead-small" data-step="26" data-id="bead-dec2-10" data-decade="2" transform="translate(353.6, 684.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+
+            <!-- DZIESIĄTKA 3 (1 duży + 10 małych) -->
+            <g id="bead-large-3" class="bead-item bead-large" data-step="27" data-id="bead-large-3" data-decade="3" transform="translate(336.5, 705.4)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="12" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-1" class="bead-item bead-small" data-step="28" data-id="bead-dec3-1" data-decade="3" transform="translate(320.0, 718.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-2" class="bead-item bead-small" data-step="29" data-id="bead-dec3-2" data-decade="3" transform="translate(302.0, 735.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-3" class="bead-item bead-small" data-step="30" data-id="bead-dec3-3" data-decade="3" transform="translate(284.0, 751.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-4" class="bead-item bead-small" data-step="31" data-id="bead-dec3-4" data-decade="3" transform="translate(264.0, 765.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-5" class="bead-item bead-small" data-step="32" data-id="bead-dec3-5" data-decade="3" transform="translate(242.0, 776.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-6" class="bead-item bead-small" data-step="33" data-id="bead-dec3-6" data-decade="3" transform="translate(220.0, 776.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-7" class="bead-item bead-small" data-step="34" data-id="bead-dec3-7" data-decade="3" transform="translate(198.0, 765.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-8" class="bead-item bead-small" data-step="35" data-id="bead-dec3-8" data-decade="3" transform="translate(178.0, 751.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-9" class="bead-item bead-small" data-step="36" data-id="bead-dec3-9" data-decade="3" transform="translate(160.0, 735.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-10" class="bead-item bead-small" data-step="37" data-id="bead-dec3-10" data-decade="3" transform="translate(142.0, 718.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+
+            <!-- DZIESIĄTKA 4 (1 duży + 10 małych) -->
+            <g id="bead-large-4" class="bead-item bead-large" data-step="38" data-id="bead-large-4" data-decade="4" transform="translate(126.7, 704.7)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="12" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-1" class="bead-item bead-small" data-step="39" data-id="bead-dec4-1" data-decade="4" transform="translate(108.4, 684.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-2" class="bead-item bead-small" data-step="40" data-id="bead-dec4-2" data-decade="4" transform="translate(92.8, 664.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-3" class="bead-item bead-small" data-step="41" data-id="bead-dec4-3" data-decade="4" transform="translate(77.6, 644.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-4" class="bead-item bead-small" data-step="42" data-id="bead-dec4-4" data-decade="4" transform="translate(63.0, 623.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-5" class="bead-item bead-small" data-step="43" data-id="bead-dec4-5" data-decade="4" transform="translate(50.1, 600.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-6" class="bead-item bead-small" data-step="44" data-id="bead-dec4-6" data-decade="4" transform="translate(38.8, 577.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-7" class="bead-item bead-small" data-step="45" data-id="bead-dec4-7" data-decade="4" transform="translate(30.0, 553.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-8" class="bead-item bead-small" data-step="46" data-id="bead-dec4-8" data-decade="4" transform="translate(22.9, 528.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-9" class="bead-item bead-small" data-step="47" data-id="bead-dec4-9" data-decade="4" transform="translate(18.6, 503.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-10" class="bead-item bead-small" data-step="48" data-id="bead-dec4-10" data-decade="4" transform="translate(18.0, 476.3)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+
+            <!-- DZIESIĄTKA 5 (1 duży + 10 małych) -->
+            <g id="bead-large-5" class="bead-item bead-large" data-step="49" data-id="bead-large-5" data-decade="5" transform="translate(20.6, 450.1)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="12" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-1" class="bead-item bead-small" data-step="50" data-id="bead-dec5-1" data-decade="5" transform="translate(27.4, 423.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-2" class="bead-item bead-small" data-step="51" data-id="bead-dec5-2" data-decade="5" transform="translate(40.0, 400.3)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-3" class="bead-item bead-small" data-step="52" data-id="bead-dec5-3" data-decade="5" transform="translate(55.2, 379.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-4" class="bead-item bead-small" data-step="53" data-id="bead-dec5-4" data-decade="5" transform="translate(75.2, 365.6)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-5" class="bead-item bead-small" data-step="54" data-id="bead-dec5-5" data-decade="5" transform="translate(100.8, 357.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-6" class="bead-item bead-small" data-step="55" data-id="bead-dec5-6" data-decade="5" transform="translate(126.0, 355.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-7" class="bead-item bead-small" data-step="56" data-id="bead-dec5-7" data-decade="5" transform="translate(151.0, 360.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-8" class="bead-item bead-small" data-step="57" data-id="bead-dec5-8" data-decade="5" transform="translate(174.0, 370.5)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-9" class="bead-item bead-small" data-step="58" data-id="bead-dec5-9" data-decade="5" transform="translate(194.8, 385.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-10" class="bead-item bead-small" data-step="59" data-id="bead-dec5-10" data-decade="5" transform="translate(214.3, 403.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="8.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+          </g>
+        </svg>
+
+        <div class="image-vignette-bottom"></div>
+      </div>
+      
+      <!-- Subtelna wskazówka dotykowa -->
+      <div id="tap-hint" class="tap-hint">
+        Dotknij tekstu, paciorka lub przycisku „Dalej”
+      </div>
+    </main>
+
+    <!-- 3. Jeden napis „Jezu, ufam Tobie” – złote litery bezpośrednio na ciemnym tle, BEZ RAMKI, bez wykrzyknika -->
+    <div class="sacred-inscription-zone">
+      <div id="sacred-inscription" class="sacred-inscription">JEZU, UFAM TOBIE</div>
+    </div>
+
+    <!-- Ergonomiczny dolny panel sterowania (ergonomia dla seniorów i obsługa jedną ręką) -->
+    <footer class="prayer-dock">
       <div class="controls-panel">
-        <!-- Poprzedni paciorek -->
-        <button id="btn-prev" class="control-btn nav-btn" title="Poprzedni paciorek" aria-label="Poprzedni paciorek">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <!-- Przycisk WSTECZ -->
+        <button id="btn-prev" class="control-btn nav-btn" title="Poprzedni paciorek (lub przesuń w prawo)" aria-label="Poprzedni paciorek">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
+          <span class="btn-text-sub">Wstecz</span>
         </button>
 
-        <!-- Główny przycisk nawigacji / następnego paciorka -->
+        <!-- Główny duży przycisk DALEJ -->
         <button id="btn-next" class="control-btn primary-btn" title="Kolejny paciorek (lub dotknij ekran)" aria-label="Kolejny paciorek">
           <span class="btn-primary-inner">
-            <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <span class="btn-primary-label">DALEJ</span>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
               <polyline points="9 18 15 12 9 6"></polyline>
             </svg>
           </span>
         </button>
 
-        <!-- Autoodtwarzanie modlitwy (Play / Pauza) -->
+        <!-- Przycisk Autoodtwarzanie / Czytaj -->
         <button id="btn-autoplay" class="control-btn autoplay-btn" title="Automatyczne prowadzenie modlitwy" aria-label="Automatyczne prowadzenie">
           <svg id="icon-play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            <polygon points="6 4 19 12 6 20 6 4"></polygon>
           </svg>
           <svg id="icon-pause" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
             <rect x="6" y="4" width="4" height="16"></rect>
             <rect x="14" y="4" width="4" height="16"></rect>
           </svg>
+          <span class="btn-text-sub" id="autoplay-btn-label">Auto</span>
         </button>
 
-        <!-- Reset / Restart modlitwy -->
-        <button id="btn-restart" class="control-btn nav-btn" title="Rozpocznij Koronkę od początku" aria-label="Od początku">
+        <!-- Wzbudzenie intencji -->
+        <button id="btn-intention" class="control-btn nav-btn" title="Własna intencja modlitewna" aria-label="Własna intencja">
           <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="1 4 1 10 7 10"></polyline>
-            <path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path>
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
           </svg>
+          <span class="btn-text-sub">Intencja</span>
         </button>
       </div>
     </footer>
 
+    <!-- EKRAN ZAKOŃCZENIA (Krótki, godny komunikat bez fanfar) -->
+    <div id="modal-completion" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card completion-card">
+        <div class="completion-icon">
+          <svg viewBox="0 0 24 24" width="42" height="42" fill="none" stroke="#d4af37" stroke-width="1.8">
+            <path d="M12 2v20M2 12h20"></path>
+            <circle cx="12" cy="12" r="9" stroke="#d4af37" stroke-width="1"></circle>
+          </svg>
+        </div>
+        <h2 class="completion-title">Koronka odmówiona</h2>
+        <p class="completion-message">
+          „Przez odmawianie tej koronki podoba Mi się dać wszystko, o co Mnie prosić będą.”
+        </p>
+        <div class="completion-stats">
+          <span>Odmówione Koronki: </span>
+          <strong id="completion-counter-val">1</strong>
+        </div>
+        <div class="completion-actions">
+          <button id="btn-completion-restart" class="portal-btn" style="width: 100%; justify-content: center;">
+            <span>Módl się ponownie</span>
+          </button>
+          <button id="btn-completion-close" class="portal-btn portal-btn-secondary" style="width: 100%; justify-content: center;">
+            <span>Zamknij</span>
+          </button>
+        </div>
+      </div>
+    </div>
 
+    <!-- MODAL USTAWIEŃ (Wielkość czcionki, tempo lektora, pauzy, wibracje, przypomnienie 15:00) -->
+    <div id="modal-settings" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title">Ustawienia modlitwy</h2>
+          <button id="btn-close-settings" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+        </div>
+        <div class="modal-body settings-body">
+          <!-- Regulacja wielkości czcionki -->
+          <div class="settings-group">
+            <label class="settings-label">
+              <span>Wielkość tekstu modlitwy</span>
+              <span id="font-size-val" class="settings-badge">20 sp</span>
+            </label>
+            <div class="font-size-buttons">
+              <button class="font-size-btn active" data-size="20">20 sp (Standard)</button>
+              <button class="font-size-btn" data-size="24">24 sp (Duża)</button>
+              <button class="font-size-btn" data-size="28">28 sp (Senior)</button>
+              <button class="font-size-btn" data-size="32">32 sp (Maks)</button>
+            </div>
+          </div>
 
-    <!-- Okno modalne: Schemat edukacyjny & Odsyłacz do abbaojcze.pl -->
+          <!-- Lektor: Pauza między modlitwami -->
+          <div class="settings-group">
+            <label class="settings-label" for="pause-slider">
+              <span>Pauza między modlitwami lektora</span>
+              <span id="pause-val" class="settings-badge">1.5 s</span>
+            </label>
+            <input type="range" id="pause-slider" min="0.5" max="4.0" step="0.5" value="1.5" class="custom-slider">
+            <div class="slider-ticks">
+              <span>0.5s</span>
+              <span>1.5s</span>
+              <span>2.5s</span>
+              <span>4.0s</span>
+            </div>
+          </div>
+
+          <!-- Lektor: Tempo mowy -->
+          <div class="settings-group">
+            <label class="settings-label" for="rate-slider">
+              <span>Tempo mowy lektora</span>
+              <span id="rate-val" class="settings-badge">1.0x</span>
+            </label>
+            <input type="range" id="rate-slider" min="0.8" max="1.2" step="0.1" value="1.0" class="custom-slider">
+            <div class="slider-ticks">
+              <span>0.8x (Spokojne)</span>
+              <span>1.0x</span>
+              <span>1.2x (Szybsze)</span>
+            </div>
+          </div>
+
+          <!-- Wibracja przy przejściu na kolejny paciorek -->
+          <div class="settings-group toggle-row">
+            <div>
+              <strong class="toggle-title">Delikatna wibracja paciorka</strong>
+              <p class="toggle-desc">Wibruje przy każdym przejściu (pozwala modlić się bez patrzenia)</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-vibration" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <!-- Blokada wygaszania ekranu -->
+          <div class="settings-group toggle-row">
+            <div>
+              <strong class="toggle-title">Ekran nie gaśnie podczas modlitwy</strong>
+              <p class="toggle-desc">Utrzymuje podświetlenie ekranu aż do ukończenia</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-wakelock" checked>
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <!-- Przypomnienie o Godzinie Miłosierdzia (15:00) -->
+          <div class="settings-group toggle-row">
+            <div>
+              <strong class="toggle-title">Przypomnienie o 15:00</strong>
+              <p class="toggle-desc">Godzina Miłosierdzia – moment konania Chrystusa na Krzyżu</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="toggle-mercy-hour">
+              <span class="slider round"></span>
+            </label>
+          </div>
+
+          <!-- Licznik modlitw (prywatny) -->
+          <div class="settings-group counter-box">
+            <span>Odmówione Koronki:</span>
+            <strong id="settings-counter-display">0</strong>
+            <button id="btn-reset-counter" class="subtle-link-btn" title="Wyzeruj licznik">Zeruj</button>
+          </div>
+
+          <!-- Przyciski szybkich odnośników -->
+          <div class="settings-links">
+            <button id="btn-open-schema-modal" class="settings-link-btn">
+              <span>📖 Jak odmawiać Koronkę (abbaojcze.pl)</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button id="btn-open-intention-modal" class="settings-link-btn">
+              <span>🙏 Moja intencja modlitewna</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+            <button id="btn-open-install-modal" class="settings-link-btn">
+              <span>📱 Pobierz pliki (APK, AAB, IPA, PWA)</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: WŁASNA INTENCJA MODLITEWNA -->
+    <div id="modal-intention" class="modal-overlay hidden" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h2 class="modal-title">Intencja Koronki</h2>
+          <button id="btn-close-intention" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-intro">
+            „Na początku – wzbudzić intencję...” Wpisz swoją intencję lub módl się w intencji pokoju i przebłagania za grzechy całego świata.
+          </p>
+          <textarea id="intention-input" class="intention-textarea" rows="4" placeholder="Wpisz swoją intencję, np.: O zdrowie dla..., o pokój na świecie..."></textarea>
+          <div style="display: flex; gap: 10px; margin-top: 14px;">
+            <button id="btn-save-intention" class="portal-btn" style="flex: 1; justify-content: center;">Zapisz intencję</button>
+            <button id="btn-clear-intention" class="portal-btn portal-btn-secondary">Wyczyść</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL: JAK ODMAWIAĆ KORONKĘ (ABBAOJCZE.PL) -->
     <div id="modal-schema" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card">
         <div class="modal-header">
           <h2 class="modal-title">Jak odmawiać Koronkę?</h2>
-          <button id="btn-close-modal" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+          <button id="btn-close-schema" class="modal-close-btn" aria-label="Zamknij">&times;</button>
         </div>
-        
         <div class="modal-body">
           <p class="modal-intro">
-            Koronkę do Miłosierdzia Bożego podyktował Pan Jezus św. Siostrze Faustynie w Wilnie w dniach 13–14 września 1935 roku jako modlitwę przebłagania i uśmierzenia gniewu Bożego.
+            Tekst i schemat Koronki do Miłosierdzia Bożego zgodny z zatwierdzeniem: <strong>Kuria Diecezjalna Opole 2006 r. nr 1029/06/I</strong>.
           </p>
           
           <div class="schema-steps">
             <div class="schema-item">
               <span class="step-num">1</span>
               <div>
-                <strong>Modlitwy początkowe:</strong> Znak Krzyża, Ojcze nasz, Zdrowaś Maryjo, Wierzę w Boga.
+                <strong>Na początku – wzbudzić intencję:</strong><br>
+                Znak Krzyża: <em>W imię Ojca i Syna, i Ducha Świętego. Amen.</em>
               </div>
             </div>
-            
+
             <div class="schema-item">
               <span class="step-num">2</span>
               <div>
-                <strong>Na dużych paciorkach (5 razy):</strong><br>
-                <em>„Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.”</em>
+                <strong>Modlitwy wstępne (na 3 pierwszych paciorkach):</strong><br>
+                1. Ojcze nasz...<br>
+                2. Zdrowaś Maryjo...<br>
+                3. Wierzę w Boga...
               </div>
             </div>
             
             <div class="schema-item">
               <span class="step-num">3</span>
+              <div>
+                <strong>Na dużych paciorkach (1 raz na początku dziesiątki):</strong><br>
+                <em>„Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.”</em>
+              </div>
+            </div>
+            
+            <div class="schema-item">
+              <span class="step-num">4</span>
               <div>
                 <strong>Na małych paciorkach (10 razy w każdej dziesiątce):</strong><br>
                 <em>„Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.”</em>
@@ -560,7 +560,7 @@
             </div>
             
             <div class="schema-item">
-              <span class="step-num">4</span>
+              <span class="step-num">5</span>
               <div>
                 <strong>Na zakończenie (3 razy):</strong><br>
                 <em>„Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem.”</em>
@@ -568,192 +568,91 @@
             </div>
 
             <div class="schema-item">
-              <span class="step-num">5</span>
+              <span class="step-num">6</span>
               <div>
-                <strong>Modlitwa końcowa:</strong><br>
-                <em>„O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój Miłosierdzia dla nas – ufam Tobie! Jezu, ufam Tobie (3x).”</em>
+                <strong>Na koniec (3 razy):</strong><br>
+                <em>„O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie!”</em>
               </div>
             </div>
           </div>
 
+          <!-- Odsyłacze edukacyjne -->
           <div class="portal-link-box">
-            <p>Pełne materiały edukacyjne, rozważania oraz schematy w różnych językach znajdziesz na stronie:</p>
+            <p>Materiały edukacyjne i darmowe obrazki z modlitwami:</p>
             <a href="https://abbaojcze.pl/" target="_blank" rel="noopener noreferrer" class="portal-btn">
               <span>Przejdź do abbaojcze.pl</span>
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                <polyline points="15 3 21 3 21 9"></polyline>
-                <line x1="10" y1="14" x2="21" y2="3"></line>
-              </svg>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+            <div style="height: 8px;"></div>
+            <a href="https://www.faustyna.pl/zmbm/koronka-do-milosierdzia-bozego/" target="_blank" rel="noopener noreferrer" class="portal-btn portal-btn-secondary">
+              <span>O nabożeństwie (faustyna.pl)</span>
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
             </a>
           </div>
         </div>
       </div>
     </div>
 
-
-
-
-    <!-- Okno modalne: Pobieranie i instalacja (Android, iOS, PWA) -->
+    <!-- MODAL POBIERANIA I INSTALACJI (APK, AAB, IPA, PWA) -->
     <div id="modal-install" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card">
         <div class="modal-header">
-          <h2 class="modal-title">Pobierz pliki instalacyjne i PWA</h2>
-          <button id="btn-close-install-modal" class="modal-close-btn" aria-label="Zamknij">&times;</button>
+          <h2 class="modal-title">Pobierz pliki i PWA</h2>
+          <button id="btn-close-install" class="modal-close-btn" aria-label="Zamknij">&times;</button>
         </div>
-        
         <div class="modal-body">
-          <!-- Baner szybkiej instalacji (gdy przeglądarka wspiera natywny prompt) -->
-          <div id="pwa-quick-install-box" class="install-prompt-banner hidden">
-            <div class="banner-content">
-              <strong>Zainstaluj jednym kliknięciem</strong>
-              <p>Twoja przeglądarka wspiera bezpośrednią instalację PWA na ekranie telefonu.</p>
+          <div class="download-actions">
+            <!-- Android APK -->
+            <div class="action-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold-light);">🤖 Android (.apk)</strong>
+                <span class="install-badge">2.8 MB</span>
+              </div>
+              <p>Pakiet instalacyjny dla urządzeń Android.</p>
+              <a href="assets/koronka.apk" download="koronka.apk" class="portal-btn" style="text-align:center; justify-content:center;">
+                <span>Pobierz koronka.apk (2.8 MB)</span>
+              </a>
             </div>
-            <button id="btn-trigger-pwa" class="portal-btn" style="border: none; cursor: pointer; align-self: flex-start;">
-              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                <polyline points="7 10 12 15 17 10"></polyline>
-                <line x1="12" y1="15" x2="12" y2="3"></line>
-              </svg>
-              <span>Zainstaluj aplikację teraz</span>
-            </button>
-          </div>
 
-          <!-- Informacja gdy aplikacja już działa w trybie standalone -->
-          <div id="pwa-already-installed-box" class="installed-badge hidden">
-            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-              <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <span>Aplikacja jest już uruchomiona w trybie zainstalowanym.</span>
-          </div>
-
-          <!-- Zakładki wyboru: 1. Pliki do pobrania (Domyślnie aktywna!), 2. PWA -->
-          <div class="platform-tabs">
-            <button class="tab-btn active" data-tab="tab-files">📦 Pliki do pobrania (APK, AAB, IPA)</button>
-            <button class="tab-btn" data-tab="tab-pwa">📱 PWA (Instalacja na ekranie)</button>
-          </div>
-
-          <!-- Zakładka 1: Wszystkie pliki do pobrania (Gotowe bezpośrednio bez pośredników) -->
-          <div id="tab-files" class="tab-content active">
-            <div class="install-badge">Bezpośrednie pobieranie • Bez pośredników</div>
-            
-            <div class="download-actions">
-              <!-- 1. ANDROID APK -->
-              <div class="action-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <strong style="color: var(--gold-light); font-size: 14px;">🤖 Android (.apk)</strong>
-                  <span class="install-badge">2.8 MB</span>
-                </div>
-                <p>Gotowy, podpisany plik instalacyjny dla telefonów i tabletów z systemem Android. Pobierz i zainstaluj na telefonie.</p>
-                <a href="assets/koronka.apk" download="koronka.apk" class="portal-btn" style="text-align: center; justify-content: center;">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Pobierz koronka.apk (2.8 MB)</span>
-                </a>
+            <!-- Android AAB -->
+            <div class="action-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold-light);">📦 Google Play (.aab)</strong>
+                <span class="install-badge">2.9 MB</span>
               </div>
+              <p>Pakiet dla Google Play Store.</p>
+              <a href="assets/koronka.aab" download="koronka.aab" class="portal-btn portal-btn-secondary" style="text-align:center; justify-content:center;">
+                <span>Pobierz koronka.aab (2.9 MB)</span>
+              </a>
+            </div>
 
-              <!-- 2. ANDROID AAB -->
-              <div class="action-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <strong style="color: var(--gold-light); font-size: 14px;">📦 Android App Bundle (.aab)</strong>
-                  <span class="install-badge">2.9 MB</span>
-                </div>
-                <p>Oficjalny pakiet Android App Bundle dla sklepu Google Play Console.</p>
-                <a href="assets/koronka.aab" download="koronka.aab" class="portal-btn portal-btn-secondary" style="text-align: center; justify-content: center;">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Pobierz koronka.aab (2.9 MB)</span>
-                </a>
+            <!-- Apple iOS IPA -->
+            <div class="action-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold-light);">🍏 Apple iOS (.ipa)</strong>
+                <span class="install-badge">700 KB</span>
               </div>
+              <p>Pakiet aplikacji dla iPhone / iPad.</p>
+              <a href="assets/koronka.ipa" download="koronka.ipa" class="portal-btn portal-btn-secondary" style="text-align:center; justify-content:center;">
+                <span>Pobierz koronka.ipa (700 KB)</span>
+              </a>
+            </div>
 
-              <!-- 3. APPLE IOS IPA -->
-              <div class="action-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <strong style="color: var(--gold-light); font-size: 14px;">🍏 Apple iOS (.ipa)</strong>
-                  <span class="install-badge">700 KB</span>
-                </div>
-                <p>Pakiet aplikacji dla iPhone i iPad. Do instalacji przez AltStore, Sideloadly lub Apple Configurator.</p>
-                <a href="assets/koronka.ipa" download="koronka.ipa" class="portal-btn" style="text-align: center; justify-content: center;">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Pobierz koronka.ipa (700 KB)</span>
-                </a>
+            <!-- PWA Ekran Początkowy -->
+            <div class="action-card">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold-light);">📱 PWA na Ekranie Głównym</strong>
+                <span class="install-badge">Offline 100%</span>
               </div>
-
-              <!-- 4. PAKIET OFFLINE ZIP -->
-              <div class="action-card">
-                <div style="display: flex; justify-content: space-between; align-items: center;">
-                  <strong style="color: var(--gold-light); font-size: 14px;">💻 Paczka offline (.zip)</strong>
-                  <span class="install-badge">436 KB</span>
-                </div>
-                <p>Pełne pliki aplikacji webowej (HTML, CSS, JS, dźwięk, grafiki) do uruchomienia offline na dowolnym komputerze lub telefonie.</p>
-                <a href="assets/koronka-offline.zip" download="koronka-offline.zip" class="portal-btn portal-btn-secondary" style="text-align: center; justify-content: center;">
-                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-                    <polyline points="7 10 12 15 17 10"></polyline>
-                    <line x1="12" y1="15" x2="12" y2="3"></line>
-                  </svg>
-                  <span>Pobierz koronka-offline.zip (436 KB)</span>
-                </a>
-              </div>
+              <p>W Safari (iOS) wybierz <em>„Udostępnij” → „Do ekranu początkowego”</em>. W Chrome (Android) kliknij <em>„Dodaj do ekranu głównego”</em>.</p>
             </div>
           </div>
-
-          <!-- Zakładka 2: PWA (Instalacja na ekranie bez pobierania plików) -->
-          <div id="tab-pwa" class="tab-content">
-            <div class="install-badge">Instalacja bezpośrednio z przeglądarki</div>
-            <p class="modal-intro">
-              Jeśli nie chcesz pobierać plików na dysk, możesz dodać aplikację bezpośrednio do ekranu początkowego:
-            </p>
-
-            <div class="schema-steps">
-              <div class="schema-item">
-                <span class="step-num">🍏</span>
-                <div>
-                  <strong>Apple iPhone / iPad (Safari):</strong><br>
-                  1. Otwórz tę stronę w przeglądarce <strong>Safari</strong>.<br>
-                  2. Dotknij ikony <strong>Udostępnij</strong> (kwadrat ze strzałką w górę na dolnym pasku).<br>
-                  3. Wybierz <strong>„Do ekranu początkowego”</strong> i kliknij <strong>„Dodaj”</strong>.<br>
-                  <em>Aplikacja pojawi się na pulpicie i działa w 100% offline.</em>
-                </div>
-              </div>
-
-              <div class="schema-item">
-                <span class="step-num">🤖</span>
-                <div>
-                  <strong>Google Android (Chrome / Brave / Edge):</strong><br>
-                  1. Kliknij menu (trzy kropki ⋮ w prawym górnym rogu).<br>
-                  2. Wybierz <strong>„Zainstaluj aplikację”</strong> lub <strong>„Dodaj do ekranu głównego”</strong>.<br>
-                  3. Potwierdź instalację.
-                </div>
-              </div>
-
-              <div class="schema-item">
-                <span class="step-num">💻</span>
-                <div>
-                  <strong>Komputer PC / Mac:</strong><br>
-                  W pasku adresu przeglądarki Chrome/Edge kliknij ikonkę <strong>Zainstaluj</strong> (monitor ze strzałką w dół).
-                </div>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </div>
 
   </div>
 
-  <script src="app.js?v=11"></script>
+  <script src="app.js?v=20"></script>
 </body>
 </html>
