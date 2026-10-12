@@ -336,13 +336,29 @@ class SacredChime {
 const chime = new SacredChime();
 
 // ========================================================
-// 4. WIBRACJA HAPTYCZNA DLA SENIORÓW I MODLITWY W KIESZENI
+// 4. ZRÓŻNICOWANA WIBRACJA HAPTYCZNA DLA SENIORÓW I MODLITWY W KIESZENI
+// Inne wibracje dla czerwonych dużych paciorków i inne dla niebieskich małych paciorków
 // ========================================================
-function triggerHaptic(duration = 25) {
-  if (AppState.settings.vibration && 'vibrate' in navigator) {
-    try {
-      navigator.vibrate(duration);
-    } catch (e) {}
+function triggerHaptic(typeOrStep = 'small') {
+  if (!AppState.settings.vibration || !('vibrate' in navigator)) return;
+  try {
+    const type = typeof typeOrStep === 'object' && typeOrStep !== null ? typeOrStep.type : typeOrStep;
+    
+    if (type === 'cross' || type === 'closing') {
+      // 1. Złoty Krzyżyk: uroczysty Znak Krzyża / zakończenie Koronki (trzykrotna wibracja)
+      navigator.vibrate([60, 40, 60, 40, 100]);
+    } else if (type === 'large' || type === 'holyGod') {
+      // 2. Czerwone duże paciorki (Ojcze Przedwieczny, Ojcze nasz, Święty Boże):
+      // Wyraźny, głęboki podwójny impuls (75ms wibracji, 50ms przerwy, 75ms wibracji)
+      // Pozwala osobie modlącej się bez patrzenia na ekran natychmiast wyczuć początek nowej dziesiątki
+      navigator.vibrate([75, 50, 75]);
+    } else {
+      // 3. Niebieskie małe paciorki (Dla Jego bolesnej męki, Zdrowaś Maryjo):
+      // Krótki, pojedynczy i subtelny impuls (30ms), potwierdzający zaliczenie paciorka
+      navigator.vibrate(30);
+    }
+  } catch (e) {
+    // Bezpieczne wyciszenie wyjątków na urządzeniach bez silnika wibracyjnego
   }
 }
 
@@ -571,7 +587,7 @@ function goToStep(index, fromAutoplay = false) {
 
   AppState.currentIndex = index;
   updateUI();
-  triggerHaptic(20);
+  triggerHaptic(AppState.steps[index]);
   chime.playSoftBead(stepFrequency(AppState.steps[index]));
 
   if (AppState.isPlaying && !fromAutoplay) {
@@ -1026,6 +1042,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=20').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=24').catch(() => {});
   });
 }
