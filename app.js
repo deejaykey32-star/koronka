@@ -26,11 +26,11 @@ function generateDivineMercySteps() {
     beadId: 'bead-cross'
   });
 
-  // Krok 2: Duży niebieski paciorek na początku różańca (Ojcze nasz)
+  // Krok 2: Pierwszy duży czerwony paciorek na początku różańca (Ojcze nasz)
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Duży paciorek)',
+    title: 'Modlitwa Pańska (Duży czerwony paciorek)',
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
     speechText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
@@ -40,11 +40,11 @@ function generateDivineMercySteps() {
     beadId: 'bead-stem-large'
   });
 
-  // Krok 3: Pierwszy mniejszy czerwony paciorek (Zdrowaś Maryjo)
+  // Krok 3: Pierwszy mniejszy niebieski paciorek (Zdrowaś Maryjo)
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Pozdrowienie Anielskie (Paciorek 1/3)',
+    title: 'Pozdrowienie Anielskie (Niebieski paciorek 1/3)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
     speechText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
@@ -54,11 +54,11 @@ function generateDivineMercySteps() {
     beadId: 'bead-stem-red-1'
   });
 
-  // Krok 4: Drugi mniejszy czerwony paciorek (Wierzę w Boga)
+  // Krok 4: Drugi mniejszy niebieski paciorek (Wierzę w Boga)
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Skład Apostolski (Paciorek 2/3)',
+    title: 'Skład Apostolski (Niebieski paciorek 2/3)',
     shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
     fullText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
     speechText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
@@ -163,44 +163,44 @@ function generateRosarySteps() {
     type: 'cross', decade: 0, beadNumber: 1, beadId: 'bead-cross'
   });
 
-  // Krok 2: Duży niebieski paciorek (Ojcze nasz)
+  // Krok 2: Pierwszy duży czerwony paciorek (Ojcze nasz)
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Ojcze nasz)',
+    title: 'Modlitwa Pańska (Duży czerwony paciorek)',
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: OJCZE_NASZ_FULL,
     speechText: OJCZE_NASZ_FULL,
     type: 'large', decade: 0, beadNumber: 2, beadId: 'bead-stem-large'
   });
 
-  // Krok 3: 1. mały czerwony paciorek (Zdrowaś Maryjo o wiarę)
+  // Krok 3: 1. mały niebieski paciorek (Zdrowaś Maryjo o wiarę)
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Zdrowaś Maryjo (o cnotę Wiary)',
+    title: 'Zdrowaś Maryjo (Niebieski paciorek 1/3 - o cnotę Wiary)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL + ' (o przymnożenie Wiary)',
     speechText: ZDROVAS_FULL,
     type: 'small', decade: 0, beadNumber: 3, beadId: 'bead-stem-red-1'
   });
 
-  // Krok 4: 2. mały czerwony paciorek (Zdrowaś Maryjo o nadzieję)
+  // Krok 4: 2. mały niebieski paciorek (Zdrowaś Maryjo o nadzieję)
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Zdrowaś Maryjo (o cnotę Nadziei)',
+    title: 'Zdrowaś Maryjo (Niebieski paciorek 2/3 - o cnotę Nadziei)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL + ' (o ugruntowanie Nadziei)',
     speechText: ZDROVAS_FULL,
     type: 'small', decade: 0, beadNumber: 4, beadId: 'bead-stem-red-2'
   });
 
-  // Krok 5: 3. mały czerwony paciorek (Zdrowaś Maryjo o miłość & Chwała Ojcu)
+  // Krok 5: 3. mały niebieski paciorek (Zdrowaś Maryjo o miłość & Chwała Ojcu)
   steps.push({
     stepIndex: 5,
     part: 'Modlitwy wstępne',
-    title: 'Zdrowaś Maryjo (o cnotę Miłości) & Chwała Ojcu',
+    title: 'Zdrowaś Maryjo (Niebieski paciorek 3/3 - o cnotę Miłości) & Chwała Ojcu',
     shortText: 'Zdrowaś Maryjo... Chwała Ojcu...',
     fullText: ZDROVAS_FULL + ' (o rozpalenie Miłości)\n\n' + CHWALA_OJCU_FULL,
     speechText: ZDROVAS_FULL + ' ' + CHWALA_OJCU_FULL,
@@ -337,7 +337,7 @@ const chime = new SacredChime();
 
 // ========================================================
 // 4. ZRÓŻNICOWANA WIBRACJA HAPTYCZNA DLA SENIORÓW I MODLITWY W KIESZENI
-// Pierwszy duży paciorek jest niebieski, a kolejne 3 czerwone.
+// Pierwszy duży paciorek jest czerwony, po nim 3 małe niebieskie paciorki.
 // W dziesiątkach duże paciorki są czerwone, a małe niebieskie.
 // ========================================================
 function triggerHaptic(typeOrStep = 'small') {
@@ -349,12 +349,12 @@ function triggerHaptic(typeOrStep = 'small') {
       // 1. Złoty Krzyżyk: uroczysty Znak Krzyża / zakończenie Koronki (trzykrotna wibracja)
       navigator.vibrate([60, 40, 60, 40, 100]);
     } else if (type === 'large' || type === 'holyGod') {
-      // 2. Duże paciorki (1. duży niebieski paciorek Ojcze nasz, duże czerwone paciorki dziesiątek Ojcze Przedwieczny, Święty Boże):
+      // 2. Duże paciorki (1. duży czerwony paciorek Ojcze nasz, duże czerwone paciorki dziesiątek Ojcze Przedwieczny, Święty Boże):
       // Wyraźny, głęboki podwójny impuls (75ms wibracji, 50ms przerwy, 75ms wibracji)
       // Pozwala osobie modlącej się bez patrzenia na ekran natychmiast wyczuć duży paciorek
       navigator.vibrate([75, 50, 75]);
     } else {
-      // 3. Małe paciorki (3 czerwone paciorki wstępne, 10 niebieskich paciorków dziesiątek):
+      // 3. Małe paciorki (3 niebieskie paciorki wstępne, 10 niebieskich paciorków dziesiątek):
       // Krótki, pojedynczy i subtelny impuls (30ms), potwierdzający zaliczenie paciorka
       navigator.vibrate(30);
     }
@@ -1049,6 +1049,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=25').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=26').catch(() => {});
   });
 }

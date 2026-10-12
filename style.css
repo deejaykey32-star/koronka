@@ -425,8 +425,24 @@ html, body {
   filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
 }
 
-/* Bieżący paciorek: wyraźnie wyróżniony, lśniący błękit/biel + aureola */
+/* Bieżący paciorek: domyślne lśnienie */
 .bead-item.active .bead-circle {
+  fill: url(#grad-active-bead) !important;
+  filter: drop-shadow(0 0 10px rgba(0, 220, 255, 1)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
+  transform: scale(1.25);
+  opacity: 1 !important;
+}
+
+/* Bieżący paciorek duży (czerwony): wyrazista soczysta czerwień + aureola */
+.bead-item.bead-large.active .bead-circle {
+  fill: url(#grad-active-red-bead) !important;
+  filter: drop-shadow(0 0 10px rgba(255, 40, 40, 1)) drop-shadow(0 0 18px rgba(255, 200, 200, 0.9));
+  transform: scale(1.25);
+  opacity: 1 !important;
+}
+
+/* Bieżący paciorek mały (niebieski): lśniący błękit/biel + aureola */
+.bead-item.bead-small.active .bead-circle {
   fill: url(#grad-active-bead) !important;
   filter: drop-shadow(0 0 10px rgba(0, 220, 255, 1)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
   transform: scale(1.25);
