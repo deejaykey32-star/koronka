@@ -278,8 +278,9 @@ const AppState = {
   wakeLock: null,
   userIntention: '',
   counter: 0,
+  resumeIndex: null, // krok do wznowienia, gdy widoczny jest baner „Poprzednia modlitwa”
   settings: {
-    fontSize: 20,
+    fontSize: 17,
     pauseBetweenPrayers: 1.5,
     speechRate: 1.0,
     vibration: true,
@@ -515,6 +516,8 @@ function updateUI() {
   const progressIndicator = document.getElementById('prayer-progress-indicator');
   const total = AppState.steps.length;
   progressIndicator.textContent = `${step.part} · Krok ${step.stepIndex} z ${total}`;
+  const progressFill = document.getElementById('prayer-progress-fill');
+  if (progressFill) progressFill.style.width = `${(step.stepIndex / total) * 100}%`;
 
   // 2. Aktualizacja tekstu modlitwy
   const titleEl = document.getElementById('prayer-title');
@@ -569,7 +572,8 @@ function updateRosaryBeadsVisuals(currentStep) {
       const match = transformAttr.match(/translate\(\s*([0-9.]+)\s*,\s*([0-9.]+)\s*\)/);
       if (match) {
         haloGroup.setAttribute('transform', `translate(${match[1]}, ${match[2]})`);
-        haloGroup.style.display = 'block';
+        // Krzyżyk ma własne złote lśnienie – aureola tylko wokół paciorków
+        haloGroup.style.display = currentBeadId === 'bead-cross' ? 'none' : 'block';
       }
     }
   } else if (haloGroup) {
@@ -684,6 +688,13 @@ function toggleAutoplay() {
 // ========================================================
 // 11. PRZEŁĄCZANIE TRYBU: KORONKA <-> RÓŻANIEC
 // ========================================================
+// Schemat serca jest zapisany w układzie 460×1024; dla każdego wizerunku przeliczamy go
+// na piksele oryginalnego pliku (viewBox = wymiary obrazu), aby obraz nie był skalowany ani przycinany.
+const HEART_LAYOUTS = {
+  koronka: { viewBox: '0 0 635 1234', transform: 'matrix(1.380435 0 0 1.380435 0 -179.457)' },
+  rozaniec: { viewBox: '0 0 768 1376', transform: 'matrix(1.669565 0 0 1.669565 0 -333.913)' }
+};
+
 function switchMode(newMode) {
   AppState.mode = newMode;
   stopAutoplay();
@@ -693,6 +704,14 @@ function switchMode(newMode) {
   const inscription = document.getElementById('sacred-inscription');
   const imgJesus = document.getElementById('holy-image-jesus');
   const imgMary = document.getElementById('holy-image-mary');
+
+  const layout = HEART_LAYOUTS[newMode] || HEART_LAYOUTS.koronka;
+  document.getElementById('rosary-heart-svg').setAttribute('viewBox', layout.viewBox);
+  document.getElementById('rosary-layout').setAttribute('transform', layout.transform);
+  document.getElementById('image-wrapper').classList.toggle('mode-mary', newMode === 'rozaniec');
+  const app = document.getElementById('app');
+  app.classList.toggle('mode-koronka', newMode !== 'rozaniec');
+  app.classList.toggle('mode-rozaniec', newMode === 'rozaniec');
 
   if (newMode === 'rozaniec') {
     AppState.steps = generateRosarySteps();
@@ -720,7 +739,10 @@ function switchMode(newMode) {
 // ========================================================
 function saveState() {
   try {
-    localStorage.setItem('koronka_saved_index', AppState.currentIndex.toString());
+    // Dopóki użytkownik nie wybrał „Kontynuuj” / „Od nowa”, nie nadpisujemy zapamiętanego kroku
+    if (AppState.resumeIndex === null || AppState.currentIndex !== 0) {
+      localStorage.setItem('koronka_saved_index', AppState.currentIndex.toString());
+    }
     localStorage.setItem('koronka_app_mode', AppState.mode);
     localStorage.setItem('koronka_timestamp', Date.now().toString());
   } catch (e) {}
@@ -746,6 +768,13 @@ function loadState() {
     const savedSettings = localStorage.getItem('koronka_settings');
     if (savedSettings) {
       AppState.settings = Object.assign(AppState.settings, JSON.parse(savedSettings));
+      // Nowy układ (tekst pod wizerunkiem): dotychczasowy standard 20 sp -> 17 sp, 32 sp -> 28 sp
+      if (!localStorage.getItem('koronka_layout_v2')) {
+        if (AppState.settings.fontSize === 20) AppState.settings.fontSize = 17;
+        if (AppState.settings.fontSize > 28) AppState.settings.fontSize = 28;
+        localStorage.setItem('koronka_layout_v2', '1');
+        saveSettings();
+      }
       applySettingsToUI();
     }
 
@@ -760,6 +789,7 @@ function loadState() {
     if (savedIndex) {
       const idx = parseInt(savedIndex, 10);
       if (idx > 0 && idx < AppState.steps.length - 1) {
+        AppState.resumeIndex = idx;
         const resumeBanner = document.getElementById('resume-banner');
         document.getElementById('resume-step-text').textContent = `Krok ${idx + 1} z ${AppState.steps.length}`;
         resumeBanner.classList.remove('hidden');
@@ -941,7 +971,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnTextSize) {
     btnTextSize.addEventListener('click', (e) => {
       e.stopPropagation();
-      const SIZES = [18, 20, 24, 28, 32];
+      const SIZES = [17, 20, 24, 28];
       const idx = SIZES.indexOf(AppState.settings.fontSize);
       AppState.settings.fontSize = SIZES[(idx + 1) % SIZES.length];
       applySettingsToUI();
@@ -1000,12 +1030,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 6. Baner wznowienia
   document.getElementById('btn-resume-continue').addEventListener('click', () => {
-    const savedIdx = parseInt(localStorage.getItem('koronka_saved_index') || '0', 10);
+    const savedIdx = AppState.resumeIndex || 0;
+    AppState.resumeIndex = null;
     document.getElementById('resume-banner').classList.add('hidden');
     goToStep(savedIdx);
   });
 
   document.getElementById('btn-resume-restart').addEventListener('click', () => {
+    AppState.resumeIndex = null;
     document.getElementById('resume-banner').classList.add('hidden');
     goToStep(0);
   });
