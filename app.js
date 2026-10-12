@@ -145,13 +145,21 @@ function generateDivineMercySteps() {
 function generateRosarySteps() {
   const steps = [];
   
+  const OJCZE_NASZ_FULL = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
+  const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
+  const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
+  const CHWALA_OJCU_FULL = 'Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen.';
+  const FATIMA_FULL = 'O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego, zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym, którzy najbardziej potrzebują Twojego miłosierdzia.';
+  const POD_TWOJA_OBRONE_FULL = 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko, naszymi prośbami racz nie gardzić w potrzebach naszych, ale od wszelakich złych przygód racz nas zawsze wybawiać, Panno chwalebna i błogosławiona. O Pani nasza, Orędowniczko nasza, Pośredniczko nasza, Pocieszycielko nasza. W imię Ojca i Syna, i Ducha Świętego. Amen.';
+
+  // Krok 1: Krzyżyk – Znak Krzyża i pełne Wyznanie Wiary (Wierzę w Boga Ojca)
   steps.push({
     stepIndex: 1,
     part: 'Wprowadzenie',
-    title: 'Znak Krzyża & Skład Apostolski',
-    shortText: '+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
-    fullText: 'W imię Ojca i Syna, i Ducha Świętego. Amen. Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi...',
-    speechText: 'W imię Ojca i Syna, i Ducha Świętego. Amen. Wierzę w Boga, Ojca wszechmogącego...',
+    title: 'Znak Krzyża & Wierzę w Boga Ojca',
+    shortText: '+ W imię Ojca i Syna... Wierzę w Boga Ojca...',
+    fullText: '+ W imię Ojca i Syna, i Ducha Świętego. Amen.\n\n' + WIERZE_W_BOGA_FULL,
+    speechText: 'W imię Ojca i Syna, i Ducha Świętego. Amen. ' + WIERZE_W_BOGA_FULL,
     type: 'cross', decade: 0, beadNumber: 1, beadId: 'bead-cross'
   });
 
@@ -159,10 +167,10 @@ function generateRosarySteps() {
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Ojcze nasz (o pomnożenie wiary)',
-    shortText: 'Ojcze nasz, któryś jest w niebie...',
-    fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
-    speechText: 'Ojcze nasz, któryś jest w niebie...',
+    title: 'Modlitwa Pańska (Ojcze nasz)',
+    shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
+    fullText: OJCZE_NASZ_FULL,
+    speechText: OJCZE_NASZ_FULL,
     type: 'large', decade: 0, beadNumber: 2, beadId: 'bead-stem-large'
   });
 
@@ -171,9 +179,9 @@ function generateRosarySteps() {
     stepIndex: 3,
     part: 'Modlitwy wstępne',
     title: 'Zdrowaś Maryjo (o cnotę Wiary)',
-    shortText: 'Zdrowaś Maryjo, łaski pełna...',
-    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen. – o przymnożenie Wiary.',
-    speechText: 'Zdrowaś Maryjo, łaski pełna...',
+    shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
+    fullText: ZDROVAS_FULL + ' (o przymnożenie Wiary)',
+    speechText: ZDROVAS_FULL,
     type: 'small', decade: 0, beadNumber: 3, beadId: 'bead-stem-red-1'
   });
 
@@ -182,9 +190,9 @@ function generateRosarySteps() {
     stepIndex: 4,
     part: 'Modlitwy wstępne',
     title: 'Zdrowaś Maryjo (o cnotę Nadziei)',
-    shortText: 'Zdrowaś Maryjo, łaski pełna...',
-    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą, błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen. – o ugruntowanie Nadziei.',
-    speechText: 'Zdrowaś Maryjo, łaski pełna...',
+    shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
+    fullText: ZDROVAS_FULL + ' (o ugruntowanie Nadziei)',
+    speechText: ZDROVAS_FULL,
     type: 'small', decade: 0, beadNumber: 4, beadId: 'bead-stem-red-2'
   });
 
@@ -194,8 +202,8 @@ function generateRosarySteps() {
     part: 'Modlitwy wstępne',
     title: 'Zdrowaś Maryjo (o cnotę Miłości) & Chwała Ojcu',
     shortText: 'Zdrowaś Maryjo... Chwała Ojcu...',
-    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą... – o rozpalenie Miłości. Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen.',
-    speechText: 'Zdrowaś Maryjo... Chwała Ojcu...',
+    fullText: ZDROVAS_FULL + ' (o rozpalenie Miłości)\n\n' + CHWALA_OJCU_FULL,
+    speechText: ZDROVAS_FULL + ' ' + CHWALA_OJCU_FULL,
     type: 'small', decade: 0, beadNumber: 5, beadId: 'bead-stem-red-3'
   });
 
@@ -207,46 +215,50 @@ function generateRosarySteps() {
     else if (d === 4) largeBeadId = 'bead-large-4';
     else if (d === 5) largeBeadId = 'bead-large-5';
 
+    // Duży paciorek: Ojcze nasz
     steps.push({
       stepIndex: cur++,
       part: `Dziesiątka ${d} z 5`,
       title: `Ojcze nasz (${d}. tajemnica)`,
-      shortText: 'Ojcze nasz, któryś jest w niebie...',
-      fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
-      speechText: 'Ojcze nasz...',
+      shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
+      fullText: OJCZE_NASZ_FULL,
+      speechText: OJCZE_NASZ_FULL,
       type: 'large', decade: d, beadNumber: 0, beadId: largeBeadId
     });
 
+    // 10 małych paciorków: Zdrowaś Maryjo
     for (let b = 1; b <= 10; b++) {
       steps.push({
         stepIndex: cur++,
         part: `Dziesiątka ${d} · ${b} z 10`,
         title: `Zdrowaś Maryjo (${b}/10)`,
         shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
-        fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
-        speechText: 'Zdrowaś Maryjo, łaski pełna...',
+        fullText: ZDROVAS_FULL,
+        speechText: ZDROVAS_FULL,
         type: 'small', decade: d, beadNumber: b, beadId: `bead-dec${d}-${b}`
       });
     }
   }
 
+  // Zakończenie: Chwała Ojcu & Modlitwa Fatimska
   steps.push({
     stepIndex: cur++,
     part: 'Zakończenie',
     title: 'Chwała Ojcu & Modlitwa Fatimska',
     shortText: 'Chwała Ojcu... O mój Jezu...',
-    fullText: 'Chwała Ojcu i Synowi, i Duchowi Świętemu... O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego, zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym, którzy najbardziej potrzebują Twojego miłosierdzia.',
-    speechText: 'Chwała Ojcu i Synowi...',
+    fullText: CHWALA_OJCU_FULL + '\n\n' + FATIMA_FULL,
+    speechText: CHWALA_OJCU_FULL + ' ' + FATIMA_FULL,
     type: 'holyGod', decade: 6, beadNumber: 1, beadId: 'bead-connector'
   });
 
+  // Zakończenie: Pod Twoją obronę & Znak Krzyża
   steps.push({
     stepIndex: cur++,
     part: 'Zakończenie',
     title: 'Pod Twoją obronę & Znak Krzyża',
     shortText: 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko...',
-    fullText: 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko, naszymi prośbami racz nie gardzić w potrzebach naszych, ale od wszelakich złych przygód racz nas zawsze wybawiać, Panno chwalebna i błogosławiona. O Pani nasza, Orędowniczko nasza, Pośredniczko nasza, Pocieszycielko nasza! + W imię Ojca i Syna, i Ducha Świętego. Amen.',
-    speechText: 'Pod Twoją obronę uciekamy się...',
+    fullText: POD_TWOJA_OBRONE_FULL,
+    speechText: POD_TWOJA_OBRONE_FULL,
     type: 'closing', decade: 6, beadNumber: 2, beadId: 'bead-cross'
   });
 
