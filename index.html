@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=26">
+  <link rel="stylesheet" href="style.css?v=29">
 </head>
 <body>
   <div id="app" class="app-container mode-koronka">
@@ -99,6 +99,11 @@
 
     <!-- 4 & 5. Główna strefa z wizerunkiem przesuniętym niżej i powiększonym schematem serca -->
     <main class="image-stage" id="prayer-stage">
+      <!-- Zawsze widoczny przycisk rozpoczęcia modlitwy od początku (lewy górny róg, ciemne tło obrazu) -->
+      <button id="btn-restart-always" class="btn-restart-always" title="Rozpocznij modlitwę od nowa" aria-label="Rozpocznij modlitwę od nowa">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
+        <span>Od nowa</span>
+      </button>
       <!-- Przycisk przywracania tekstu (widoczny gdy panel tekstowy jest ukryty) -->
       <button id="btn-restore-text" class="btn-restore-text hidden" title="Pokaż tekst modlitwy" aria-label="Pokaż tekst modlitwy">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
@@ -176,8 +181,8 @@
 
           <!-- Schemat serca rysowany w układzie 460×1024 i przeliczany na piksele oryginalnego obrazu (app.js: HEART_LAYOUTS) -->
           <g id="rosary-layout" transform="matrix(1.380435 0 0 1.380435 0 -179.457)">
-          <!-- Łańcuszek łączący krzyżyk i paciorki wstępne do łącznika -->
-          <path class="rosary-chain stem-chain" d="M 231.0 565.0 L 231.0 529.0 L 231.0 503.0 L 231.0 477.0 L 231.0 453.5 L 233.5 429.0"/>
+          <!-- Łańcuszek łączący krzyżyk i 3 paciorki wstępne do łącznika -->
+          <path class="rosary-chain stem-chain" d="M 231.0 580.0 L 231.0 538.0 L 231.0 498.0 L 231.0 458.0 L 233.5 429.0"/>
           
           <!-- Pętla w kształcie serca łącząca 5 dziesiątek -->
           <path class="rosary-chain loop-chain" d="M 233.5 429.0 L 248.2 403.1 L 267.2 386.1 L 287.8 371.0 L 311.4 359.9 L 336.0 355.7 L 361.5 357.1 L 386.5 364.9 L 407.0 380.0 L 422.8 400.8 L 434.6 423.0 L 441.5 450.2 L 443.4 476.6 L 443.2 502.8 L 439.4 528.2 L 433.0 553.4 L 423.4 577.2 L 411.9 600.2 L 399.0 623.0 L 385.0 644.0 L 369.4 664.8 L 353.6 684.4 L 336.5 705.4 L 320.0 718.0 L 302.0 735.0 L 284.0 751.0 L 264.0 765.0 L 242.0 776.0 L 220.0 776.0 L 198.0 765.0 L 178.0 751.0 L 160.0 735.0 L 142.0 718.0 L 126.7 704.7 L 108.4 684.4 L 92.8 664.8 L 77.6 644.2 L 63.0 623.0 L 50.1 600.2 L 38.8 577.4 L 30.0 553.7 L 22.9 528.2 L 18.6 503.0 L 18.0 476.3 L 20.6 450.1 L 27.4 423.0 L 40.0 400.3 L 55.2 379.9 L 75.2 365.6 L 100.8 357.0 L 126.0 355.7 L 151.0 360.0 L 174.0 370.5 L 194.8 385.4 L 214.3 403.0 Z"/>
@@ -189,105 +194,100 @@
           </g>
 
           <!-- 1. Złoty Krzyżyk (Kroki 1 i 61) -->
-          <g id="bead-cross" class="bead-item bead-cross" data-step="1" data-id="bead-cross" transform="translate(231, 565)">
+          <g id="bead-cross" class="bead-item bead-cross" data-step="1" data-id="bead-cross" transform="translate(231, 580)">
             <rect x="-24" y="-32" width="48" height="64" fill="transparent" class="bead-hit-area"/>
             <rect x="-3.5" y="-24" width="7" height="46" rx="2" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
             <rect x="-16" y="-14" width="32" height="7" rx="2" fill="url(#grad-gold-cross)" filter="url(#bead-shadow)"/>
             <path d="M 0 -12 L 0 6 M -8 -7 L 8 -7 M 0 6 L -3.5 16 M 0 6 L 3.5 16" stroke="#4d3701" stroke-width="1.3" stroke-linecap="round"/>
           </g>
 
-          <!-- Paciorki modlitw wstępnych: 1 duży czerwony paciorek + 3 mniejsze niebieskie paciorki -->
+          <!-- Paciorki modlitw wstępnych: 3 paciorki na sznurku (Ojcze nasz, Zdrowaś Maryjo, Wierzę w Boga) -->
           <g id="beads-group" class="beads-group">
-            <!-- 1. Pierwszy duży czerwony paciorek na początku różańca (Ojcze nasz) -->
-            <g id="bead-stem-large" class="bead-item bead-large" data-step="2" data-id="bead-stem-large" data-decade="0" transform="translate(231.0, 529.0)">
+            <!-- 1. Pierwszy paciorek wstępny: Ojcze nasz (Krok 2) -->
+            <g id="bead-stem-large" class="bead-item bead-small" data-step="2" data-id="bead-stem-large" data-decade="0" transform="translate(231.0, 538.0)">
               <circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/>
-              <circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+              <circle class="bead-circle" cx="0" cy="0" r="10.8" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
             </g>
-            <!-- 2. Pierwszy mniejszy niebieski paciorek (Zdrowaś Maryjo) -->
-            <g id="bead-stem-red-1" class="bead-item bead-small" data-step="3" data-id="bead-stem-red-1" data-decade="0" transform="translate(231.0, 503.0)">
-              <circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/>
-              <circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+            <!-- 2. Drugi paciorek wstępny: Zdrowaś Maryjo (Krok 3) -->
+            <g id="bead-stem-red-1" class="bead-item bead-small" data-step="3" data-id="bead-stem-red-1" data-decade="0" transform="translate(231.0, 498.0)">
+              <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+              <circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
             </g>
-            <!-- 3. Drugi mniejszy niebieski paciorek (Wierzę w Boga) -->
-            <g id="bead-stem-red-2" class="bead-item bead-small" data-step="4" data-id="bead-stem-red-2" data-decade="0" transform="translate(231.0, 477.0)">
-              <circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/>
-              <circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
-            </g>
-            <!-- 4. Trzeci mniejszy niebieski paciorek -->
-            <g id="bead-stem-red-3" class="bead-item bead-small" data-step="5" data-id="bead-stem-red-3" data-decade="0" transform="translate(231.0, 453.5)">
-              <circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/>
-              <circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
+            <!-- 3. Trzeci paciorek wstępny: Wierzę w Boga (Krok 4) -->
+            <g id="bead-stem-red-2" class="bead-item bead-small" data-step="4" data-id="bead-stem-red-2" data-decade="0" transform="translate(231.0, 458.0)">
+              <circle class="bead-hit-area" cx="0" cy="0" r="20" fill="transparent"/>
+              <circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
             </g>
 
-            <!-- Łącznik Serca: Krok 5 - 1. Dziesiątka (Ojcze Przedwieczny - duży czerwony) oraz Krok 60 (Święty Boże) -->
+            <!-- Łącznik Serca: Krok 5 - 1. Dziesiątka (Ojcze Przedwieczny - duży niebieski) oraz Krok 60 (Święty Boże) -->
             <g id="bead-connector" class="bead-item bead-large bead-connector" data-step="5" data-id="bead-connector" data-decade="1" transform="translate(233.5, 429.0)">
               <circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/>
-              <circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/>
+              <circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/>
             </g>
 
-            <!-- DZIESIĄTKA 1 (10 małych niebieskich paciorków) -->
-            <g id="bead-dec1-1" class="bead-item bead-small" data-step="6" data-id="bead-dec1-1" data-decade="1" transform="translate(248.2, 403.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-2" class="bead-item bead-small" data-step="7" data-id="bead-dec1-2" data-decade="1" transform="translate(267.2, 386.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-3" class="bead-item bead-small" data-step="8" data-id="bead-dec1-3" data-decade="1" transform="translate(287.8, 371.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-4" class="bead-item bead-small" data-step="9" data-id="bead-dec1-4" data-decade="1" transform="translate(311.4, 359.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-5" class="bead-item bead-small" data-step="10" data-id="bead-dec1-5" data-decade="1" transform="translate(336.0, 355.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-6" class="bead-item bead-small" data-step="11" data-id="bead-dec1-6" data-decade="1" transform="translate(361.5, 357.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-7" class="bead-item bead-small" data-step="12" data-id="bead-dec1-7" data-decade="1" transform="translate(386.5, 364.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-8" class="bead-item bead-small" data-step="13" data-id="bead-dec1-8" data-decade="1" transform="translate(407.0, 380.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-9" class="bead-item bead-small" data-step="14" data-id="bead-dec1-9" data-decade="1" transform="translate(422.8, 400.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec1-10" class="bead-item bead-small" data-step="15" data-id="bead-dec1-10" data-decade="1" transform="translate(434.6, 423.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <!-- DZIESIĄTKA 1 (10 małych czerwonych paciorków) -->
+            <g id="bead-dec1-1" class="bead-item bead-small" data-step="6" data-id="bead-dec1-1" data-decade="1" transform="translate(248.2, 403.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-2" class="bead-item bead-small" data-step="7" data-id="bead-dec1-2" data-decade="1" transform="translate(267.2, 386.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-3" class="bead-item bead-small" data-step="8" data-id="bead-dec1-3" data-decade="1" transform="translate(287.8, 371.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-4" class="bead-item bead-small" data-step="9" data-id="bead-dec1-4" data-decade="1" transform="translate(311.4, 359.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-5" class="bead-item bead-small" data-step="10" data-id="bead-dec1-5" data-decade="1" transform="translate(336.0, 355.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-6" class="bead-item bead-small" data-step="11" data-id="bead-dec1-6" data-decade="1" transform="translate(361.5, 357.1)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-7" class="bead-item bead-small" data-step="12" data-id="bead-dec1-7" data-decade="1" transform="translate(386.5, 364.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-8" class="bead-item bead-small" data-step="13" data-id="bead-dec1-8" data-decade="1" transform="translate(407.0, 380.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-9" class="bead-item bead-small" data-step="14" data-id="bead-dec1-9" data-decade="1" transform="translate(422.8, 400.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec1-10" class="bead-item bead-small" data-step="15" data-id="bead-dec1-10" data-decade="1" transform="translate(434.6, 423.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
 
-            <!-- DZIESIĄTKA 2 (1 duży czerwony + 10 małych niebieskich) -->
-            <g id="bead-large-2" class="bead-item bead-large" data-step="16" data-id="bead-large-2" data-decade="2" transform="translate(441.5, 450.2)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-1" class="bead-item bead-small" data-step="17" data-id="bead-dec2-1" data-decade="2" transform="translate(443.4, 476.6)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-2" class="bead-item bead-small" data-step="18" data-id="bead-dec2-2" data-decade="2" transform="translate(443.2, 502.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-3" class="bead-item bead-small" data-step="19" data-id="bead-dec2-3" data-decade="2" transform="translate(439.4, 528.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-4" class="bead-item bead-small" data-step="20" data-id="bead-dec2-4" data-decade="2" transform="translate(433.0, 553.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-5" class="bead-item bead-small" data-step="21" data-id="bead-dec2-5" data-decade="2" transform="translate(423.4, 577.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-6" class="bead-item bead-small" data-step="22" data-id="bead-dec2-6" data-decade="2" transform="translate(411.9, 600.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-7" class="bead-item bead-small" data-step="23" data-id="bead-dec2-7" data-decade="2" transform="translate(399.0, 623.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-8" class="bead-item bead-small" data-step="24" data-id="bead-dec2-8" data-decade="2" transform="translate(385.0, 644.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-9" class="bead-item bead-small" data-step="25" data-id="bead-dec2-9" data-decade="2" transform="translate(369.4, 664.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec2-10" class="bead-item bead-small" data-step="26" data-id="bead-dec2-10" data-decade="2" transform="translate(353.6, 684.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <!-- DZIESIĄTKA 2 (1 duży niebieski + 10 małych czerwonych) -->
+            <g id="bead-large-2" class="bead-item bead-large" data-step="16" data-id="bead-large-2" data-decade="2" transform="translate(441.5, 450.2)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-1" class="bead-item bead-small" data-step="17" data-id="bead-dec2-1" data-decade="2" transform="translate(443.4, 476.6)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-2" class="bead-item bead-small" data-step="18" data-id="bead-dec2-2" data-decade="2" transform="translate(443.2, 502.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-3" class="bead-item bead-small" data-step="19" data-id="bead-dec2-3" data-decade="2" transform="translate(439.4, 528.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-4" class="bead-item bead-small" data-step="20" data-id="bead-dec2-4" data-decade="2" transform="translate(433.0, 553.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-5" class="bead-item bead-small" data-step="21" data-id="bead-dec2-5" data-decade="2" transform="translate(423.4, 577.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-6" class="bead-item bead-small" data-step="22" data-id="bead-dec2-6" data-decade="2" transform="translate(411.9, 600.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-7" class="bead-item bead-small" data-step="23" data-id="bead-dec2-7" data-decade="2" transform="translate(399.0, 623.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-8" class="bead-item bead-small" data-step="24" data-id="bead-dec2-8" data-decade="2" transform="translate(385.0, 644.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-9" class="bead-item bead-small" data-step="25" data-id="bead-dec2-9" data-decade="2" transform="translate(369.4, 664.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec2-10" class="bead-item bead-small" data-step="26" data-id="bead-dec2-10" data-decade="2" transform="translate(353.6, 684.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
 
-            <!-- DZIESIĄTKA 3 (1 duży czerwony + 10 małych niebieskich) -->
-            <g id="bead-large-3" class="bead-item bead-large" data-step="27" data-id="bead-large-3" data-decade="3" transform="translate(336.5, 705.4)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-1" class="bead-item bead-small" data-step="28" data-id="bead-dec3-1" data-decade="3" transform="translate(320.0, 718.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-2" class="bead-item bead-small" data-step="29" data-id="bead-dec3-2" data-decade="3" transform="translate(302.0, 735.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-3" class="bead-item bead-small" data-step="30" data-id="bead-dec3-3" data-decade="3" transform="translate(284.0, 751.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-4" class="bead-item bead-small" data-step="31" data-id="bead-dec3-4" data-decade="3" transform="translate(264.0, 765.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-5" class="bead-item bead-small" data-step="32" data-id="bead-dec3-5" data-decade="3" transform="translate(242.0, 776.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-6" class="bead-item bead-small" data-step="33" data-id="bead-dec3-6" data-decade="3" transform="translate(220.0, 776.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-7" class="bead-item bead-small" data-step="34" data-id="bead-dec3-7" data-decade="3" transform="translate(198.0, 765.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-8" class="bead-item bead-small" data-step="35" data-id="bead-dec3-8" data-decade="3" transform="translate(178.0, 751.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-9" class="bead-item bead-small" data-step="36" data-id="bead-dec3-9" data-decade="3" transform="translate(160.0, 735.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec3-10" class="bead-item bead-small" data-step="37" data-id="bead-dec3-10" data-decade="3" transform="translate(142.0, 718.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <!-- DZIESIĄTKA 3 (1 duży niebieski + 10 małych czerwonych) -->
+            <g id="bead-large-3" class="bead-item bead-large" data-step="27" data-id="bead-large-3" data-decade="3" transform="translate(336.5, 705.4)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-1" class="bead-item bead-small" data-step="28" data-id="bead-dec3-1" data-decade="3" transform="translate(320.0, 718.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-2" class="bead-item bead-small" data-step="29" data-id="bead-dec3-2" data-decade="3" transform="translate(302.0, 735.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-3" class="bead-item bead-small" data-step="30" data-id="bead-dec3-3" data-decade="3" transform="translate(284.0, 751.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-4" class="bead-item bead-small" data-step="31" data-id="bead-dec3-4" data-decade="3" transform="translate(264.0, 765.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-5" class="bead-item bead-small" data-step="32" data-id="bead-dec3-5" data-decade="3" transform="translate(242.0, 776.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-6" class="bead-item bead-small" data-step="33" data-id="bead-dec3-6" data-decade="3" transform="translate(220.0, 776.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-7" class="bead-item bead-small" data-step="34" data-id="bead-dec3-7" data-decade="3" transform="translate(198.0, 765.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-8" class="bead-item bead-small" data-step="35" data-id="bead-dec3-8" data-decade="3" transform="translate(178.0, 751.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-9" class="bead-item bead-small" data-step="36" data-id="bead-dec3-9" data-decade="3" transform="translate(160.0, 735.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec3-10" class="bead-item bead-small" data-step="37" data-id="bead-dec3-10" data-decade="3" transform="translate(142.0, 718.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
 
-            <!-- DZIESIĄTKA 4 (1 duży czerwony + 10 małych niebieskich) -->
-            <g id="bead-large-4" class="bead-item bead-large" data-step="38" data-id="bead-large-4" data-decade="4" transform="translate(126.7, 704.7)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-1" class="bead-item bead-small" data-step="39" data-id="bead-dec4-1" data-decade="4" transform="translate(108.4, 684.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-2" class="bead-item bead-small" data-step="40" data-id="bead-dec4-2" data-decade="4" transform="translate(92.8, 664.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-3" class="bead-item bead-small" data-step="41" data-id="bead-dec4-4" data-decade="4" transform="translate(77.6, 644.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-4" class="bead-item bead-small" data-step="42" data-id="bead-dec4-4" data-decade="4" transform="translate(63.0, 623.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-5" class="bead-item bead-small" data-step="43" data-id="bead-dec4-5" data-decade="4" transform="translate(50.1, 600.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-6" class="bead-item bead-small" data-step="44" data-id="bead-dec4-6" data-decade="4" transform="translate(38.8, 577.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-7" class="bead-item bead-small" data-step="45" data-id="bead-dec4-7" data-decade="4" transform="translate(30.0, 553.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-8" class="bead-item bead-small" data-step="46" data-id="bead-dec4-8" data-decade="4" transform="translate(22.9, 528.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-9" class="bead-item bead-small" data-step="47" data-id="bead-dec4-9" data-decade="4" transform="translate(18.6, 503.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec4-10" class="bead-item bead-small" data-step="48" data-id="bead-dec4-10" data-decade="4" transform="translate(18.0, 476.3)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <!-- DZIESIĄTKA 4 (1 duży niebieski + 10 małych czerwonych) -->
+            <g id="bead-large-4" class="bead-item bead-large" data-step="38" data-id="bead-large-4" data-decade="4" transform="translate(126.7, 704.7)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-1" class="bead-item bead-small" data-step="39" data-id="bead-dec4-1" data-decade="4" transform="translate(108.4, 684.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-2" class="bead-item bead-small" data-step="40" data-id="bead-dec4-2" data-decade="4" transform="translate(92.8, 664.8)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-3" class="bead-item bead-small" data-step="41" data-id="bead-dec4-4" data-decade="4" transform="translate(77.6, 644.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-4" class="bead-item bead-small" data-step="42" data-id="bead-dec4-4" data-decade="4" transform="translate(63.0, 623.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-5" class="bead-item bead-small" data-step="43" data-id="bead-dec4-5" data-decade="4" transform="translate(50.1, 600.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-6" class="bead-item bead-small" data-step="44" data-id="bead-dec4-6" data-decade="4" transform="translate(38.8, 577.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-7" class="bead-item bead-small" data-step="45" data-id="bead-dec4-7" data-decade="4" transform="translate(30.0, 553.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-8" class="bead-item bead-small" data-step="46" data-id="bead-dec4-8" data-decade="4" transform="translate(22.9, 528.2)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-9" class="bead-item bead-small" data-step="47" data-id="bead-dec4-9" data-decade="4" transform="translate(18.6, 503.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec4-10" class="bead-item bead-small" data-step="48" data-id="bead-dec4-10" data-decade="4" transform="translate(18.0, 476.3)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
 
-            <!-- DZIESIĄTKA 5 (1 duży czerwony + 10 małych niebieskich) -->
-            <g id="bead-large-5" class="bead-item bead-large" data-step="49" data-id="bead-large-5" data-decade="5" transform="translate(20.6, 450.1)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-1" class="bead-item bead-small" data-step="50" data-id="bead-dec5-1" data-decade="5" transform="translate(27.4, 423.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-2" class="bead-item bead-small" data-step="51" data-id="bead-dec5-2" data-decade="5" transform="translate(40.0, 400.3)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-3" class="bead-item bead-small" data-step="52" data-id="bead-dec5-3" data-decade="5" transform="translate(55.2, 379.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-4" class="bead-item bead-small" data-step="53" data-id="bead-dec5-4" data-decade="5" transform="translate(75.2, 365.6)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-5" class="bead-item bead-small" data-step="54" data-id="bead-dec5-5" data-decade="5" transform="translate(100.8, 357.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-6" class="bead-item bead-small" data-step="55" data-id="bead-dec5-6" data-decade="5" transform="translate(126.0, 355.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-7" class="bead-item bead-small" data-step="56" data-id="bead-dec5-7" data-decade="5" transform="translate(151.0, 360.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-8" class="bead-item bead-small" data-step="57" data-id="bead-dec5-8" data-decade="5" transform="translate(174.0, 370.5)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-9" class="bead-item bead-small" data-step="58" data-id="bead-dec5-9" data-decade="5" transform="translate(194.8, 385.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
-            <g id="bead-dec5-10" class="bead-item bead-small" data-step="59" data-id="bead-dec5-10" data-decade="5" transform="translate(214.3, 403.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="9.8" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <!-- DZIESIĄTKA 5 (1 duży niebieski + 10 małych czerwonych) -->
+            <g id="bead-large-5" class="bead-item bead-large" data-step="49" data-id="bead-large-5" data-decade="5" transform="translate(20.6, 450.1)"><circle class="bead-hit-area" cx="0" cy="0" r="22" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="13" fill="url(#grad-blue-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-1" class="bead-item bead-small" data-step="50" data-id="bead-dec5-1" data-decade="5" transform="translate(27.4, 423.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-2" class="bead-item bead-small" data-step="51" data-id="bead-dec5-2" data-decade="5" transform="translate(40.0, 400.3)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-3" class="bead-item bead-small" data-step="52" data-id="bead-dec5-3" data-decade="5" transform="translate(55.2, 379.9)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-4" class="bead-item bead-small" data-step="53" data-id="bead-dec5-4" data-decade="5" transform="translate(75.2, 365.6)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-5" class="bead-item bead-small" data-step="54" data-id="bead-dec5-5" data-decade="5" transform="translate(100.8, 357.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-6" class="bead-item bead-small" data-step="55" data-id="bead-dec5-6" data-decade="5" transform="translate(126.0, 355.7)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-7" class="bead-item bead-small" data-step="56" data-id="bead-dec5-7" data-decade="5" transform="translate(151.0, 360.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-8" class="bead-item bead-small" data-step="57" data-id="bead-dec5-8" data-decade="5" transform="translate(174.0, 370.5)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-9" class="bead-item bead-small" data-step="58" data-id="bead-dec5-9" data-decade="5" transform="translate(194.8, 385.4)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
+            <g id="bead-dec5-10" class="bead-item bead-small" data-step="59" data-id="bead-dec5-10" data-decade="5" transform="translate(214.3, 403.0)"><circle class="bead-hit-area" cx="0" cy="0" r="18" fill="transparent"/><circle class="bead-circle" cx="0" cy="0" r="10" fill="url(#grad-red-bead)" filter="url(#bead-shadow)"/></g>
           </g>
           </g>
         </svg>
@@ -297,42 +297,43 @@
       <div id="tap-hint" class="tap-hint">
         Dotknij ekranu, paciorka lub przycisku „Dalej”
       </div>
+
+      <!-- 2. Pływający panel tekstu modlitwy PONAD dolną częścią szaty, PONIŻEJ schematu serca -->
+      <!-- Ograniczona wysokość, czcionka dopasowana, możliwość zwijania i ukrywania -->
+      <section class="prayer-stage-header prayer-floating-card" id="prayer-tap-text-area" role="button" tabindex="0" aria-label="Dotknij, aby przejść do następnego paciorka">
+        <div class="prayer-progress-track" aria-hidden="true"><div id="prayer-progress-fill" class="prayer-progress-fill"></div></div>
+        
+        <div class="prayer-meta-row">
+          <span id="prayer-progress-indicator" class="prayer-progress-indicator">Wprowadzenie · Krok 1 z 61</span>
+          <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta na głos">
+            <span></span><span></span><span></span>
+          </div>
+          <div class="text-controls">
+            <button id="btn-text-size-down" class="text-ctrl-btn" title="Zmień rozmiar tekstu" aria-label="Zmień rozmiar tekstu">
+              <span class="text-ctrl-label">Aa</span>
+            </button>
+            <button id="btn-text-collapse" class="text-ctrl-btn" title="Zwiń/Rozwiń tekst" aria-label="Zwiń tekst">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
+            </button>
+            <button id="btn-text-hide" class="text-ctrl-btn" title="Ukryj tekst modlitwy" aria-label="Ukryj tekst">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Główny tekst modlitwy - wygodna, czytelna czcionka niezasłaniająca wizerunku -->
+        <div class="prayer-text-container" id="prayer-text-container">
+          <h2 id="prayer-title" class="prayer-title-discrete">Znak Krzyża</h2>
+          <p id="prayer-text" class="prayer-text">+ W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
+          <div id="prayer-intention-box" class="prayer-intention-box hidden">
+            <span class="intention-tag">Intencja:</span>
+            <span id="prayer-intention-display" class="intention-display">Za pokój i o Miłosierdzie Boże dla całego świata</span>
+          </div>
+        </div>
+      </section>
     </main>
 
-    <!-- 2. Panel tekstu modlitwy POD wizerunkiem i schematem – ograniczona wysokość, aby nie konkurował z obrazem -->
-    <section class="prayer-stage-header" id="prayer-tap-text-area" role="button" tabindex="0" aria-label="Dotknij, aby przejść do następnego paciorka">
-      <!-- 7. Dyskretny wskaźnik postępu nad tekstem + kontrolki widoczności tekstu -->
-      <div class="prayer-meta-row">
-        <div class="prayer-progress-track" aria-hidden="true"><div id="prayer-progress-fill" class="prayer-progress-fill"></div></div>
-        <span id="prayer-progress-indicator" class="prayer-progress-indicator">Wprowadzenie · Krok 1 z 61</span>
-        <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta na głos">
-          <span></span><span></span><span></span>
-        </div>
-        <div class="text-controls">
-          <button id="btn-text-size-down" class="text-ctrl-btn" title="Zmień rozmiar tekstu" aria-label="Zmień rozmiar tekstu">
-            <span class="text-ctrl-label">Aa</span>
-          </button>
-          <button id="btn-text-collapse" class="text-ctrl-btn" title="Zwiń/Rozwiń tekst" aria-label="Zwiń tekst">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-          </button>
-          <button id="btn-text-hide" class="text-ctrl-btn" title="Ukryj tekst modlitwy" aria-label="Ukryj tekst">
-            <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-          </button>
-        </div>
-      </div>
-
-      <!-- Główny tekst modlitwy - duża, przejrzysta czcionka, nigdy nie przycięta -->
-      <div class="prayer-text-container" id="prayer-text-container">
-        <h2 id="prayer-title" class="prayer-title-discrete">Znak Krzyża</h2>
-        <p id="prayer-text" class="prayer-text">+ W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
-        <div id="prayer-intention-box" class="prayer-intention-box hidden">
-          <span class="intention-tag">Intencja:</span>
-          <span id="prayer-intention-display" class="intention-display">Za pokój i o Miłosierdzie Boże dla całego świata</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- 3. Jeden napis „Jezu, ufam Tobie” – złote litery bezpośrednio na ciemnym tle, BEZ RAMKI, bez wykrzyknika -->
+    <!-- 3. Strefa napisu „Jezu, ufam Tobie” – w trybie koronki ukryta, bo oryginalny obraz z Wilna ma już napis w dolnej części -->
     <div class="sacred-inscription-zone">
       <div id="sacred-inscription" class="sacred-inscription">JEZU, UFAM TOBIE</div>
     </div>
@@ -380,6 +381,22 @@
       </div>
     </footer>
 
+    <!-- Potwierdzenie „Od nowa” (własne okno – systemowe confirm() bywa blokowane w aplikacjach i PWA) -->
+    <div id="modal-restart" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="restart-title">
+      <div class="modal-card completion-card">
+        <h2 id="restart-title" class="completion-title">Rozpocząć od nowa?</h2>
+        <p class="completion-message">Modlitwa wróci do pierwszego kroku – znaku krzyża.</p>
+        <div class="completion-actions">
+          <button id="btn-restart-confirm" class="portal-btn" style="width: 100%; justify-content: center;">
+            <span>Tak, od nowa</span>
+          </button>
+          <button id="btn-restart-cancel" class="portal-btn portal-btn-secondary" style="width: 100%; justify-content: center;">
+            <span>Anuluj</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- EKRAN ZAKOŃCZENIA (Krótki, godny komunikat bez fanfar) -->
     <div id="modal-completion" class="modal-overlay hidden" role="dialog" aria-modal="true">
       <div class="modal-card completion-card">
@@ -420,13 +437,14 @@
           <div class="settings-group">
             <label class="settings-label">
               <span>Wielkość tekstu modlitwy</span>
-              <span id="font-size-val" class="settings-badge">17 sp</span>
+              <span id="font-size-val" class="settings-badge">14 sp</span>
             </label>
             <div class="font-size-buttons">
-              <button class="font-size-btn active" data-size="17">17 sp (Standard)</button>
-              <button class="font-size-btn" data-size="20">20 sp (Duża)</button>
-              <button class="font-size-btn" data-size="24">24 sp (Senior)</button>
-              <button class="font-size-btn" data-size="28">28 sp (Maks)</button>
+              <button class="font-size-btn" data-size="12">12 sp (Mini)</button>
+              <button class="font-size-btn active" data-size="14">14 sp (Kompaktowy)</button>
+              <button class="font-size-btn" data-size="16">16 sp (Standard)</button>
+              <button class="font-size-btn" data-size="18">18 sp (Duża)</button>
+              <button class="font-size-btn" data-size="22">22 sp (Senior)</button>
             </div>
           </div>
 
@@ -635,11 +653,11 @@
             <div class="action-card">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <strong style="color:var(--gold-light);">🤖 Android (.apk)</strong>
-                <span class="install-badge">3.9 MB</span>
+                <span class="install-badge">8.0 MB</span>
               </div>
-              <p>Pakiet instalacyjny dla urządzeń Android ze wsparciem wibracji.</p>
+              <p>Natywna aplikacja Android (wersja 3.0.0) – modlitwa, wizerunek i lektor działają bez internetu. Jeśli masz poprzednią wersję, najpierw ją odinstaluj.</p>
               <a href="assets/koronka.apk" download="koronka.apk" class="portal-btn" style="text-align:center; justify-content:center;">
-                <span>Pobierz koronka.apk (3.9 MB)</span>
+                <span>Pobierz koronka.apk (8.0 MB)</span>
               </a>
             </div>
 
@@ -647,11 +665,11 @@
             <div class="action-card">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <strong style="color:var(--gold-light);">📦 Google Play (.aab)</strong>
-                <span class="install-badge">4.0 MB</span>
+                <span class="install-badge">7.8 MB</span>
               </div>
-              <p>Pakiet dystrybucyjny dla Google Play Store.</p>
+              <p>Natywny pakiet dystrybucyjny (wersja 3.0.0) dla Google Play Store.</p>
               <a href="assets/koronka.aab" download="koronka.aab" class="portal-btn portal-btn-secondary" style="text-align:center; justify-content:center;">
-                <span>Pobierz koronka.aab (4.0 MB)</span>
+                <span>Pobierz koronka.aab (7.8 MB)</span>
               </a>
             </div>
 
@@ -659,11 +677,11 @@
             <div class="action-card">
               <div style="display:flex; justify-content:space-between; align-items:center;">
                 <strong style="color:var(--gold-light);">🍏 Apple iOS (.ipa)</strong>
-                <span class="install-badge">1.4 MB</span>
+                <span class="install-badge">iOS 14+</span>
               </div>
-              <p>Pakiet aplikacji dla iPhone / iPad (iOS 2.0).</p>
+              <p>Natywna aplikacja dla iPhone / iPad (wersja 3.0.0), niepodpisana – do instalacji wymaga podpisania (np. Sideloadly, AltStore) lub konta Apple Developer. Najprościej na iPhonie: PWA poniżej.</p>
               <a href="assets/koronka.ipa" download="koronka.ipa" class="portal-btn portal-btn-secondary" style="text-align:center; justify-content:center;">
-                <span>Pobierz koronka.ipa (1.4 MB)</span>
+                <span>Pobierz koronka.ipa</span>
               </a>
             </div>
 
@@ -694,6 +712,6 @@
 
   </div>
 
-  <script src="app.js?v=28"></script>
+  <script src="app.js?v=32"></script>
 </body>
 </html>

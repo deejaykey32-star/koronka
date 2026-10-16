@@ -21,7 +21,7 @@
   --text-muted: #cbd5e1;
   --text-dim: #8b8577;
 
-  --prayer-font-size: 17px;
+  --prayer-font-size: 14px;
 
   --font-serif: 'Cinzel', Georgia, 'Times New Roman', serif;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -214,41 +214,50 @@ html, body {
 }
 
 /* ========================================================
-   2. PANEL TEKSTU MODLITWY POD WIZERUNKIEM I SCHEMATEM
-   Ograniczona wysokość – tekst nie konkuruje z obrazem
+   2. PŁYWAJĄCY PANEL TEKSTU MODLITWY PONAD WIZERUNKIEM
+   Umieszczony w dolnej strefie szaty, poniżej schematu serca.
+   Ograniczona wysokość – nie konkuruje z wizerunkiem i nie zmniejsza obrazu.
    ======================================================== */
-.prayer-stage-header {
-  position: relative;
-  flex-shrink: 0;
-  max-height: clamp(86px, 23dvh, 200px);
-  padding: 7px 14px 8px 14px;
-  background: linear-gradient(180deg, #0c0a06 0%, #050505 100%);
+.prayer-stage-header.prayer-floating-card {
+  position: absolute;
+  bottom: 8px;
+  left: 10px;
+  right: 10px;
+  max-width: 470px;
+  margin: 0 auto;
+  max-height: clamp(80px, 20dvh, 130px);
+  padding: 6px 12px 8px 12px;
+  background: rgba(10, 10, 8, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(212, 175, 55, 0.32);
+  border-radius: 14px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8), 0 0 1px rgba(212, 175, 55, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   cursor: pointer;
   z-index: 30;
-  border-top: 1px solid rgba(212, 175, 55, 0.22);
-  transition: all 0.3s ease;
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-/* Pasek postępu całej modlitwy (złota linia na górnej krawędzi panelu) */
+/* Pasek postępu całej modlitwy (złota linia na górnej krawędzi karty) */
 .prayer-progress-track {
   position: absolute;
-  top: -1px;
+  top: 0;
   left: 0;
   right: 0;
-  height: 3px;
-  background: rgba(212, 175, 55, 0.12);
+  height: 2.5px;
+  background: rgba(212, 175, 55, 0.15);
   pointer-events: none;
 }
 
 .prayer-progress-fill {
   height: 100%;
   width: 0;
-  background: linear-gradient(90deg, #9e7a17, #f8eec4);
-  box-shadow: 0 0 8px rgba(212, 175, 55, 0.7);
+  background: linear-gradient(90deg, #b89128, #fbf2cc);
+  box-shadow: 0 0 8px rgba(212, 175, 55, 0.8);
   transition: width 0.35s ease;
 }
 
@@ -396,7 +405,8 @@ html, body {
 
 /* Zwinięty tekst – widać tylko pasek meta z postępem */
 .prayer-stage-header.collapsed {
-  padding-bottom: 5px;
+  max-height: 42px;
+  padding: 5px 12px 6px 12px;
 }
 
 .prayer-stage-header.collapsed .prayer-text-container {
@@ -413,6 +423,37 @@ html, body {
 }
 
 /* Przycisk przywracania tekstu (pływający na wizerunku) */
+/* Lewy górny róg – zawsze widoczny przycisk „Od nowa” */
+.btn-restart-always {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 25;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+  border-radius: 18px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.25s ease;
+}
+
+.btn-restart-always:hover {
+  background: rgba(212, 175, 55, 0.3);
+  border-color: var(--gold-primary);
+}
+
+.btn-restart-always:active {
+  transform: scale(0.94);
+}
+
 /* Prawy górny róg – ciemne tło obrazu, z dala od twarzy i napisu „Jezu, ufam Tobie” */
 .btn-restore-text {
   position: absolute;
@@ -555,18 +596,18 @@ html, body {
   opacity: 1 !important;
 }
 
-/* Bieżący paciorek duży (czerwony): wyrazista soczysta czerwień + aureola */
+/* Bieżący paciorek duży (niebieski): wyrazisty błękit/biel + złota aureola */
 .bead-item.bead-large.active .bead-circle {
-  fill: url(#grad-active-red-bead) !important;
-  filter: drop-shadow(0 0 10px rgba(255, 40, 40, 1)) drop-shadow(0 0 18px rgba(255, 200, 200, 0.9));
+  fill: url(#grad-active-bead) !important;
+  filter: drop-shadow(0 0 10px rgba(0, 200, 255, 1)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.95));
   transform: scale(1.25);
   opacity: 1 !important;
 }
 
-/* Bieżący paciorek mały (niebieski): lśniący błękit/biel + aureola */
+/* Bieżący paciorek mały (czerwony): wyrazista soczysta czerwień + aureola */
 .bead-item.bead-small.active .bead-circle {
-  fill: url(#grad-active-bead) !important;
-  filter: drop-shadow(0 0 10px rgba(0, 220, 255, 1)) drop-shadow(0 0 18px rgba(255, 255, 255, 0.9));
+  fill: url(#grad-active-red-bead) !important;
+  filter: drop-shadow(0 0 10px rgba(255, 40, 40, 1)) drop-shadow(0 0 18px rgba(255, 200, 200, 0.95));
   transform: scale(1.25);
   opacity: 1 !important;
 }
@@ -577,7 +618,7 @@ html, body {
 
 .bead-cross.active {
   filter: drop-shadow(0 0 12px rgba(255, 225, 100, 0.95)) drop-shadow(0 0 20px rgba(255, 255, 255, 0.85));
-  transform: translate(231px, 565px) scale(1.15);
+  transform: translate(231px, 580px) scale(1.15);
 }
 
 .bead-cross.completed {

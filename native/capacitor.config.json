@@ -1,0 +1,13 @@
+{
+  "appId": "pl.abbaojcze.koronka",
+  "appName": "Koronka",
+  "webDir": "www",
+  "backgroundColor": "#000000",
+  "android": {
+    "allowMixedContent": false
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#000000"
+  }
+}

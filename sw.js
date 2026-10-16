@@ -1,4 +1,4 @@
-const CACHE_NAME = 'koronka-v2-cache-v29';
+const CACHE_NAME = 'koronka-v2-cache-v33';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

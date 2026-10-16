@@ -26,25 +26,25 @@ function generateDivineMercySteps() {
     beadId: 'bead-cross'
   });
 
-  // Krok 2: Pierwszy duży czerwony paciorek na początku różańca (Ojcze nasz)
+  // Krok 2: Pierwszy paciorek wstępny (Ojcze nasz)
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Duży czerwony paciorek)',
+    title: 'Modlitwa Pańska (Ojcze nasz)',
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
     speechText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
-    type: 'large',
+    type: 'small',
     decade: 0,
     beadNumber: 2,
     beadId: 'bead-stem-large'
   });
 
-  // Krok 3: Pierwszy mniejszy niebieski paciorek (Zdrowaś Maryjo)
+  // Krok 3: Drugi paciorek wstępny (Zdrowaś Maryjo)
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Pozdrowienie Anielskie (Niebieski paciorek 1/3)',
+    title: 'Pozdrowienie Anielskie (Zdrowaś Maryjo)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
     speechText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
@@ -54,11 +54,11 @@ function generateDivineMercySteps() {
     beadId: 'bead-stem-red-1'
   });
 
-  // Krok 4: Drugi mniejszy niebieski paciorek (Wierzę w Boga)
+  // Krok 4: Trzeci paciorek wstępny (Wierzę w Boga)
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Skład Apostolski (Niebieski paciorek 2/3)',
+    title: 'Skład Apostolski (Wierzę w Boga)',
     shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
     fullText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
     speechText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
@@ -280,7 +280,7 @@ const AppState = {
   counter: 0,
   resumeIndex: null, // krok do wznowienia, gdy widoczny jest baner „Poprzednia modlitwa”
   settings: {
-    fontSize: 17,
+    fontSize: 14,
     pauseBetweenPrayers: 1.5,
     speechRate: 1.0,
     vibration: true,
@@ -365,11 +365,19 @@ function triggerHaptic(typeOrStep = 'small') {
   }
 }
 
+// Wtyczki aplikacji natywnej (Capacitor) – w przeglądarce/PWA są niedostępne
+const NativePlugins = (window.Capacitor && window.Capacitor.Plugins) || {};
+
 // ========================================================
 // 5. BLOKADA WYGASZANIA EKRANU (SCREEN WAKE LOCK API)
 // ========================================================
 async function requestScreenWakeLock() {
-  if (!AppState.settings.wakelock || !('wakeLock' in navigator)) return;
+  if (!AppState.settings.wakelock) return;
+  if (NativePlugins.KeepAwake) {
+    NativePlugins.KeepAwake.keepAwake().catch(() => {});
+    return;
+  }
+  if (!('wakeLock' in navigator)) return;
   try {
     if (!AppState.wakeLock) {
       AppState.wakeLock = await navigator.wakeLock.request('screen');
@@ -383,6 +391,9 @@ async function requestScreenWakeLock() {
 }
 
 function releaseScreenWakeLock() {
+  if (NativePlugins.KeepAwake) {
+    NativePlugins.KeepAwake.allowSleep().catch(() => {});
+  }
   if (AppState.wakeLock) {
     AppState.wakeLock.release().catch(() => {});
     AppState.wakeLock = null;
@@ -420,6 +431,10 @@ class PrayerSpeaker {
 
   speak(text, onEndCallback) {
     this.stop();
+    if (AppState.settings.soundEnabled && NativePlugins.TextToSpeech) {
+      this.speakNative(text, onEndCallback);
+      return;
+    }
     if (!AppState.settings.soundEnabled || !this.synth) {
       if (onEndCallback) setTimeout(onEndCallback, 1500);
       return;
@@ -468,7 +483,32 @@ class PrayerSpeaker {
     updateMediaSession();
   }
 
+  // Lektor w aplikacji natywnej: systemowy syntezator mowy (WebView nie ma speechSynthesis)
+  speakNative(text, onEndCallback) {
+    const token = {};
+    this.currentUtterance = token;
+    document.getElementById('voice-wave').classList.remove('hidden');
+    const finish = () => {
+      if (this.currentUtterance !== token) return; // przerwane przez stop() lub kolejny tekst
+      this.currentUtterance = null;
+      document.getElementById('voice-wave').classList.add('hidden');
+      if (onEndCallback) onEndCallback();
+    };
+    NativePlugins.TextToSpeech.speak({
+      text,
+      lang: 'pl-PL',
+      rate: AppState.settings.speechRate,
+      pitch: 0.95,
+      category: 'playback'
+    }).then(finish, finish);
+    updateMediaSession();
+  }
+
   stop() {
+    if (NativePlugins.TextToSpeech && this.currentUtterance) {
+      this.currentUtterance = null;
+      NativePlugins.TextToSpeech.stop().catch(() => {});
+    }
     if (this.synth && this.synth.speaking) {
       this.synth.cancel();
     }
@@ -768,11 +808,10 @@ function loadState() {
     const savedSettings = localStorage.getItem('koronka_settings');
     if (savedSettings) {
       AppState.settings = Object.assign(AppState.settings, JSON.parse(savedSettings));
-      // Nowy układ (tekst pod wizerunkiem): dotychczasowy standard 20 sp -> 17 sp, 32 sp -> 28 sp
-      if (!localStorage.getItem('koronka_layout_v2')) {
-        if (AppState.settings.fontSize === 20) AppState.settings.fontSize = 17;
-        if (AppState.settings.fontSize > 28) AppState.settings.fontSize = 28;
-        localStorage.setItem('koronka_layout_v2', '1');
+      // Nowy zbalansowany układ: kompaktowy tekst modlitwy (14 sp)
+      if (!localStorage.getItem('koronka_layout_v3')) {
+        AppState.settings.fontSize = 14;
+        localStorage.setItem('koronka_layout_v3', '1');
         saveSettings();
       }
       applySettingsToUI();
@@ -790,9 +829,8 @@ function loadState() {
       const idx = parseInt(savedIndex, 10);
       if (idx > 0 && idx < AppState.steps.length - 1) {
         AppState.resumeIndex = idx;
-        const resumeBanner = document.getElementById('resume-banner');
         document.getElementById('resume-step-text').textContent = `Krok ${idx + 1} z ${AppState.steps.length}`;
-        resumeBanner.classList.remove('hidden');
+        setResumeBannerVisible(true);
       }
     }
     // 6. Zapamiętany tryb widoczności tekstu (pełny / zwinięty / ukryty)
@@ -801,6 +839,12 @@ function loadState() {
       setTextMode(savedTextMode);
     }
   } catch (e) {}
+}
+
+// Baner „Poprzednia modlitwa” ma własny „Od nowa” – wtedy chowamy przycisk w rogu, by się nie dublował
+function setResumeBannerVisible(visible) {
+  document.getElementById('resume-banner').classList.toggle('hidden', !visible);
+  document.getElementById('btn-restart-always').classList.toggle('hidden', visible);
 }
 
 function setTextMode(mode) {
@@ -971,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnTextSize) {
     btnTextSize.addEventListener('click', (e) => {
       e.stopPropagation();
-      const SIZES = [17, 20, 24, 28];
+      const SIZES = [12, 14, 16, 18, 22];
       const idx = SIZES.indexOf(AppState.settings.fontSize);
       AppState.settings.fontSize = SIZES[(idx + 1) % SIZES.length];
       applySettingsToUI();
@@ -1005,7 +1049,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const prayerStage = document.getElementById('prayer-stage');
   if (prayerStage) {
     prayerStage.addEventListener('click', (e) => {
-      if (e.target.closest('.bead-item') || e.target.closest('#btn-restore-text')) return;
+      if (e.target.closest('.bead-item') || e.target.closest('#btn-restore-text') || e.target.closest('#btn-restart-always')) return;
       goToNextStep();
     });
   }
@@ -1032,13 +1076,35 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('btn-resume-continue').addEventListener('click', () => {
     const savedIdx = AppState.resumeIndex || 0;
     AppState.resumeIndex = null;
-    document.getElementById('resume-banner').classList.add('hidden');
+    setResumeBannerVisible(false);
     goToStep(savedIdx);
+  });
+
+  // Zawsze widoczny „Od nowa” – z potwierdzeniem, aby przypadkowe dotknięcie nie skasowało postępu
+  const modalRestart = document.getElementById('modal-restart');
+  const restartFromBeginning = () => {
+    modalRestart.classList.add('hidden');
+    AppState.resumeIndex = null;
+    setResumeBannerVisible(false);
+    goToStep(0);
+  };
+  document.getElementById('btn-restart-always').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (AppState.currentIndex > 0) {
+      modalRestart.classList.remove('hidden');
+    } else {
+      restartFromBeginning();
+    }
+  });
+  document.getElementById('btn-restart-confirm').addEventListener('click', restartFromBeginning);
+  document.getElementById('btn-restart-cancel').addEventListener('click', () => modalRestart.classList.add('hidden'));
+  modalRestart.addEventListener('click', (e) => {
+    if (e.target === modalRestart) modalRestart.classList.add('hidden');
   });
 
   document.getElementById('btn-resume-restart').addEventListener('click', () => {
     AppState.resumeIndex = null;
-    document.getElementById('resume-banner').classList.add('hidden');
+    setResumeBannerVisible(false);
     goToStep(0);
   });
 
@@ -1161,8 +1227,8 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Rejestracja Service Worker (PWA Offline)
-if ('serviceWorker' in navigator) {
+// Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
+if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js?v=27').catch(() => {});
   });

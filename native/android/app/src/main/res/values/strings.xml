@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Koronka</string>
+    <string name="title_activity_main">Koronka</string>
+    <string name="package_name">pl.abbaojcze.koronka</string>
+    <string name="custom_url_scheme">pl.abbaojcze.koronka</string>
+</resources>

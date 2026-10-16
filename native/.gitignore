@@ -1,0 +1,4 @@
+node_modules/
+www/
+# Klucz wydania i hasła – NIGDY do gita (kopia zapasowa w bezpiecznym miejscu!)
+android-keys/

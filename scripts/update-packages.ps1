@@ -76,7 +76,7 @@ function Set-ZipEntry {
 # 1. AKTUALIZACJA: koronka-offline.zip
 # ========================================================
 $offlineZipPath = Join-Path $assetsDir "koronka-offline.zip"
-Write-Host "`n[1/4] Generowanie $offlineZipPath ..." -ForegroundColor Yellow
+Write-Host "`n[1/3] Generowanie $offlineZipPath ..." -ForegroundColor Yellow
 
 if (Test-Path $offlineZipPath) {
     Remove-Item -Force $offlineZipPath
@@ -106,57 +106,41 @@ $zipSize = (Get-Item $offlineZipPath).Length / 1KB
 Write-Host " -> Utworzono koronka-offline.zip (Rozmiar: $([math]::Round($zipSize, 1)) KB)" -ForegroundColor Green
 
 # ========================================================
-# 2. STATUS PAKIETU: koronka.ipa (Apple iOS)
+# 2. NATYWNA APLIKACJA ANDROID: koronka.apk + koronka.aab (Capacitor)
 # ========================================================
-$ipaPath = Join-Path $assetsDir "koronka.ipa"
-Write-Host "`n[2/4] Aktualizacja pakietu Apple iOS: $ipaPath ..." -ForegroundColor Yellow
-if (Test-Path $ipaPath) {
-    # Podmiana plików aplikacji internetowej wewnątrz pakietu na bieżącą wersję
-    $ipaZip = [System.IO.Compression.ZipFile]::Open($ipaPath, [System.IO.Compression.ZipArchiveMode]::Update)
-    $appDir = "Payload/Koronka.app"
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/index.html" -SourceFilePath $indexPath
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/style.css" -SourceFilePath $stylePath
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/app.js" -SourceFilePath $appPath
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/sw.js" -SourceFilePath $swPath
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/manifest.json" -SourceFilePath $manifestPath
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/icon-192.png" -SourceFilePath $icon192
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/icon-512.png" -SourceFilePath $icon512
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/jezus-milosierny-wilno.jpg" -SourceFilePath $jezusImg
-    Set-ZipEntry -Zip $ipaZip -EntryName "$appDir/assets/matka-boza.jpg" -SourceFilePath $maryImg
-    $ipaZip.Dispose()
-
-    $ipaSize = (Get-Item $ipaPath).Length / 1KB
-    Write-Host " -> Pakiet koronka.ipa gotowy i poprawny (Rozmiar: $([math]::Round($ipaSize, 1)) KB)" -ForegroundColor Green
-} else {
-    Write-Host " -> Plik $ipaPath nie istnieje!" -ForegroundColor Red
-}
-
-# ========================================================
-# 3. STATUS PAKIETU: koronka.apk (Android TWA / PWA)
-# ========================================================
-# APK jest certyfikowanym pakietem Trusted Web Activity (TWA).
-# Posiada podpis kryptograficzny zgodny z .well-known/assetlinks.json.
-# Modyfikacja pliku zip w locie uszkadza podpis (błąd: 'Pakiet wygląda na nieprawidłowy').
-# Aplikacja po zainstalowaniu ładuje i buforuje offline najnowszą wersję PWA.
+# Pliki aplikacji są wbudowane w pakiet (działa bez internetu).
+# Podpis: native/android-keys/keystore.properties + koronka-release.jks (poza gitem!).
+$nativeDir = Join-Path $RootDir "native"
+$androidDir = Join-Path $nativeDir "android"
+$keyProps = Join-Path $nativeDir "android-keys\keystore.properties"
 $apkPath = Join-Path $assetsDir "koronka.apk"
-Write-Host "`n[3/4] Weryfikacja pakietu Android: $apkPath ..." -ForegroundColor Yellow
-if (Test-Path $apkPath) {
-    $apkSize = (Get-Item $apkPath).Length / 1MB
-    Write-Host " -> Pakiet koronka.apk z poprawnym podpisem cyfrowym gotowy (Rozmiar: $([math]::Round($apkSize, 2)) MB)" -ForegroundColor Green
-} else {
-    Write-Host " -> Plik $apkPath nie istnieje!" -ForegroundColor Red
-}
-
-# ========================================================
-# 4. STATUS PAKIETU: koronka.aab (Google Play Store Bundle)
-# ========================================================
 $aabPath = Join-Path $assetsDir "koronka.aab"
-Write-Host "`n[4/4] Weryfikacja pakietu Google Play Store: $aabPath ..." -ForegroundColor Yellow
-if (Test-Path $aabPath) {
-    $aabSize = (Get-Item $aabPath).Length / 1MB
-    Write-Host " -> Pakiet koronka.aab gotowy do publikacji (Rozmiar: $([math]::Round($aabSize, 2)) MB)" -ForegroundColor Green
+Write-Host "`n[2/3] Budowa natywnej aplikacji Android (APK + AAB) ..." -ForegroundColor Yellow
+if (-not (Test-Path $keyProps)) {
+    Write-Host " -> Brak klucza wydania ($keyProps) - pomijam budowę Android." -ForegroundColor Red
 } else {
-    Write-Host " -> Plik $aabPath nie istnieje!" -ForegroundColor Red
+    if (-not $env:JAVA_HOME) { $env:JAVA_HOME = "C:\Program Files\Android\Android Studio\jbr" }
+    Push-Location $nativeDir
+    npm run sync
+    Pop-Location
+    Push-Location $androidDir
+    & .\gradlew.bat assembleRelease bundleRelease -q
+    $gradleOk = $LASTEXITCODE -eq 0
+    Pop-Location
+    if ($gradleOk) {
+        Copy-Item -Force (Join-Path $androidDir "app\build\outputs\apk\release\app-release.apk") $apkPath
+        Copy-Item -Force (Join-Path $androidDir "app\build\outputs\bundle\release\app-release.aab") $aabPath
+        Write-Host " -> koronka.apk ($([math]::Round((Get-Item $apkPath).Length / 1MB, 1)) MB) i koronka.aab ($([math]::Round((Get-Item $aabPath).Length / 1MB, 1)) MB) zbudowane i podpisane" -ForegroundColor Green
+    } else {
+        Write-Host " -> Błąd budowy Gradle - pakiety Android NIE zostały zaktualizowane!" -ForegroundColor Red
+    }
 }
 
-Write-Host "`nSukces! Wszystkie pakiety instalacyjne (APK, AAB, IPA, PWA, ZIP) są w 100% sprawne i gotowe do instalacji." -ForegroundColor Cyan
+# ========================================================
+# 3. NATYWNA APLIKACJA iOS: koronka.ipa
+# ========================================================
+# Budowana na macOS przez GitHub Actions (.github/workflows/ios-ipa.yml) po wypchnięciu zmian;
+# gotowy plik trafia do assets/koronka.ipa (git pull, aby go pobrać).
+Write-Host "`n[3/3] iOS: koronka.ipa budowany automatycznie przez GitHub Actions po 'git push'." -ForegroundColor Yellow
+
+Write-Host "`nGotowe: ZIP/PWA zaktualizowane, Android zbudowany lokalnie, iOS budowany w chmurze." -ForegroundColor Cyan
