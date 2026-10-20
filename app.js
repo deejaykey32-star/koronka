@@ -16,9 +16,9 @@ function generateDivineMercySteps() {
   steps.push({
     stepIndex: 1,
     part: 'Wprowadzenie',
-    title: 'Wzbudzenie intencji & Znak Krzyża',
+    title: 'Znak Krzyża',
     shortText: '+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
-    fullText: 'Na początku – wzbudzić intencję. Uczyń znak krzyża: W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    fullText: '+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
     speechText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
     type: 'cross',
     decade: 0,
@@ -280,7 +280,7 @@ const AppState = {
   counter: 0,
   resumeIndex: null, // krok do wznowienia, gdy widoczny jest baner „Poprzednia modlitwa”
   settings: {
-    fontSize: 14,
+    fontSize: 13,
     pauseBetweenPrayers: 1.5,
     speechRate: 1.0,
     vibration: true,
@@ -555,7 +555,7 @@ function updateUI() {
   // 1. Aktualizacja wskaźnika postępu
   const progressIndicator = document.getElementById('prayer-progress-indicator');
   const total = AppState.steps.length;
-  progressIndicator.textContent = `${step.part} · Krok ${step.stepIndex} z ${total}`;
+  progressIndicator.textContent = `Krok ${step.stepIndex} z ${total} · ${step.title}`;
   const progressFill = document.getElementById('prayer-progress-fill');
   if (progressFill) progressFill.style.width = `${(step.stepIndex / total) * 100}%`;
 
@@ -808,10 +808,10 @@ function loadState() {
     const savedSettings = localStorage.getItem('koronka_settings');
     if (savedSettings) {
       AppState.settings = Object.assign(AppState.settings, JSON.parse(savedSettings));
-      // Nowy zbalansowany układ: kompaktowy tekst modlitwy (14 sp)
-      if (!localStorage.getItem('koronka_layout_v3')) {
-        AppState.settings.fontSize = 14;
-        localStorage.setItem('koronka_layout_v3', '1');
+      // Nowy zbalansowany układ: mniejszy tekst modlitwy (13 sp domyślnie)
+      if (!localStorage.getItem('koronka_layout_v4')) {
+        AppState.settings.fontSize = 13;
+        localStorage.setItem('koronka_layout_v4', '1');
         saveSettings();
       }
       applySettingsToUI();
@@ -1015,7 +1015,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btnTextSize) {
     btnTextSize.addEventListener('click', (e) => {
       e.stopPropagation();
-      const SIZES = [12, 14, 16, 18, 22];
+      const SIZES = [11, 12, 13, 15, 17];
       const idx = SIZES.indexOf(AppState.settings.fontSize);
       AppState.settings.fontSize = SIZES[(idx + 1) % SIZES.length];
       applySettingsToUI();
