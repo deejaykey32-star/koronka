@@ -731,8 +731,8 @@ function toggleAutoplay() {
 // Schemat serca jest zapisany w układzie 460×1024; dla każdego wizerunku przeliczamy go
 // na piksele oryginalnego pliku (viewBox = wymiary obrazu), aby obraz nie był skalowany ani przycinany.
 const HEART_LAYOUTS = {
-  koronka: { viewBox: '0 0 635 1234', transform: 'matrix(1.380435 0 0 1.380435 0 -179.457)' },
-  rozaniec: { viewBox: '0 0 768 1376', transform: 'matrix(1.669565 0 0 1.669565 0 -333.913)' }
+  koronka: { viewBox: '0 0 460 1024', transform: '' },
+  rozaniec: { viewBox: '0 0 460 1024', transform: '' }
 };
 
 function switchMode(newMode) {
@@ -744,29 +744,47 @@ function switchMode(newMode) {
   const inscription = document.getElementById('sacred-inscription');
   const imgJesus = document.getElementById('holy-image-jesus');
   const imgMary = document.getElementById('holy-image-mary');
+  const cameoImg = document.getElementById('cameo-mode-img');
 
   const layout = HEART_LAYOUTS[newMode] || HEART_LAYOUTS.koronka;
-  document.getElementById('rosary-heart-svg').setAttribute('viewBox', layout.viewBox);
-  document.getElementById('rosary-layout').setAttribute('transform', layout.transform);
-  document.getElementById('image-wrapper').classList.toggle('mode-mary', newMode === 'rozaniec');
+  const svgEl = document.getElementById('rosary-heart-svg');
+  if (svgEl) svgEl.setAttribute('viewBox', layout.viewBox);
+  const rosaryLayoutEl = document.getElementById('rosary-layout');
+  if (rosaryLayoutEl) {
+    if (layout.transform) rosaryLayoutEl.setAttribute('transform', layout.transform);
+    else rosaryLayoutEl.removeAttribute('transform');
+  }
+
+  const wrapper = document.getElementById('image-wrapper');
+  if (wrapper) wrapper.classList.toggle('mode-mary', newMode === 'rozaniec');
   const app = document.getElementById('app');
-  app.classList.toggle('mode-koronka', newMode !== 'rozaniec');
-  app.classList.toggle('mode-rozaniec', newMode === 'rozaniec');
+  if (app) {
+    app.classList.toggle('mode-koronka', newMode !== 'rozaniec');
+    app.classList.toggle('mode-rozaniec', newMode === 'rozaniec');
+  }
 
   if (newMode === 'rozaniec') {
     AppState.steps = generateRosarySteps();
-    titleEl.textContent = 'Różaniec';
-    modeLabel.textContent = 'Koronka';
-    inscription.textContent = 'KRÓLOWO POKOJU, MÓDL SIĘ ZA NAMI';
-    imgJesus.classList.add('hidden');
-    imgMary.classList.remove('hidden');
+    if (titleEl) titleEl.textContent = 'Różaniec do Matk...';
+    if (modeLabel) modeLabel.textContent = 'Koronka';
+    if (inscription) inscription.textContent = 'KRÓLOWO POKOJU, MÓDL SIĘ ZA NAMI';
+    if (imgJesus) imgJesus.classList.add('hidden');
+    if (imgMary) imgMary.classList.remove('hidden');
+    if (cameoImg) {
+      cameoImg.src = 'assets/cameo-jesus-clean.png';
+      cameoImg.alt = 'Jezus Miłosierny';
+    }
   } else {
     AppState.steps = generateDivineMercySteps();
-    titleEl.textContent = 'Koronka';
-    modeLabel.textContent = 'Różaniec';
-    inscription.textContent = 'JEZU, UFAM TOBIE';
-    imgJesus.classList.remove('hidden');
-    imgMary.classList.add('hidden');
+    if (titleEl) titleEl.textContent = 'Koronka do Bożeg...';
+    if (modeLabel) modeLabel.textContent = 'Różaniec';
+    if (inscription) inscription.textContent = 'JEZU, UFAM TOBIE';
+    if (imgJesus) imgJesus.classList.remove('hidden');
+    if (imgMary) imgMary.classList.add('hidden');
+    if (cameoImg) {
+      cameoImg.src = 'assets/cameo-mary-clean.png';
+      cameoImg.alt = 'Matka Boża';
+    }
   }
 
   AppState.currentIndex = 0;
@@ -841,10 +859,11 @@ function loadState() {
   } catch (e) {}
 }
 
-// Baner „Poprzednia modlitwa” ma własny „Od nowa” – wtedy chowamy przycisk w rogu, by się nie dublował
 function setResumeBannerVisible(visible) {
-  document.getElementById('resume-banner').classList.toggle('hidden', !visible);
-  document.getElementById('btn-restart-always').classList.toggle('hidden', visible);
+  const b = document.getElementById('resume-banner');
+  if (b) b.classList.toggle('hidden', !visible);
+  const r = document.getElementById('btn-restart-always');
+  if (r) r.classList.toggle('hidden', visible);
 }
 
 function setTextMode(mode) {
@@ -897,12 +916,18 @@ function applySettingsToUI() {
   // Dźwięk
   const iconOn = document.getElementById('icon-voice-on');
   const iconOff = document.getElementById('icon-voice-off');
-  if (AppState.settings.soundEnabled) {
-    iconOn.classList.remove('hidden');
-    iconOff.classList.add('hidden');
-  } else {
-    iconOn.classList.add('hidden');
-    iconOff.classList.remove('hidden');
+  if (iconOn && iconOff) {
+    if (AppState.settings.soundEnabled) {
+      iconOn.classList.remove('hidden');
+      iconOff.classList.add('hidden');
+    } else {
+      iconOn.classList.add('hidden');
+      iconOff.classList.remove('hidden');
+    }
+  }
+  const musicBtn = document.getElementById('btn-audio');
+  if (musicBtn) {
+    musicBtn.classList.toggle('muted', !AppState.settings.soundEnabled);
   }
 }
 
@@ -1054,59 +1079,90 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 3. Przyciski dolnego docku
-  document.getElementById('btn-next').addEventListener('click', () => goToNextStep());
-  document.getElementById('btn-prev').addEventListener('click', () => goToPrevStep());
-  document.getElementById('btn-autoplay').addEventListener('click', () => toggleAutoplay());
+  // 3. Przyciski akcji
+  const btnNext = document.getElementById('btn-next');
+  if (btnNext) btnNext.addEventListener('click', () => goToNextStep());
+  const btnPrev = document.getElementById('btn-prev');
+  if (btnPrev) btnPrev.addEventListener('click', () => goToPrevStep());
+  const btnAutoplay = document.getElementById('btn-autoplay');
+  if (btnAutoplay) btnAutoplay.addEventListener('click', () => toggleAutoplay());
 
-  // 4. Przełącznik trybu (Koronka <-> Różaniec)
-  document.getElementById('btn-switch-mode').addEventListener('click', () => {
-    switchMode(AppState.mode === 'koronka' ? 'rozaniec' : 'koronka');
-  });
+  // 4. Przełącznik trybu (Koronka <-> Różaniec) - medalion w lewym dolnym rogu
+  const btnSwitchMode = document.getElementById('btn-switch-mode');
+  if (btnSwitchMode) {
+    btnSwitchMode.addEventListener('click', () => {
+      switchMode(AppState.mode === 'koronka' ? 'rozaniec' : 'koronka');
+    });
+  }
 
-  // 5. Przycisk dźwięku / wyciszenia
-  document.getElementById('btn-audio').addEventListener('click', () => {
-    AppState.settings.soundEnabled = !AppState.settings.soundEnabled;
-    applySettingsToUI();
-    saveSettings();
-    if (!AppState.settings.soundEnabled) stopAutoplay();
-  });
+  // 5. Przycisk dźwięku / wyciszenia (🎵 błękitna nutka)
+  const btnAudio = document.getElementById('btn-audio');
+  if (btnAudio) {
+    btnAudio.addEventListener('click', () => {
+      AppState.settings.soundEnabled = !AppState.settings.soundEnabled;
+      applySettingsToUI();
+      saveSettings();
+      if (!AppState.settings.soundEnabled) stopAutoplay();
+    });
+  }
 
-  // 6. Baner wznowienia
-  document.getElementById('btn-resume-continue').addEventListener('click', () => {
-    const savedIdx = AppState.resumeIndex || 0;
-    AppState.resumeIndex = null;
-    setResumeBannerVisible(false);
-    goToStep(savedIdx);
-  });
+  // Górna ikona 🙏 (Jak odmawiać Koronkę)
+  const btnSchemaTop = document.getElementById('btn-schema-top');
+  if (btnSchemaTop) {
+    btnSchemaTop.addEventListener('click', () => {
+      const modalSchema = document.getElementById('modal-schema');
+      if (modalSchema) modalSchema.classList.remove('hidden');
+    });
+  }
 
-  // Zawsze widoczny „Od nowa” – z potwierdzeniem, aby przypadkowe dotknięcie nie skasowało postępu
+  // 6. Baner wznowienia (opcjonalny)
+  const btnResumeContinue = document.getElementById('btn-resume-continue');
+  if (btnResumeContinue) {
+    btnResumeContinue.addEventListener('click', () => {
+      const savedIdx = AppState.resumeIndex || 0;
+      AppState.resumeIndex = null;
+      setResumeBannerVisible(false);
+      goToStep(savedIdx);
+    });
+  }
+
+  // Zawsze widoczny „Od nowa” – z potwierdzeniem
   const modalRestart = document.getElementById('modal-restart');
   const restartFromBeginning = () => {
-    modalRestart.classList.add('hidden');
+    if (modalRestart) modalRestart.classList.add('hidden');
     AppState.resumeIndex = null;
     setResumeBannerVisible(false);
     goToStep(0);
   };
-  document.getElementById('btn-restart-always').addEventListener('click', (e) => {
-    e.stopPropagation();
-    if (AppState.currentIndex > 0) {
-      modalRestart.classList.remove('hidden');
-    } else {
-      restartFromBeginning();
-    }
-  });
-  document.getElementById('btn-restart-confirm').addEventListener('click', restartFromBeginning);
-  document.getElementById('btn-restart-cancel').addEventListener('click', () => modalRestart.classList.add('hidden'));
-  modalRestart.addEventListener('click', (e) => {
-    if (e.target === modalRestart) modalRestart.classList.add('hidden');
-  });
+  const btnRestartAlways = document.getElementById('btn-restart-always');
+  if (btnRestartAlways) {
+    btnRestartAlways.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (AppState.currentIndex > 0 && modalRestart) {
+        modalRestart.classList.remove('hidden');
+      } else {
+        restartFromBeginning();
+      }
+    });
+  }
+  const btnRestartConfirm = document.getElementById('btn-restart-confirm');
+  if (btnRestartConfirm) btnRestartConfirm.addEventListener('click', restartFromBeginning);
+  const btnRestartCancel = document.getElementById('btn-restart-cancel');
+  if (btnRestartCancel) btnRestartCancel.addEventListener('click', () => modalRestart && modalRestart.classList.add('hidden'));
+  if (modalRestart) {
+    modalRestart.addEventListener('click', (e) => {
+      if (e.target === modalRestart) modalRestart.classList.add('hidden');
+    });
+  }
 
-  document.getElementById('btn-resume-restart').addEventListener('click', () => {
-    AppState.resumeIndex = null;
-    setResumeBannerVisible(false);
-    goToStep(0);
-  });
+  const btnResumeRestart = document.getElementById('btn-resume-restart');
+  if (btnResumeRestart) {
+    btnResumeRestart.addEventListener('click', () => {
+      AppState.resumeIndex = null;
+      setResumeBannerVisible(false);
+      goToStep(0);
+    });
+  }
 
   // 7. Modale
   const modalSettings = document.getElementById('modal-settings');

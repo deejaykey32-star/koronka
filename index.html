@@ -27,90 +27,34 @@
 <body>
   <div id="app" class="app-container mode-koronka">
     
-    <!-- 1. Górny pasek z małym nagłówkiem „Koronka” i symbolem promieni miłosierdzia -->
+    <!-- 1. Górny pasek w stylu aplikacji Rosario (Koronka do Bożeg... 🙏 🌟 ⋮) -->
     <header class="top-bar" id="main-top-bar">
       <div class="header-left">
-        <!-- Biało-czerwony symbol promieni miłosierdzia zamiast długich słów -->
-        <div class="divine-rays-icon" title="Promienie Miłosierdzia Bożego" aria-label="Promienie Miłosierdzia">
-          <svg viewBox="0 0 32 32" width="28" height="28" fill="none">
-            <circle cx="16" cy="7" r="3.5" fill="#ffd700" />
-            <!-- Promień blady / jasnoniebieski (usprawiedliwienie dusz) -->
-            <path d="M14 10 L6 29 L11 29 L15 11 Z" fill="url(#grad-pale-ray)" opacity="0.95"/>
-            <!-- Promień czerwony (krew / życie dusz) -->
-            <path d="M18 10 L26 29 L21 29 L17 11 Z" fill="url(#grad-red-ray)" opacity="0.95"/>
-            <defs>
-              <linearGradient id="grad-pale-ray" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ffffff"/>
-                <stop offset="50%" stop-color="#bfe3ff"/>
-                <stop offset="100%" stop-color="#70b8ff"/>
-              </linearGradient>
-              <linearGradient id="grad-red-ray" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stop-color="#ff7a7a"/>
-                <stop offset="50%" stop-color="#e01b1b"/>
-                <stop offset="100%" stop-color="#940505"/>
-              </linearGradient>
-            </defs>
-          </svg>
-        </div>
-        <h1 class="app-title" id="app-title-text">Koronka</h1>
+        <h1 class="app-title" id="app-title-text" title="Koronka do Miłosierdzia Bożego">Koronka do Bożeg...</h1>
       </div>
       
       <div class="header-right">
-        <!-- Przełącznik trybu: Koronka <-> Różaniec -->
-        <button id="btn-switch-mode" class="mode-switch-btn" title="Przełącz modlitwę: Koronka / Różaniec" aria-label="Przełącz Koronka lub Różaniec">
-          <span id="mode-label" class="mode-label">Różaniec</span>
+        <!-- 1. Ikona rąk do modlitwy 🙏 (Jak odmawiać Koronkę / Schemat) -->
+        <button id="btn-schema-top" class="header-icon-btn" title="Jak odmawiać Koronkę" aria-label="Jak odmawiać Koronkę">
+          <span class="header-emoji">🙏</span>
         </button>
 
-        <!-- Przycisk Lektora audio / mowy -->
-        <button id="btn-audio" class="icon-btn" title="Lektor czytający modlitwę" aria-label="Lektor audio">
-          <svg id="icon-voice-on" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-          </svg>
-          <svg id="icon-voice-off" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-            <line x1="23" y1="9" x2="17" y2="15"></line>
-            <line x1="17" y1="9" x2="23" y2="15"></line>
-          </svg>
+        <!-- 2. Ikona gwiazdy 🌟 (Intencja modlitewna) -->
+        <button id="btn-intention" class="header-icon-btn" title="Intencja modlitewna" aria-label="Intencja modlitewna">
+          <span class="header-emoji">🌟</span>
         </button>
 
-        <!-- Menu / Ustawienia -->
-        <button id="btn-settings" class="icon-btn" title="Ustawienia i menu" aria-label="Ustawienia i menu">
-          <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <line x1="3" y1="6" x2="21" y2="6"></line>
-            <line x1="3" y1="12" x2="21" y2="12"></line>
-            <line x1="3" y1="18" x2="21" y2="18"></line>
-          </svg>
+        <!-- 3. Ikona pionowego menu ⋮ (Ustawienia) -->
+        <button id="btn-settings" class="header-icon-btn" title="Ustawienia i menu" aria-label="Ustawienia i menu">
+          <span class="header-dots">&#8942;</span>
         </button>
       </div>
     </header>
 
-    <!-- Baner wznawiania modlitwy (gdy użytkownik przerwał lub wrócił po telefonie) -->
-    <div id="resume-banner" class="resume-banner hidden">
-      <div class="resume-info">
-        <span class="resume-title">Poprzednia modlitwa:</span>
-        <span id="resume-step-text" class="resume-step">Krok 14 z 61</span>
-      </div>
-      <div class="resume-actions">
-        <button id="btn-resume-continue" class="resume-btn primary">Kontynuuj</button>
-        <button id="btn-resume-restart" class="resume-btn secondary">Od nowa</button>
-      </div>
-    </div>
-
-    <!-- 4 & 5. Główna strefa z wizerunkiem przesuniętym niżej i powiększonym schematem serca -->
+    <!-- Główna strefa: Jezus i różaniec na całym ekranie bez obwódki -->
     <main class="image-stage" id="prayer-stage">
-      <!-- Zawsze widoczny przycisk rozpoczęcia modlitwy od początku (lewy górny róg, ciemne tło obrazu) -->
-      <button id="btn-restart-always" class="btn-restart-always" title="Rozpocznij modlitwę od nowa" aria-label="Rozpocznij modlitwę od nowa">
-        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"></path></svg>
-        <span>Od nowa</span>
-      </button>
-      <!-- Przycisk przywracania tekstu (widoczny gdy panel tekstowy jest ukryty) -->
-      <button id="btn-restore-text" class="btn-restore-text hidden" title="Pokaż tekst modlitwy" aria-label="Pokaż tekst modlitwy">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-        <span>Tekst</span>
-      </button>
       <div class="image-wrapper" id="image-wrapper">
-        <!-- Wizerunek Jezusa Miłosiernego (Wilno 1934 Kazimirowski) - z zachowaniem proporcji -->
+        <!-- Wizerunek Jezusa Miłosiernego - bez obwódki na całym ekranie -->
         <img 
           src="assets/jezus-milosierny-wilno.jpg" 
           alt="Jezus Miłosierny - Wizerunek wileński namalowany przez Eugeniusza Kazimirowskiego w 1934 roku" 
@@ -127,9 +71,8 @@
           draggable="false"
         >
 
-        <!-- 5. Powiększony proporcjonalnie schemat serca różańcowego -->
-        <!-- 6. Z 3 paciorkami na sznurku (usunięty czwarty paciorek) -->
-        <svg id="rosary-heart-svg" class="rosary-heart-svg" viewBox="0 0 635 1234" preserveAspectRatio="none">
+        <!-- Schemat serca na całym ekranie w układzie 460x1024 -->
+        <svg id="rosary-heart-svg" class="rosary-heart-svg" viewBox="0 0 460 1024" preserveAspectRatio="none">
           <defs>
             <radialGradient id="grad-red-bead" cx="35%" cy="35%" r="65%">
               <stop offset="0%" stop-color="#ff9191"/>
@@ -179,8 +122,8 @@
             </filter>
           </defs>
 
-          <!-- Schemat serca rysowany w układzie 460×1024 i przeliczany na piksele oryginalnego obrazu (app.js: HEART_LAYOUTS) -->
-          <g id="rosary-layout" transform="matrix(1.380435 0 0 1.380435 0 -179.457)">
+          <!-- Schemat serca w układzie 460×1024 -->
+          <g id="rosary-layout">
           <!-- Łańcuszek łączący krzyżyk, duży niebieski paciorek i 3 paciorki czerwone do łącznika -->
           <path class="rosary-chain stem-chain" d="M 231.0 580.0 L 231.0 538.0 L 231.0 506.0 L 231.0 480.0 L 231.0 454.0 L 233.5 429.0"/>
           
@@ -298,93 +241,42 @@
         </svg>
       </div>
       
-      <!-- Subtelna wskazówka dotykowa -->
-      <div id="tap-hint" class="tap-hint">
-        Dotknij ekranu, paciorka lub przycisku „Dalej”
-      </div>
-
-      <!-- 2. Pływający panel tekstu modlitwy PONAD dolną częścią szaty, PONIŻEJ schematu serca -->
-      <!-- Ograniczona wysokość, czcionka dopasowana, możliwość zwijania i ukrywania -->
-      <section class="prayer-stage-header prayer-floating-card" id="prayer-tap-text-area" role="button" tabindex="0" aria-label="Dotknij, aby przejść do następnego paciorka">
-        <div class="prayer-progress-track" aria-hidden="true"><div id="prayer-progress-fill" class="prayer-progress-fill"></div></div>
-        
-        <div class="prayer-meta-row">
-          <span id="prayer-progress-indicator" class="prayer-progress-indicator">Wprowadzenie · Krok 1 z 61</span>
-          <div id="voice-wave" class="voice-wave hidden" title="Lektor czyta na głos">
-            <span></span><span></span><span></span>
-          </div>
-          <div class="text-controls">
-            <button id="btn-text-size-down" class="text-ctrl-btn" title="Zmień rozmiar tekstu" aria-label="Zmień rozmiar tekstu">
-              <span class="text-ctrl-label">Aa</span>
-            </button>
-            <button id="btn-text-collapse" class="text-ctrl-btn" title="Zwiń/Rozwiń tekst" aria-label="Zwiń tekst">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg>
-            </button>
-            <button id="btn-text-hide" class="text-ctrl-btn" title="Ukryj tekst modlitwy" aria-label="Ukryj tekst">
-              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
-            </button>
-          </div>
-        </div>
-
-        <!-- Główny tekst modlitwy - wygodna, czytelna czcionka niezasłaniająca wizerunku -->
+      <!-- 2. Pływająca kapsuła z tekstem modlitwy w górnej części w stylu aplikacji ze zrzutu -->
+      <section class="prayer-floating-capsule" id="prayer-tap-text-area" role="button" tabindex="0" aria-label="Dotknij, aby przejść do następnej modlitwy">
         <div class="prayer-text-container" id="prayer-text-container">
-          <h2 id="prayer-title" class="prayer-title-discrete">Znak Krzyża</h2>
-          <p id="prayer-text" class="prayer-text">+ W imię Ojca i Syna, i Ducha Świętego. Amen.</p>
+          <p id="prayer-text" class="prayer-text">+ W imię Ojca, i Syna i Ducha<br>Świętego. Amen.</p>
+          <h2 id="prayer-title" class="prayer-title-sr hidden">Znak Krzyża</h2>
+          <span id="prayer-progress-indicator" class="hidden"></span>
           <div id="prayer-intention-box" class="prayer-intention-box hidden">
             <span class="intention-tag">Intencja:</span>
-            <span id="prayer-intention-display" class="intention-display">Za pokój i o Miłosierdzie Boże dla całego świata</span>
+            <span id="prayer-intention-display" class="intention-display"></span>
           </div>
         </div>
       </section>
-    </main>
 
-    <!-- 3. Strefa napisu „Jezu, ufam Tobie” – w trybie koronki ukryta, bo oryginalny obraz z Wilna ma już napis w dolnej części -->
-    <div class="sacred-inscription-zone">
-      <div id="sacred-inscription" class="sacred-inscription">JEZU, UFAM TOBIE</div>
-    </div>
-
-    <!-- Ergonomiczny dolny panel sterowania (ergonomia dla seniorów i obsługa jedną ręką) -->
-    <footer class="prayer-dock">
-      <div class="controls-panel">
-        <!-- Przycisk WSTECZ -->
-        <button id="btn-prev" class="control-btn nav-btn" title="Poprzedni paciorek (lub przesuń w prawo)" aria-label="Poprzedni paciorek">
-          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-          <span class="btn-text-sub">Wstecz</span>
+      <!-- 3. Pływające kontrolki na dole ekranu w stylu grafiki referencyjnej -->
+      <div class="bottom-floating-controls" id="bottom-floating-controls">
+        <!-- Lewy dolny róg: Medalion z wizerunkiem Maryi (przełącznik Koronka <-> Różaniec) -->
+        <button id="btn-switch-mode" class="cameo-btn" title="Przełącz modlitwę: Koronka / Różaniec" aria-label="Przełącz Koronka lub Różaniec">
+          <img src="assets/cameo-mary-clean.png" alt="Matka Boża" id="cameo-mode-img" class="cameo-img">
         </button>
 
-        <!-- Główny duży przycisk DALEJ -->
-        <button id="btn-next" class="control-btn primary-btn" title="Kolejny paciorek (lub dotknij ekran)" aria-label="Kolejny paciorek">
-          <span class="btn-primary-inner">
-            <span class="btn-primary-label">DALEJ</span>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
-              <polyline points="9 18 15 12 9 6"></polyline>
-            </svg>
-          </span>
-        </button>
+        <!-- Środek: Pergaminowa wstęga „JEZU UFAM TOBIE” -->
+        <div class="banner-scroll-wrap" id="banner-wrap">
+          <img src="assets/banner-transparent.png" alt="Jezu Ufam Tobie" id="banner-img" class="banner-scroll-img">
+        </div>
 
-        <!-- Przycisk Autoodtwarzanie / Czytaj -->
-        <button id="btn-autoplay" class="control-btn autoplay-btn" title="Automatyczne prowadzenie modlitwy" aria-label="Automatyczne prowadzenie">
-          <svg id="icon-play" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <polygon points="6 4 19 12 6 20 6 4"></polygon>
-          </svg>
-          <svg id="icon-pause" class="hidden" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-            <rect x="6" y="4" width="4" height="16"></rect>
-            <rect x="14" y="4" width="4" height="16"></rect>
-          </svg>
-          <span class="btn-text-sub" id="autoplay-btn-label">Auto</span>
-        </button>
-
-        <!-- Wzbudzenie intencji -->
-        <button id="btn-intention" class="control-btn nav-btn" title="Własna intencja modlitewna" aria-label="Własna intencja">
-          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-          </svg>
-          <span class="btn-text-sub">Intencja</span>
-        </button>
+        <!-- Prawy dolny róg: 🎵 Muzyka/Lektor oraz ▶ Przycisk Dalej -->
+        <div class="bottom-right-cluster">
+          <button id="btn-audio" class="music-note-btn" title="Lektor i dźwięk modlitwy" aria-label="Włącz / wyłącz dźwięk">
+            <img src="assets/btn-music-transparent.png" alt="Dźwięk" id="music-note-img" class="music-note-img">
+          </button>
+          <button id="btn-next" class="play-circle-btn" title="Kolejny paciorek" aria-label="Kolejny paciorek">
+            <img src="assets/btn-play-clean.png" alt="Dalej" class="play-circle-img">
+          </button>
+        </div>
       </div>
-    </footer>
+    </main>
 
     <!-- Potwierdzenie „Od nowa” (własne okno – systemowe confirm() bywa blokowane w aplikacjach i PWA) -->
     <div id="modal-restart" class="modal-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="restart-title">

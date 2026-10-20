@@ -49,6 +49,10 @@ html, body {
   -webkit-user-select: none;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* Główny kontener aplikacji - pełne wykorzystanie ekranu bez pustych marginesów */
 .app-container {
   position: relative;
@@ -64,200 +68,122 @@ html, body {
 }
 
 /* ========================================================
-   1. GÓRNY PASEK: DYSKRETNY NAGŁÓWEK „KORONKA” Z PROMIENIAMI
-   Pływający nad ciemnym tłem obrazu bez zmniejszania wizerunku
+   1. GÓRNY PASEK: KORONKA DO BOŻEG... 🙏 🌟 ⋮
    ======================================================== */
 .top-bar {
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
+  height: calc(50px + var(--safe-top));
+  padding: var(--safe-top) 16px 0 16px;
+  background: #212124;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(6px + var(--safe-top)) 12px 6px 12px;
-  background: linear-gradient(to bottom, rgba(5, 5, 5, 0.9) 0%, rgba(5, 5, 5, 0.5) 75%, transparent 100%);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   z-index: 50;
-  border-bottom: 1px solid rgba(212, 175, 55, 0.12);
-  pointer-events: auto;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
 }
 
 .header-left {
   display: flex;
   align-items: center;
-  gap: 10px;
-}
-
-.divine-rays-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  filter: drop-shadow(0 0 8px rgba(189, 227, 255, 0.6)) drop-shadow(0 0 8px rgba(196, 38, 29, 0.6));
+  min-width: 0;
 }
 
 .app-title {
-  font-family: var(--font-serif);
+  font-family: var(--font-sans);
   font-size: 19px;
-  font-weight: 700;
-  letter-spacing: 1.5px;
-  color: var(--gold-light);
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .header-right {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 10px;
 }
 
-.mode-switch-btn {
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-light);
-  border-radius: 14px;
-  padding: 4px 10px;
-  font-size: 11px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
+.header-icon-btn {
+  background: none;
+  border: none;
+  padding: 4px 6px;
   cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: all 0.2s ease;
-}
-
-.mode-switch-btn:hover {
-  background: rgba(212, 175, 55, 0.25);
-  border-color: var(--gold-primary);
-}
-
-.icon-btn {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: var(--text-muted);
-  border-radius: 50%;
-  width: 36px;
-  height: 36px;
   display: flex;
   align-items: center;
   justify-content: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
+  outline: none;
+  border-radius: 8px;
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
-.icon-btn:hover {
-  background: rgba(212, 175, 55, 0.18);
-  border-color: var(--gold-border);
-  color: var(--gold-light);
-}
-
-.icon-btn.active {
-  background: rgba(212, 175, 55, 0.25);
-  border-color: var(--gold-primary);
-  color: #ffd700;
-  box-shadow: 0 0 10px var(--gold-glow);
-}
-
-/* Baner wznawiania */
-.resume-banner {
-  position: absolute;
-  top: calc(46px + var(--safe-top));
-  left: 10px;
-  right: 10px;
-  background: rgba(18, 14, 6, 0.95);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--gold-border);
-  border-radius: 12px;
-  padding: 5px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 8px;
-  z-index: 48;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
-  animation: slideDown 0.3s ease;
-}
-
-.resume-info {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
-  line-height: 1.2;
-}
-
-.resume-title {
-  font-size: 10px;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-}
-
-.resume-step {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--gold-light);
-}
-
-.resume-actions {
-  display: flex;
-  gap: 8px;
-}
-
-.resume-btn {
-  border: none;
-  border-radius: 14px;
-  padding: 6px 12px;
-  font-size: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  white-space: nowrap;
-}
-
-.resume-btn.primary {
-  background: var(--gold-primary);
-  color: #1a1202;
-}
-
-.resume-btn.secondary {
+.header-icon-btn:hover {
   background: rgba(255, 255, 255, 0.1);
-  color: var(--text-muted);
+}
+
+.header-icon-btn:active {
+  transform: scale(0.9);
+}
+
+.header-emoji {
+  font-size: 22px;
+  line-height: 1;
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.4));
+}
+
+.header-dots {
+  font-size: 24px;
+  line-height: 1;
+  color: #e2e8f0;
+  font-weight: 700;
 }
 
 /* ========================================================
-   2. PŁYWAJĄCY PANEL TEKSTU MODLITWY PONAD WIZERUNKIEM
-   Umieszczony w dolnej strefie szaty, poniżej schematu serca.
-   Kompaktowy, z mniejszą czytelną czcionką, nie konkuruje z wizerunkiem
+   2. PŁYWAJĄCA KAPSUŁA Z TEKSTEM MODLITWY (GÓRA EKRANU)
    ======================================================== */
-.prayer-stage-header.prayer-floating-card {
+.prayer-floating-capsule {
   position: absolute;
-  bottom: calc(66px + var(--safe-bottom));
-  left: 10px;
-  right: 10px;
+  top: calc(60px + var(--safe-top));
+  left: 14px;
+  right: 14px;
   max-width: 440px;
   margin: 0 auto;
-  max-height: clamp(52px, 12dvh, 78px);
-  padding: 4px 10px 5px 10px;
-  background: rgba(10, 10, 8, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(212, 175, 55, 0.28);
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.85);
+  background: rgba(14, 18, 22, 0.84);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px;
+  padding: 10px 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   text-align: center;
   cursor: pointer;
   z-index: 30;
-  transition: all 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: transform 0.15s ease, background 0.15s ease;
 }
 
-/* Pasek postępu całej modlitwy (złota linia na górnej krawędzi karty) */
-.prayer-progress-track {
-  position: absolute;
-  top: 0;
+.prayer-floating-capsule:active {
+  transform: scale(0.985);
+  background: rgba(22, 28, 34, 0.92);
+}
+
+.prayer-floating-capsule .prayer-text {
+  font-family: var(--font-sans);
+  font-size: var(--prayer-font-size, 15px);
+  font-weight: 500;
+  line-height: 1.35;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  margin: 0;
+  word-break: break-word;
+}
   left: 0;
   right: 0;
   height: 2px;
@@ -492,9 +418,7 @@ html, body {
 }
 
 /* ========================================================
-   4 & 5. WIZERUNEK W ORYGINALNYCH PROPORCJACH + SCHEMAT SERCA
-   Obraz zajmuje całą dostępną wysokość lub szerokość (co mniejsze),
-   zawsze widoczny w całości – bez rozciągania i bez przycinania.
+   4. JEZUS I RÓŻANIEC NA CAŁYM EKRANIE BEZ OBWÓDKI
    ======================================================== */
 .image-stage {
   position: absolute;
@@ -508,46 +432,34 @@ html, body {
   cursor: pointer;
   z-index: 10;
   background: #000000;
-  container-type: size;
+  border: none;
+  outline: none;
 }
 
 .image-wrapper {
-  /* Proporcje oryginalnego pliku (Kazimirowski: 635×1234, Maryja: 768×1376) */
-  --img-w: 635;
-  --img-h: 1234;
-  position: relative;
-  flex: 0 0 auto;
-  width: min(100cqw, calc(100cqh * var(--img-w) / var(--img-h)));
-  aspect-ratio: var(--img-w) / var(--img-h);
-  margin: 0 auto;
-}
-
-.image-wrapper.mode-mary {
-  --img-w: 768;
-  --img-h: 1376;
-}
-
-/* Starsze przeglądarki bez jednostek kontenera */
-@supports not (container-type: size) {
-  .image-wrapper {
-    width: auto;
-    height: 100%;
-    max-width: 100%;
-  }
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  overflow: hidden;
 }
 
 .holy-image {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* Nigdy nie ucina głowy ani stóp Pana Jezusa! */
-  object-position: center;
+  object-fit: cover;
+  object-position: center top;
+  border: none;
+  outline: none;
   pointer-events: none;
   transition: opacity 0.4s ease;
 }
 
 /* ========================================================
-   SCHEMAT SERCA RÓŻAŃCOWEGO (SVG OVERLAY)
+   SCHEMAT SERCA RÓŻAŃCOWEGO (SVG OVERLAY NA CAŁYM EKRANIE)
    ======================================================== */
 .rosary-heart-svg {
   position: absolute;
@@ -556,6 +468,8 @@ html, body {
   height: 100%;
   pointer-events: none;
   z-index: 15;
+  border: none;
+  outline: none;
 }
 
 .rosary-chain {
@@ -696,116 +610,135 @@ html, body {
 }
 
 /* ========================================================
-   ERGONOMICZNY DOLNY PANEL STEROWANIA
+   5. PŁYWAJĄCE KONTROLKI DOLNE (MEDALION, WSTĘGA, NUTKA, PLAY)
+   W stylu aplikacji referencyjnej Rosario
    ======================================================== */
-.prayer-dock {
+.bottom-floating-controls {
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  padding: 6px 14px calc(8px + var(--safe-bottom)) 14px;
-  background: linear-gradient(to top, rgba(8, 8, 8, 0.96) 0%, rgba(8, 8, 8, 0.82) 75%, transparent 100%);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-top: 1px solid rgba(212, 175, 55, 0.15);
-  z-index: 40;
+  bottom: calc(10px + var(--safe-bottom));
+  left: 12px;
+  right: 12px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 35;
 }
 
-.controls-panel {
+.cameo-btn {
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
   display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 12px;
-  max-width: 440px;
-  margin: 0 auto;
+  justify-content: center;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.85));
+  flex-shrink: 0;
 }
 
-.control-btn {
-  border: none;
-  outline: none;
-  cursor: pointer;
+.cameo-btn:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 14px rgba(45, 130, 255, 0.9));
+}
+
+.cameo-btn:active {
+  transform: scale(0.93);
+}
+
+.cameo-img {
+  width: 70px;
+  height: 74px;
+  object-fit: contain;
+  display: block;
+}
+
+.banner-scroll-wrap {
+  pointer-events: auto;
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2px;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.9));
+  transition: transform 0.2s ease;
+}
+
+.banner-scroll-img {
+  max-width: 250px;
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.bottom-right-cluster {
+  pointer-events: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 3px;
-  transition: all 0.2s ease;
+  gap: 8px;
+  flex-shrink: 0;
 }
 
-.btn-text-sub {
-  font-size: 10px;
-  color: var(--text-dim);
-  font-weight: 600;
-  letter-spacing: 0.4px;
+.music-note-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, opacity 0.2s ease;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
 }
 
-.nav-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-light);
+.music-note-btn:hover {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 14px rgba(0, 180, 255, 0.95));
 }
 
-.nav-btn:hover {
-  background: rgba(212, 175, 55, 0.16);
-  border-color: var(--gold-primary);
-}
-
-.nav-btn:active {
+.music-note-btn:active {
   transform: scale(0.92);
 }
 
-.autoplay-btn {
-  width: 52px;
-  height: 52px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--gold-border);
-  color: var(--gold-light);
+.music-note-btn.muted {
+  opacity: 0.45;
+  filter: grayscale(85%);
 }
 
-.autoplay-btn.playing {
-  background: rgba(212, 175, 55, 0.25);
-  border-color: var(--gold-primary);
-  box-shadow: 0 0 14px var(--gold-glow);
+.music-note-img {
+  width: 44px;
+  height: 40px;
+  object-fit: contain;
+  display: block;
 }
 
-.autoplay-btn.playing .btn-text-sub {
-  color: var(--gold-light);
+.play-circle-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  filter: drop-shadow(0 4px 14px rgba(0,0,0,0.9));
 }
 
-/* Główny duży przycisk DALEJ */
-.primary-btn {
-  width: 110px;
-  height: 56px;
-  border-radius: 28px;
-  background: linear-gradient(135deg, #fceda6 0%, #d4af37 50%, #9e7a17 100%);
-  border: 2px solid #ffffff;
-  color: #1a1202;
-  box-shadow: 0 4px 18px rgba(212, 175, 55, 0.55), 0 2px 6px rgba(0, 0, 0, 0.9);
+.play-circle-btn:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 18px rgba(45, 130, 255, 0.95));
 }
 
-.btn-primary-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  font-family: var(--font-serif);
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 1px;
+.play-circle-btn:active {
+  transform: scale(0.92);
 }
 
-.primary-btn:hover {
-  transform: translateY(-1px) scale(1.03);
-  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.7);
-}
-
-.primary-btn:active {
-  transform: scale(0.95);
+.play-circle-img {
+  width: 66px;
+  height: 66px;
+  object-fit: contain;
+  display: block;
 }
 
 /* ========================================================
