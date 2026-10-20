@@ -742,13 +742,18 @@ function updateRosarySvgViewBox() {
   const vbHeight = Math.round(460 * (h / w));
   svg.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
 
-  // Granice serca: min Y ~ 304, max Y ~ 717, środek geometryczny = 510.5
-  // Zależnie od tego, czy tekst modlitwy jest schowany/widoczny, pozycjonujemy schemat estetycznie w świetle ekranu
+  // Granice serca: min Y ~ 304, max Y ~ 707.3, środek geometryczny = 505.6
+  // Zapewniamy, że dolne paciorki 3. dziesiątki ZAWSZE znajdują się powyżej wstęgi z napisem „Jezu Ufam Tobie”
   const isHidden = AppState.textMode === 'hidden';
-  const topReserved = isHidden ? 50 : 110;
-  const bottomReserved = 90;
-  const availableMid = Math.max(340, (vbHeight + topReserved - bottomReserved) / 2);
-  const dy = availableMid - 510.5;
+  const topReserved = isHidden ? 55 : 105;
+  const bottomReserved = 90; // bezpieczny odstęp od pergaminowej wstęgi i dolnych kontrolek
+
+  const availHeight = vbHeight - topReserved - bottomReserved;
+  const targetMid = topReserved + availHeight / 2;
+  // Zabezpieczenie: dolne paciorki (Y=707.3) nigdy nie mogą wejść pod wstęgę
+  const maxDy = (vbHeight - bottomReserved) - 712;
+  const minDy = (topReserved + 5) - 304;
+  const dy = Math.min(maxDy, Math.max(minDy, targetMid - 505.6));
 
   heartGroup.setAttribute('transform', `translate(0, ${dy.toFixed(1)})`);
 }
@@ -1320,6 +1325,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
 if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=36').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=37').catch(() => {});
   });
 }
