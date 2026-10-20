@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=37">
+  <link rel="stylesheet" href="style.css?v=38">
 </head>
 <body>
   <div id="app" class="app-container mode-koronka">
@@ -289,14 +289,24 @@
           <img src="assets/banner-transparent.png" alt="Jezu Ufam Tobie" id="banner-img" class="banner-scroll-img">
         </div>
 
-        <!-- Prawy dolny róg: 🎵 Muzyka/Lektor oraz ▶ Przycisk Dalej -->
-        <div class="bottom-right-cluster">
-          <button id="btn-audio" class="music-note-btn" title="Lektor i dźwięk modlitwy" aria-label="Włącz / wyłącz dźwięk">
-            <img src="assets/btn-music-transparent.png" alt="Dźwięk" id="music-note-img" class="music-note-img">
-          </button>
-          <button id="btn-next" class="play-circle-btn" title="Kolejny paciorek" aria-label="Kolejny paciorek">
-            <img src="assets/btn-play-clean.png" alt="Dalej" class="play-circle-img">
-          </button>
+        <!-- Prawy dolny róg: 🎵 Lektor, ↺ Od nowa, ◀ Wstecz, ▶ Dalej (Play) -->
+        <div class="bottom-right-cluster" id="bottom-right-cluster">
+          <div class="ctrl-sub-row">
+            <button id="btn-audio" class="music-note-btn" title="Lektor i dźwięk modlitwy (włącz / wyłącz odczytywanie na głos)" aria-label="Włącz / wyłącz lektora">
+              <img src="assets/btn-music-transparent.png" alt="Lektor" id="music-note-img" class="music-note-img">
+            </button>
+            <button id="btn-restart" class="nav-circle-btn btn-restart-style" title="Od nowa (początek modlitwy)" aria-label="Rozpocznij od nowa">
+              <img src="assets/btn-restart-clean.png" alt="Od nowa" class="nav-btn-img restart-btn-img">
+            </button>
+          </div>
+          <div class="ctrl-main-row">
+            <button id="btn-prev" class="nav-circle-btn btn-prev-style" title="Poprzednia modlitwa (wstecz)" aria-label="Poprzednia modlitwa (wstecz)">
+              <img src="assets/btn-prev-clean.png" alt="Wstecz" class="nav-btn-img prev-btn-img">
+            </button>
+            <button id="btn-next" class="play-circle-btn btn-next-style" title="Kolejna modlitwa (dalej)" aria-label="Kolejna modlitwa (dalej)">
+              <img src="assets/btn-play-clean.png" alt="Dalej" class="play-circle-img">
+            </button>
+          </div>
         </div>
       </div>
     </main>
@@ -644,6 +654,6 @@
 
   </div>
 
-  <script src="app.js?v=37"></script>
+  <script src="app.js?v=38"></script>
 </body>
 </html>

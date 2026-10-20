@@ -621,9 +621,9 @@ html, body {
    ======================================================== */
 .bottom-floating-controls {
   position: absolute;
-  bottom: calc(6px + var(--safe-bottom));
-  left: 10px;
-  right: 10px;
+  bottom: calc(14px + var(--safe-bottom));
+  left: 12px;
+  right: 12px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -668,13 +668,15 @@ html, body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 0;
+  margin-bottom: 2px;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.9));
   transition: transform 0.2s ease;
+  min-width: 0;
+  padding: 0 4px;
 }
 
 .banner-scroll-img {
-  max-width: 230px;
+  max-width: 180px;
   width: 100%;
   height: auto;
   display: block;
@@ -685,9 +687,17 @@ html, body {
   pointer-events: auto;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-end;
+  gap: 6px;
   flex-shrink: 0;
+}
+
+.ctrl-sub-row,
+.ctrl-main-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
 .music-note-btn {
@@ -696,6 +706,9 @@ html, body {
   padding: 0;
   cursor: pointer;
   outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, opacity 0.2s ease;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,0.8));
 }
@@ -710,13 +723,49 @@ html, body {
 }
 
 .music-note-btn.muted {
-  opacity: 0.45;
-  filter: grayscale(85%);
+  opacity: 0.35;
+  filter: grayscale(90%) drop-shadow(0 2px 6px rgba(0,0,0,0.6));
 }
 
 .music-note-img {
-  width: 44px;
+  width: 36px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+}
+
+.nav-circle-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.85));
+}
+
+.nav-circle-btn:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 16px rgba(45, 130, 255, 0.95));
+}
+
+.nav-circle-btn:active {
+  transform: scale(0.92);
+}
+
+.btn-restart-style .nav-btn-img {
+  width: 40px;
   height: 40px;
+  object-fit: contain;
+  display: block;
+}
+
+.btn-prev-style .nav-btn-img {
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   display: block;
 }
@@ -727,6 +776,9 @@ html, body {
   padding: 0;
   cursor: pointer;
   outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
   filter: drop-shadow(0 4px 14px rgba(0,0,0,0.9));
 }
@@ -741,8 +793,8 @@ html, body {
 }
 
 .play-circle-img {
-  width: 66px;
-  height: 66px;
+  width: 60px;
+  height: 60px;
   object-fit: contain;
   display: block;
 }

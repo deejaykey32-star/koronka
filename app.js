@@ -142,15 +142,69 @@ function generateDivineMercySteps() {
 // ========================================================
 // DANE MODLITWY RÓŻAŃCOWEJ (DO PRZEŁĄCZENIA KORONKA <-> RÓŻANIEC)
 // ========================================================
+function getRosaryMysteriesForToday() {
+  const day = new Date().getDay(); // 0 = Niedziela, 1 = Poniedziałek, ..., 6 = Sobota
+  if (day === 1 || day === 6) {
+    return {
+      name: 'Tajemnice Radosne',
+      days: 'Poniedziałek i Sobota',
+      items: [
+        'Zwiastowanie Najświętszej Maryi Pannie',
+        'Nawiedzenie świętej Elżbiety',
+        'Narodzenie Pana Jezusa w Betlejem',
+        'Ofiarowanie Pana Jezusa w świątyni',
+        'Odnalezienie Pana Jezusa w świątyni'
+      ]
+    };
+  } else if (day === 2 || day === 5) {
+    return {
+      name: 'Tajemnice Bolesne',
+      days: 'Wtorek i Piątek',
+      items: [
+        'Modlitwa Pana Jezusa w Ogrójcu',
+        'Biczowanie Pana Jezusa',
+        'Cierniem ukoronowanie Pana Jezusa',
+        'Dźwiganie krzyża na Kalwarię',
+        'Ukrzyżowanie i śmierć Pana Jezusa'
+      ]
+    };
+  } else if (day === 4) {
+    return {
+      name: 'Tajemnice Światła',
+      days: 'Czwartek',
+      items: [
+        'Chrzest Pana Jezusa w Jordanie',
+        'Objawienie siebie na weselu w Kanie Galilejskiej',
+        'Głoszenie Królestwa Bożego i wzywanie do nawrócenia',
+        'Przemienienie na Górze Tabor',
+        'Ustanowienie Najświętszej Eucharystii'
+      ]
+    };
+  } else {
+    return {
+      name: 'Tajemnice Chwalebne',
+      days: 'Środa i Niedziela',
+      items: [
+        'Zmartwychwstanie Pana Jezusa',
+        'Wniebowstąpienie Pana Jezusa',
+        'Zesłanie Ducha Świętego',
+        'Wniebowzięcie Najświętszej Maryi Panny',
+        'Ukoronowanie Maryi na Królową Nieba i Ziemi'
+      ]
+    };
+  }
+}
+
 function generateRosarySteps() {
   const steps = [];
+  const mysteryInfo = getRosaryMysteriesForToday();
   
   const OJCZE_NASZ_FULL = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
   const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
   const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
   const CHWALA_OJCU_FULL = 'Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen.';
   const FATIMA_FULL = 'O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego, zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym, którzy najbardziej potrzebują Twojego miłosierdzia.';
-  const POD_TWOJA_OBRONE_FULL = 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko, naszymi prośbami racz nie gardzić w potrzebach naszych, ale od wszelakich złych przygód racz nas zawsze wybawiać, Panno chwalebna i błogosławiona. O Pani nasza, Orędowniczko nasza, Pośredniczko nasza, Pocieszycielko nasza. W imię Ojca i Syna, i Ducha Świętego. Amen.';
+  const POD_TWOJA_OBRONE_FULL = 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko, naszymi prośbami racz nie gardzić w potrzebach naszych, ale od wszelakich złych przygód racz nas zawsze wybawiać, Panno chwalebna i błogosławiona. O Pani nasza, Orędowniczko nasza, Pośredniczko nasza, Pocieszycielko nasza. Z Synem swoim nas pojednaj, Synowi swojemu nas polecaj, swojemu Synowi nas oddawaj.\n\n+ W imię Ojca i Syna, i Ducha Świętego. Amen.';
 
   // Krok 1: Krzyżyk – Znak Krzyża i pełne Wyznanie Wiary (Wierzę w Boga Ojca)
   steps.push({
@@ -167,7 +221,7 @@ function generateRosarySteps() {
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Duży niebieski paciorek)',
+    title: 'Modlitwa Pańska (Ojcze nasz)',
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: OJCZE_NASZ_FULL,
     speechText: OJCZE_NASZ_FULL,
@@ -178,7 +232,7 @@ function generateRosarySteps() {
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Zdrowaś Maryjo (Czerwony paciorek 1/3 - o cnotę Wiary)',
+    title: 'Zdrowaś Maryjo (1/3 – o cnotę Wiary)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL + ' (o przymnożenie Wiary)',
     speechText: ZDROVAS_FULL,
@@ -189,7 +243,7 @@ function generateRosarySteps() {
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Zdrowaś Maryjo (Czerwony paciorek 2/3 - o cnotę Nadziei)',
+    title: 'Zdrowaś Maryjo (2/3 – o cnotę Nadziei)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL + ' (o ugruntowanie Nadziei)',
     speechText: ZDROVAS_FULL,
@@ -200,7 +254,7 @@ function generateRosarySteps() {
   steps.push({
     stepIndex: 5,
     part: 'Modlitwy wstępne',
-    title: 'Zdrowaś Maryjo (Czerwony paciorek 3/3 - o cnotę Miłości) & Chwała Ojcu',
+    title: 'Zdrowaś Maryjo (3/3 – o cnotę Miłości) & Chwała Ojcu',
     shortText: 'Zdrowaś Maryjo... Chwała Ojcu...',
     fullText: ZDROVAS_FULL + ' (o rozpalenie Miłości)\n\n' + CHWALA_OJCU_FULL,
     speechText: ZDROVAS_FULL + ' ' + CHWALA_OJCU_FULL,
@@ -215,50 +269,53 @@ function generateRosarySteps() {
     else if (d === 4) largeBeadId = 'bead-large-4';
     else if (d === 5) largeBeadId = 'bead-large-5';
 
-    // Duży paciorek: Ojcze nasz
+    const mysteryName = mysteryInfo.items[d - 1] || `Tajemnica ${d}`;
+
+    // Duży paciorek: Rozważenie tajemnicy & Ojcze nasz
     steps.push({
       stepIndex: cur++,
-      part: `Dziesiątka ${d} z 5`,
-      title: `Ojcze nasz (${d}. tajemnica)`,
-      shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
-      fullText: OJCZE_NASZ_FULL,
-      speechText: OJCZE_NASZ_FULL,
+      part: `${mysteryInfo.name} · Dziesiątka ${d} z 5`,
+      title: `Tajemnica ${d}: ${mysteryName} · Ojcze nasz`,
+      shortText: `Tajemnica ${d}: ${mysteryName} · Ojcze nasz...`,
+      fullText: `Tajemnica ${d}: ${mysteryName}\n\n${OJCZE_NASZ_FULL}`,
+      speechText: `Tajemnica ${d}: ${mysteryName}. ${OJCZE_NASZ_FULL}`,
       type: 'large', decade: d, beadNumber: 0, beadId: largeBeadId
     });
 
-    // 10 małych paciorków: Zdrowaś Maryjo
+    // 10 małych paciorków: Zdrowaś Maryjo (na 10. paciorku również Chwała Ojcu & Modlitwa Fatimska)
     for (let b = 1; b <= 10; b++) {
-      steps.push({
-        stepIndex: cur++,
-        part: `Dziesiątka ${d} · ${b} z 10`,
-        title: `Zdrowaś Maryjo (${b}/10)`,
-        shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
-        fullText: ZDROVAS_FULL,
-        speechText: ZDROVAS_FULL,
-        type: 'small', decade: d, beadNumber: b, beadId: `bead-dec${d}-${b}`
-      });
+      if (b < 10) {
+        steps.push({
+          stepIndex: cur++,
+          part: `Dziesiątka ${d} · ${b} z 10`,
+          title: `Zdrowaś Maryjo (${b}/10)`,
+          shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
+          fullText: ZDROVAS_FULL,
+          speechText: ZDROVAS_FULL,
+          type: 'small', decade: d, beadNumber: b, beadId: `bead-dec${d}-${b}`
+        });
+      } else {
+        steps.push({
+          stepIndex: cur++,
+          part: `Dziesiątka ${d} · 10 z 10`,
+          title: `Zdrowaś Maryjo (10/10) · Chwała Ojcu · O mój Jezu`,
+          shortText: 'Zdrowaś Maryjo... Chwała Ojcu... O mój Jezu...',
+          fullText: `${ZDROVAS_FULL}\n\n${CHWALA_OJCU_FULL}\n\n${FATIMA_FULL}`,
+          speechText: `${ZDROVAS_FULL} ${CHWALA_OJCU_FULL} ${FATIMA_FULL}`,
+          type: 'small', decade: d, beadNumber: b, beadId: `bead-dec${d}-${b}`
+        });
+      }
     }
   }
 
-  // Zakończenie: Chwała Ojcu & Modlitwa Fatimska
-  steps.push({
-    stepIndex: cur++,
-    part: 'Zakończenie',
-    title: 'Chwała Ojcu & Modlitwa Fatimska',
-    shortText: 'Chwała Ojcu... O mój Jezu...',
-    fullText: CHWALA_OJCU_FULL + '\n\n' + FATIMA_FULL,
-    speechText: CHWALA_OJCU_FULL + ' ' + FATIMA_FULL,
-    type: 'holyGod', decade: 6, beadNumber: 1, beadId: 'bead-connector'
-  });
-
-  // Zakończenie: Pod Twoją obronę & Znak Krzyża
+  // Krok 61: Zakończenie – Pod Twoją obronę & Znak Krzyża (Krzyżyk)
   steps.push({
     stepIndex: cur++,
     part: 'Zakończenie',
     title: 'Pod Twoją obronę & Znak Krzyża',
     shortText: 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko...',
     fullText: POD_TWOJA_OBRONE_FULL,
-    speechText: POD_TWOJA_OBRONE_FULL,
+    speechText: 'Pod Twoją obronę uciekamy się, Święta Boża Rodzicielko, naszymi prośbami racz nie gardzić w potrzebach naszych, ale od wszelakich złych przygód racz nas zawsze wybawiać, Panno chwalebna i błogosławiona. O Pani nasza, Orędowniczko nasza, Pośredniczko nasza, Pocieszycielko nasza. Z Synem swoim nas pojednaj, Synowi swojemu nas polecaj, swojemu Synowi nas oddawaj. W imię Ojca i Syna, i Ducha Świętego. Amen.',
     type: 'closing', decade: 6, beadNumber: 2, beadId: 'bead-cross'
   });
 
@@ -587,13 +644,18 @@ function updateRosaryBeadsVisuals(currentStep) {
   const allBeadElements = document.querySelectorAll('.bead-item');
   const haloGroup = document.getElementById('active-halo-group');
 
-  // Wyczyść klasy
-  allBeadElements.forEach(el => {
-    const beadStep = parseInt(el.getAttribute('data-step') || '0', 10);
-    el.classList.remove('active');
+  // Paciorki odmówione do bieżącego kroku
+  const completedBeads = new Set();
+  for (let i = 0; i < AppState.currentIndex; i++) {
+    if (AppState.steps[i] && AppState.steps[i].beadId) {
+      completedBeads.add(AppState.steps[i].beadId);
+    }
+  }
 
-    // 5. Paciorki odmówione: przygaszone perłowo
-    if (beadStep < currentStep.stepIndex && el.id !== currentBeadId) {
+  // Wyczyść klasy i oznacz paciorki odmówione
+  allBeadElements.forEach(el => {
+    el.classList.remove('active');
+    if (completedBeads.has(el.id) && el.id !== currentBeadId) {
       el.classList.add('completed');
     } else {
       el.classList.remove('completed');
@@ -631,6 +693,15 @@ function goToStep(index, fromAutoplay = false) {
     return;
   }
 
+  // Przerwij poprzednie oczekiwanie na kolejny krok
+  if (AppState.audioTimer) {
+    clearTimeout(AppState.audioTimer);
+    AppState.audioTimer = null;
+  }
+
+  // Zatrzymaj poprzednio odczytywany tekst
+  speaker.stop();
+
   AppState.currentIndex = index;
   updateUI();
   triggerHaptic(AppState.steps[index]);
@@ -640,7 +711,8 @@ function goToStep(index, fromAutoplay = false) {
     stopAutoplay();
   }
 
-  if (AppState.isPlaying) {
+  // Odmawianie wraz z lektorem lub bez (wg stanu soundEnabled)
+  if (AppState.settings.soundEnabled) {
     const textToSpeak = AppState.steps[index].speechText || AppState.steps[index].fullText;
     speaker.speak(textToSpeak, () => {
       if (AppState.isPlaying) {
@@ -677,11 +749,14 @@ function handlePrayerCompleted() {
   releaseScreenWakeLock();
   AppState.counter++;
   localStorage.setItem('koronka_counter', AppState.counter.toString());
-  document.getElementById('completion-counter-val').textContent = AppState.counter;
-  document.getElementById('settings-counter-display').textContent = AppState.counter;
+  const compVal = document.getElementById('completion-counter-val');
+  if (compVal) compVal.textContent = AppState.counter;
+  const setVal = document.getElementById('settings-counter-display');
+  if (setVal) setVal.textContent = AppState.counter;
 
   // Wyświetl godny, prosty komunikat zakończenia
-  document.getElementById('modal-completion').classList.remove('hidden');
+  const modalComp = document.getElementById('modal-completion');
+  if (modalComp) modalComp.classList.remove('hidden');
 }
 
 // ========================================================
@@ -689,20 +764,25 @@ function handlePrayerCompleted() {
 // ========================================================
 function startAutoplay() {
   AppState.isPlaying = true;
-  document.getElementById('btn-autoplay').classList.add('playing');
-  document.getElementById('icon-play').classList.add('hidden');
-  document.getElementById('icon-pause').classList.remove('hidden');
+  const btnAutoplay = document.getElementById('btn-autoplay');
+  if (btnAutoplay) btnAutoplay.classList.add('playing');
+  const iconPlay = document.getElementById('icon-play');
+  if (iconPlay) iconPlay.classList.add('hidden');
+  const iconPause = document.getElementById('icon-pause');
+  if (iconPause) iconPause.classList.remove('hidden');
   requestScreenWakeLock();
 
   const currentStep = AppState.steps[AppState.currentIndex];
-  const textToSpeak = currentStep.speechText || currentStep.fullText;
-  speaker.speak(textToSpeak, () => {
-    if (AppState.isPlaying) {
-      AppState.audioTimer = setTimeout(() => {
-        goToNextStep(true);
-      }, AppState.settings.pauseBetweenPrayers * 1000);
-    }
-  });
+  if (currentStep && AppState.settings.soundEnabled) {
+    const textToSpeak = currentStep.speechText || currentStep.fullText;
+    speaker.speak(textToSpeak, () => {
+      if (AppState.isPlaying) {
+        AppState.audioTimer = setTimeout(() => {
+          goToNextStep(true);
+        }, AppState.settings.pauseBetweenPrayers * 1000);
+      }
+    });
+  }
 }
 
 function stopAutoplay() {
@@ -712,9 +792,12 @@ function stopAutoplay() {
     AppState.audioTimer = null;
   }
   speaker.stop();
-  document.getElementById('btn-autoplay').classList.remove('playing');
-  document.getElementById('icon-play').classList.remove('hidden');
-  document.getElementById('icon-pause').classList.add('hidden');
+  const btnAutoplay = document.getElementById('btn-autoplay');
+  if (btnAutoplay) btnAutoplay.classList.remove('playing');
+  const iconPlay = document.getElementById('icon-play');
+  if (iconPlay) iconPlay.classList.remove('hidden');
+  const iconPause = document.getElementById('icon-pause');
+  if (iconPause) iconPause.classList.add('hidden');
 }
 
 function toggleAutoplay() {
@@ -727,6 +810,7 @@ function toggleAutoplay() {
 
 // ========================================================
 // 11. PRZEŁĄCZANIE TRYBU: KORONKA <-> RÓŻANIEC
+// ========================================================
 function updateRosarySvgViewBox() {
   const stage = document.getElementById('prayer-stage');
   const svg = document.getElementById('rosary-heart-svg');
@@ -738,19 +822,17 @@ function updateRosarySvgViewBox() {
   if (!w || !h) return;
 
   const vbWidth = 460;
-  // Dynamiczna wysokość viewBox dopasowana 1:1 do proporcji ekranu (szerokość 100%, brak czarnych marginesów, paciorki są idealnymi okręgami)
+  // Dynamiczna wysokość viewBox dopasowana 1:1 do proporcji ekranu
   const vbHeight = Math.round(460 * (h / w));
   svg.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
 
   // Granice serca: min Y ~ 304, max Y ~ 707.3, środek geometryczny = 505.6
-  // Zapewniamy, że dolne paciorki 3. dziesiątki ZAWSZE znajdują się powyżej wstęgi z napisem „Jezu Ufam Tobie”
   const isHidden = AppState.textMode === 'hidden';
   const topReserved = isHidden ? 55 : 105;
-  const bottomReserved = 90; // bezpieczny odstęp od pergaminowej wstęgi i dolnych kontrolek
+  const bottomReserved = 90;
 
   const availHeight = vbHeight - topReserved - bottomReserved;
   const targetMid = topReserved + availHeight / 2;
-  // Zabezpieczenie: dolne paciorki (Y=707.3) nigdy nie mogą wejść pod wstęgę
   const maxDy = (vbHeight - bottomReserved) - 712;
   const minDy = (topReserved + 5) - 304;
   const dy = Math.min(maxDy, Math.max(minDy, targetMid - 505.6));
@@ -768,6 +850,8 @@ function switchMode(newMode) {
   const imgJesus = document.getElementById('holy-image-jesus');
   const imgMary = document.getElementById('holy-image-mary');
   const cameoImg = document.getElementById('cameo-mode-img');
+  const cameoBtn = document.getElementById('btn-switch-mode');
+  const bannerImg = document.getElementById('banner-img');
 
   updateRosarySvgViewBox();
 
@@ -781,7 +865,7 @@ function switchMode(newMode) {
 
   if (newMode === 'rozaniec') {
     AppState.steps = generateRosarySteps();
-    if (titleEl) titleEl.textContent = 'Różaniec do Matk...';
+    if (titleEl) titleEl.textContent = 'Różaniec Święty';
     if (modeLabel) modeLabel.textContent = 'Koronka';
     if (inscription) inscription.textContent = 'KRÓLOWO POKOJU, MÓDL SIĘ ZA NAMI';
     if (imgJesus) imgJesus.classList.add('hidden');
@@ -790,9 +874,17 @@ function switchMode(newMode) {
       cameoImg.src = 'assets/cameo-jesus-clean.png';
       cameoImg.alt = 'Jezus Miłosierny';
     }
+    if (cameoBtn) {
+      cameoBtn.title = 'Przełącz na Koronkę do Miłosierdzia Bożego';
+      cameoBtn.setAttribute('aria-label', cameoBtn.title);
+    }
+    if (bannerImg) {
+      bannerImg.src = 'assets/banner-mary-transparent.png';
+      bannerImg.alt = 'Królowo Pokoju, módl się za nami';
+    }
   } else {
     AppState.steps = generateDivineMercySteps();
-    if (titleEl) titleEl.textContent = 'Koronka do Bożeg...';
+    if (titleEl) titleEl.textContent = 'Koronka do Bożego Miłosierdzia';
     if (modeLabel) modeLabel.textContent = 'Różaniec';
     if (inscription) inscription.textContent = 'JEZU, UFAM TOBIE';
     if (imgJesus) imgJesus.classList.remove('hidden');
@@ -801,11 +893,27 @@ function switchMode(newMode) {
       cameoImg.src = 'assets/cameo-mary-clean.png';
       cameoImg.alt = 'Matka Boża';
     }
+    if (cameoBtn) {
+      cameoBtn.title = 'Przełącz na Różaniec Święty';
+      cameoBtn.setAttribute('aria-label', cameoBtn.title);
+    }
+    if (bannerImg) {
+      bannerImg.src = 'assets/banner-transparent.png';
+      bannerImg.alt = 'Jezu Ufam Tobie';
+    }
   }
 
   AppState.currentIndex = 0;
   updateUI();
   localStorage.setItem('koronka_app_mode', newMode);
+
+  // Odczytaj początkowy Znak Krzyża jeśli lektor jest włączony
+  if (AppState.settings.soundEnabled) {
+    const firstStep = AppState.steps[0];
+    if (firstStep) {
+      speaker.speak(firstStep.speechText || firstStep.fullText);
+    }
+  }
 }
 
 // ========================================================
@@ -1042,9 +1150,15 @@ document.addEventListener('DOMContentLoaded', () => {
     item.addEventListener('click', (e) => {
       e.stopPropagation();
       const beadId = item.id;
-      const stepIdx = AppState.steps.findIndex(s => s.beadId === beadId);
-      if (stepIdx !== -1) {
-        goToStep(stepIdx);
+      const matching = [];
+      AppState.steps.forEach((s, idx) => {
+        if (s.beadId === beadId) matching.push(idx);
+      });
+      if (matching.length === 1) {
+        goToStep(matching[0]);
+      } else if (matching.length > 1) {
+        matching.sort((a, b) => Math.abs(a - AppState.currentIndex) - Math.abs(b - AppState.currentIndex));
+        goToStep(matching[0]);
       } else {
         const stepNum = parseInt(item.getAttribute('data-step') || '1', 10);
         goToStep(stepNum - 1);
@@ -1101,12 +1215,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const prayerStage = document.getElementById('prayer-stage');
   if (prayerStage) {
     prayerStage.addEventListener('click', (e) => {
-      if (e.target.closest('.bead-item') || e.target.closest('#btn-restore-text') || e.target.closest('#btn-restart-always')) return;
+      if (e.target.closest('.bead-item') || e.target.closest('#btn-restore-text') || e.target.closest('#btn-restart') || e.target.closest('#btn-restart-always')) return;
       goToNextStep();
     });
   }
 
-  // 3. Przyciski akcji
+  // 3. Przyciski akcji na dole ekranu
   const btnNext = document.getElementById('btn-next');
   if (btnNext) btnNext.addEventListener('click', () => goToNextStep());
   const btnPrev = document.getElementById('btn-prev');
@@ -1122,14 +1236,22 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // 5. Przycisk dźwięku / wyciszenia (🎵 błękitna nutka)
+  // 5. Przycisk dźwięku / lektora (🎵 błękitna nutka)
   const btnAudio = document.getElementById('btn-audio');
   if (btnAudio) {
     btnAudio.addEventListener('click', () => {
       AppState.settings.soundEnabled = !AppState.settings.soundEnabled;
       applySettingsToUI();
       saveSettings();
-      if (!AppState.settings.soundEnabled) stopAutoplay();
+      if (!AppState.settings.soundEnabled) {
+        stopAutoplay();
+        speaker.stop();
+      } else {
+        const curStep = AppState.steps[AppState.currentIndex];
+        if (curStep) {
+          speaker.speak(curStep.speechText || curStep.fullText);
+        }
+      }
     });
   }
 
@@ -1153,7 +1275,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Zawsze widoczny „Od nowa” – z potwierdzeniem
+  // Przycisk „Od nowa” (↺) – z potwierdzeniem
   const modalRestart = document.getElementById('modal-restart');
   const restartFromBeginning = () => {
     if (modalRestart) modalRestart.classList.add('hidden');
@@ -1161,17 +1283,22 @@ document.addEventListener('DOMContentLoaded', () => {
     setResumeBannerVisible(false);
     goToStep(0);
   };
+
+  const handleRestartClick = (e) => {
+    if (e) e.stopPropagation();
+    if (AppState.currentIndex > 0 && modalRestart) {
+      modalRestart.classList.remove('hidden');
+    } else {
+      restartFromBeginning();
+    }
+  };
+
+  const btnRestart = document.getElementById('btn-restart');
+  if (btnRestart) btnRestart.addEventListener('click', handleRestartClick);
+
   const btnRestartAlways = document.getElementById('btn-restart-always');
-  if (btnRestartAlways) {
-    btnRestartAlways.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (AppState.currentIndex > 0 && modalRestart) {
-        modalRestart.classList.remove('hidden');
-      } else {
-        restartFromBeginning();
-      }
-    });
-  }
+  if (btnRestartAlways) btnRestartAlways.addEventListener('click', handleRestartClick);
+
   const btnRestartConfirm = document.getElementById('btn-restart-confirm');
   if (btnRestartConfirm) btnRestartConfirm.addEventListener('click', restartFromBeginning);
   const btnRestartCancel = document.getElementById('btn-restart-cancel');
@@ -1181,6 +1308,24 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e.target === modalRestart) modalRestart.classList.add('hidden');
     });
   }
+
+  // Klawiatura (ułatwienie modlitwy na komputerach i tabletach)
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'Enter') {
+      e.preventDefault();
+      goToNextStep();
+    } else if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      goToPrevStep();
+    } else if (e.key === 'Home' || e.key.toLowerCase() === 'r') {
+      e.preventDefault();
+      handleRestartClick();
+    } else if (e.key.toLowerCase() === 'm') {
+      e.preventDefault();
+      if (btnAudio) btnAudio.click();
+    }
+  });
 
   const btnResumeRestart = document.getElementById('btn-resume-restart');
   if (btnResumeRestart) {
