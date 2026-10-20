@@ -727,13 +727,31 @@ function toggleAutoplay() {
 
 // ========================================================
 // 11. PRZEŁĄCZANIE TRYBU: KORONKA <-> RÓŻANIEC
-// ========================================================
-// Schemat serca jest zapisany w układzie 460×1024; dla każdego wizerunku przeliczamy go
-// na piksele oryginalnego pliku (viewBox = wymiary obrazu), aby obraz nie był skalowany ani przycinany.
-const HEART_LAYOUTS = {
-  koronka: { viewBox: '0 0 460 1024', transform: '' },
-  rozaniec: { viewBox: '0 0 460 1024', transform: '' }
-};
+function updateRosarySvgViewBox() {
+  const stage = document.getElementById('prayer-stage');
+  const svg = document.getElementById('rosary-heart-svg');
+  const heartGroup = document.getElementById('rosary-layout');
+  if (!stage || !svg || !heartGroup) return;
+
+  const w = stage.clientWidth || window.innerWidth;
+  const h = stage.clientHeight || window.innerHeight;
+  if (!w || !h) return;
+
+  const vbWidth = 460;
+  // Dynamiczna wysokość viewBox dopasowana 1:1 do proporcji ekranu (szerokość 100%, brak czarnych marginesów, paciorki są idealnymi okręgami)
+  const vbHeight = Math.round(460 * (h / w));
+  svg.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
+
+  // Granice serca: min Y ~ 304, max Y ~ 717, środek geometryczny = 510.5
+  // Zależnie od tego, czy tekst modlitwy jest schowany/widoczny, pozycjonujemy schemat estetycznie w świetle ekranu
+  const isHidden = AppState.textMode === 'hidden';
+  const topReserved = isHidden ? 50 : 110;
+  const bottomReserved = 90;
+  const availableMid = Math.max(340, (vbHeight + topReserved - bottomReserved) / 2);
+  const dy = availableMid - 510.5;
+
+  heartGroup.setAttribute('transform', `translate(0, ${dy.toFixed(1)})`);
+}
 
 function switchMode(newMode) {
   AppState.mode = newMode;
@@ -746,14 +764,7 @@ function switchMode(newMode) {
   const imgMary = document.getElementById('holy-image-mary');
   const cameoImg = document.getElementById('cameo-mode-img');
 
-  const layout = HEART_LAYOUTS[newMode] || HEART_LAYOUTS.koronka;
-  const svgEl = document.getElementById('rosary-heart-svg');
-  if (svgEl) svgEl.setAttribute('viewBox', layout.viewBox);
-  const rosaryLayoutEl = document.getElementById('rosary-layout');
-  if (rosaryLayoutEl) {
-    if (layout.transform) rosaryLayoutEl.setAttribute('transform', layout.transform);
-    else rosaryLayoutEl.removeAttribute('transform');
-  }
+  updateRosarySvgViewBox();
 
   const wrapper = document.getElementById('image-wrapper');
   if (wrapper) wrapper.classList.toggle('mode-mary', newMode === 'rozaniec');
@@ -875,23 +886,30 @@ function setTextMode(mode) {
   const header = document.getElementById('prayer-tap-text-area');
   const btnRestore = document.getElementById('btn-restore-text');
   const btnCollapse = document.getElementById('btn-text-collapse');
+  const toggleSettings = document.getElementById('toggle-prayer-text');
 
-  if (!header) return;
-
-  if (mode === 'hidden') {
-    header.classList.remove('collapsed');
-    header.classList.add('text-hidden');
-    if (btnRestore) btnRestore.classList.remove('hidden');
-  } else if (mode === 'collapsed') {
-    header.classList.add('collapsed');
-    header.classList.remove('text-hidden');
-    if (btnRestore) btnRestore.classList.add('hidden');
-    if (btnCollapse) btnCollapse.setAttribute('title', 'Rozwiń tekst modlitwy');
-  } else {
-    header.classList.remove('collapsed', 'text-hidden');
-    if (btnRestore) btnRestore.classList.add('hidden');
-    if (btnCollapse) btnCollapse.setAttribute('title', 'Zwiń tekst modlitwy');
+  if (toggleSettings) {
+    toggleSettings.checked = (mode !== 'hidden');
   }
+
+  if (header) {
+    if (mode === 'hidden') {
+      header.classList.remove('collapsed');
+      header.classList.add('text-hidden');
+      if (btnRestore) btnRestore.classList.remove('hidden');
+    } else if (mode === 'collapsed') {
+      header.classList.add('collapsed');
+      header.classList.remove('text-hidden');
+      if (btnRestore) btnRestore.classList.add('hidden');
+      if (btnCollapse) btnCollapse.setAttribute('title', 'Rozwiń tekst modlitwy');
+    } else {
+      header.classList.remove('collapsed', 'text-hidden');
+      if (btnRestore) btnRestore.classList.add('hidden');
+      if (btnCollapse) btnCollapse.setAttribute('title', 'Zwiń tekst modlitwy');
+    }
+  }
+
+  updateRosarySvgViewBox();
 }
 
 function applySettingsToUI() {
@@ -912,6 +930,10 @@ function applySettingsToUI() {
   document.getElementById('toggle-vibration').checked = AppState.settings.vibration;
   document.getElementById('toggle-wakelock').checked = AppState.settings.wakelock;
   document.getElementById('toggle-mercy-hour').checked = AppState.settings.mercyHourReminder;
+  const togglePrayerText = document.getElementById('toggle-prayer-text');
+  if (togglePrayerText) {
+    togglePrayerText.checked = (AppState.textMode !== 'hidden');
+  }
 
   // Dźwięk
   const iconOn = document.getElementById('icon-voice-on');
@@ -1246,6 +1268,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target.checked) setupMercyHourReminder();
   });
 
+  const togglePrayerText = document.getElementById('toggle-prayer-text');
+  if (togglePrayerText) {
+    togglePrayerText.addEventListener('change', (e) => {
+      setTextMode(e.target.checked ? 'full' : 'hidden');
+    });
+  }
+
+  // Dynamiczne dopasowanie schematu serca do pełnej szerokości ekranu
+  window.addEventListener('resize', updateRosarySvgViewBox);
+  window.addEventListener('orientationchange', updateRosarySvgViewBox);
+  updateRosarySvgViewBox();
+
   // 11. Zerowanie licznika
   document.getElementById('btn-reset-counter').addEventListener('click', () => {
     if (confirm('Czy chcesz wyzerować licznik odmówionych Koronek?')) {
@@ -1286,6 +1320,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
 if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=27').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=36').catch(() => {});
   });
 }
