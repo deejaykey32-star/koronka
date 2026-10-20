@@ -12,7 +12,11 @@
 function generateDivineMercySteps() {
   const steps = [];
 
-  // Krok 1: Wzbudzenie intencji & Znak Krzyża
+  const OJCZE_NASZ_FULL = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
+  const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
+  const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
+
+  // Krok 1: Złoty Krzyżyk – Znak Krzyża
   steps.push({
     stepIndex: 1,
     part: 'Wprowadzenie',
@@ -26,50 +30,64 @@ function generateDivineMercySteps() {
     beadId: 'bead-cross'
   });
 
-  // Krok 2: Pierwszy paciorek wstępny (Ojcze nasz)
+  // Krok 2: Pierwszy duży niebieski paciorek – Wzbudzenie intencji
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Ojcze nasz)',
-    shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
-    fullText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
-    speechText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.',
+    title: 'Wzbudzenie intencji (Duży niebieski paciorek)',
+    shortText: 'Na początku – wzbudzić intencję. Jezu, ufam Tobie...',
+    fullText: 'Na początku – wzbudzić intencję modlitwy: Jezu, ufam Tobie!\n\n(Możesz wzbudzić własną intencję modlitwy lub ofiarować Koronkę na przebłaganie za grzechy nasze i całego świata).',
+    speechText: 'Na początku – wzbudź intencję modlitwy. Jezu, ufam Tobie!',
     type: 'large',
     decade: 0,
     beadNumber: 2,
     beadId: 'bead-stem-large'
   });
 
-  // Krok 3: Drugi paciorek wstępny (Zdrowaś Maryjo)
+  // Krok 3: 1. mały czerwony paciorek – Modlitwa Pańska (Ojcze nasz)
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Pozdrowienie Anielskie (Zdrowaś Maryjo)',
-    shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
-    fullText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
-    speechText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.',
+    title: 'Modlitwa Pańska (Ojcze nasz)',
+    shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
+    fullText: OJCZE_NASZ_FULL,
+    speechText: OJCZE_NASZ_FULL,
     type: 'small',
     decade: 0,
     beadNumber: 3,
     beadId: 'bead-stem-red-1'
   });
 
-  // Krok 4: Trzeci paciorek wstępny (Wierzę w Boga)
+  // Krok 4: 2. mały czerwony paciorek – Pozdrowienie Anielskie (Zdrowaś Maryjo)
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Skład Apostolski (Wierzę w Boga)',
-    shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
-    fullText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
-    speechText: 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.',
+    title: 'Pozdrowienie Anielskie (Zdrowaś Maryjo)',
+    shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
+    fullText: ZDROVAS_FULL,
+    speechText: ZDROVAS_FULL,
     type: 'small',
     decade: 0,
     beadNumber: 4,
     beadId: 'bead-stem-red-2'
   });
 
-  // 5 dziesiątek (Kroki 5–59)
-  let currentStep = 5;
+  // Krok 5: 3. mały czerwony paciorek – Skład Apostolski (Wierzę w Boga)
+  steps.push({
+    stepIndex: 5,
+    part: 'Modlitwy wstępne',
+    title: 'Skład Apostolski (Wierzę w Boga)',
+    shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
+    fullText: WIERZE_W_BOGA_FULL,
+    speechText: WIERZE_W_BOGA_FULL,
+    type: 'small',
+    decade: 0,
+    beadNumber: 5,
+    beadId: 'bead-stem-red-3'
+  });
+
+  // 5 dziesiątek (Kroki 6–60)
+  let currentStep = 6;
   for (let d = 1; d <= 5; d++) {
     let largeBeadId = 'bead-connector';
     if (d === 2) largeBeadId = 'bead-large-2';
@@ -108,9 +126,9 @@ function generateDivineMercySteps() {
     }
   }
 
-  // Krok 60: Na zakończenie (3 razy) - Święty Boże
+  // Krok 61: Na zakończenie (3 razy) - Święty Boże
   steps.push({
-    stepIndex: 60,
+    stepIndex: 61,
     part: 'Zakończenie',
     title: 'Święty Boże (3 razy)',
     shortText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny...',
@@ -122,9 +140,9 @@ function generateDivineMercySteps() {
     beadId: 'bead-connector'
   });
 
-  // Krok 61: Na koniec (3 razy) - O Krwi i Wodo + Znak Krzyża
+  // Krok 62: Na koniec (3 razy) - O Krwi i Wodo + Znak Krzyża
   steps.push({
-    stepIndex: 61,
+    stepIndex: 62,
     part: 'Zakończenie',
     title: 'O Krwi i Wodo (3 razy) & Znak Krzyża',
     shortText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego...',
@@ -840,6 +858,22 @@ function updateRosarySvgViewBox() {
   heartGroup.setAttribute('transform', `translate(0, ${dy.toFixed(1)})`);
 }
 
+function updateStemBeadsLayout() {
+  const beadStemLarge = document.getElementById('bead-stem-large');
+  const beadStemRed1 = document.getElementById('bead-stem-red-1');
+  const beadStemRed2 = document.getElementById('bead-stem-red-2');
+  const beadStemRed3 = document.getElementById('bead-stem-red-3');
+
+  // W Koronce i w Różańcu: 1 duży niebieski paciorek + 3 małe czerwone paciorki + duży niebieski łącznik
+  if (beadStemLarge) beadStemLarge.setAttribute('transform', 'translate(230.0, 444.0)');
+  if (beadStemRed1) beadStemRed1.setAttribute('transform', 'translate(230.0, 420.0)');
+  if (beadStemRed2) beadStemRed2.setAttribute('transform', 'translate(230.0, 396.0)');
+  if (beadStemRed3) {
+    beadStemRed3.setAttribute('transform', 'translate(230.0, 372.0)');
+    beadStemRed3.style.display = '';
+  }
+}
+
 function switchMode(newMode) {
   AppState.mode = newMode;
   stopAutoplay();
@@ -854,6 +888,7 @@ function switchMode(newMode) {
   const bannerImg = document.getElementById('banner-img');
 
   updateRosarySvgViewBox();
+  updateStemBeadsLayout();
 
   const wrapper = document.getElementById('image-wrapper');
   if (wrapper) wrapper.classList.toggle('mode-mary', newMode === 'rozaniec');
@@ -1140,6 +1175,7 @@ function initSwipeGestures() {
 // ========================================================
 document.addEventListener('DOMContentLoaded', () => {
   loadState();
+  updateStemBeadsLayout();
   updateUI();
   initSwipeGestures();
   setupMercyHourReminder();
@@ -1470,6 +1506,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
 if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=37').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=38').catch(() => {});
   });
 }
