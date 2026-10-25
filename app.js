@@ -151,14 +151,14 @@ function generateDivineMercySteps() {
     beadId: 'bead-connector'
   });
 
-  // Krok 62: Akt strzelisty (3x) - O Krwi i Wodo + Znak Krzyża
+  // Krok 62: Akt strzelisty (3x) + Jezu, ufam Tobie (3x) + Znak Krzyża
   steps.push({
     stepIndex: 62,
     part: 'Zakończenie',
-    title: 'O Krwi i Wodo (3x) & Znak Krzyża',
-    shortText: 'O Krwi i Wodo, któraś wypłynęła... (3x)',
-    fullText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas — ufam Tobie!\n(3x)\n\n+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
-    speechText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    title: 'O Krwi i Wodo (3x) · Jezu, ufam Tobie (3x)',
+    shortText: 'O Krwi i Wodo... (3x) · Jezu, ufam Tobie! (3x)',
+    fullText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas — ufam Tobie!\n(3x)\n\nJezu, ufam Tobie!\n(3x)\n\n+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    speechText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! Jezu, ufam Tobie. Jezu, ufam Tobie. Jezu, ufam Tobie. W imię Ojca i Syna, i Ducha Świętego. Amen.',
     type: 'closing',
     decade: 6,
     beadNumber: 2,
@@ -923,16 +923,32 @@ function updateRosarySvgViewBox() {
   const vbHeight = Math.round(460 * (h / w));
   svg.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
 
-  // Granice serca: min Y ~ 304, max Y ~ 707.3, środek geometryczny = 505.6
-  const isHidden = AppState.textMode === 'hidden';
-  const topReserved = isHidden ? 55 : 105;
-  const bottomReserved = 90;
+  // Precyzyjne pozycjonowanie: duży niebieski paciorek łącznika (bead-connector na środku)
+  // ma znajdować się dokładnie pod brodą Pana Jezusa.
+  // W wizerunku wileńskim (635x1234) podbródek Jezusa jest na wysokości 260px (21.07% wysokości).
+  // Obraz (.holy-image-jesus) ma transform: translateY(18px) scale(0.96) z origin: center top.
+  const imgAspect = 635 / 1234;
+  const stageAspect = w / h;
+  let imgHeight, imgTop;
+  if (stageAspect > imgAspect) {
+    imgHeight = h;
+    imgTop = 0;
+  } else {
+    imgHeight = w / imgAspect;
+    imgTop = (h - imgHeight) / 2;
+  }
 
-  const availHeight = vbHeight - topReserved - bottomReserved;
-  const targetMid = topReserved + availHeight / 2;
-  const maxDy = (vbHeight - bottomReserved) - 712;
-  const minDy = (topReserved + 5) - 304;
-  const dy = Math.min(maxDy, Math.max(minDy, targetMid - 505.6));
+  // Pozycja brody Jezusa na ekranie w pikselach:
+  const screenChinY = imgTop + 18 + (imgHeight * 0.96 * (260 / 1234));
+  // Środek dużego niebieskiego paciorka (promień 13px) umieszczamy tuż pod brodą na dekolcie (+18px):
+  const targetBeadY_screen = screenChinY + 18;
+
+  // Przeliczenie pikseli ekranu na jednostki viewBox SVG (1 jednostka SVG = w / 460 px):
+  const targetBeadY_svg = targetBeadY_screen * (460 / w);
+
+  // W bazowym SVG bead-connector ma współrzędną Y = 348.0.
+  // Aby bead-connector znalazł się dokładnie pod brodą, przesunięcie grupy wynosi:
+  const dy = targetBeadY_svg - 348.0;
 
   heartGroup.setAttribute('transform', `translate(0, ${dy.toFixed(1)})`);
 }

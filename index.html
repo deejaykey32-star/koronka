@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=40">
+  <link rel="stylesheet" href="style.css?v=42">
 </head>
 <body>
   <div id="app" class="app-container mode-koronka">
@@ -276,17 +276,17 @@
         <span>&#128065;</span> Pokaż tekst
       </button>
 
+      <!-- Środek dolnej części: Napis „JEZU, UFAM TOBIE” pod stopami Jezusa na środku stóp poniżej -->
+      <div class="wilno-inscription-wrap" id="banner-wrap">
+        <span class="wilno-inscription-text" id="wilno-inscription-text">JEZU, UFAM TOBIE</span>
+      </div>
+
       <!-- 3. Pływające kontrolki na dole ekranu w stylu grafiki referencyjnej -->
       <div class="bottom-floating-controls" id="bottom-floating-controls">
         <!-- Lewy dolny róg: Medalion z wizerunkiem Maryi (przełącznik Koronka <-> Różaniec) -->
         <button id="btn-switch-mode" class="cameo-btn" title="Przełącz modlitwę: Koronka / Różaniec" aria-label="Przełącz Koronka lub Różaniec">
           <img src="assets/cameo-mary-clean.png" alt="Matka Boża" id="cameo-mode-img" class="cameo-img">
         </button>
-
-        <!-- Środek: Napis „JEZU, UFAM TOBIE” bezpośrednio na ciemnym tle wizerunku wileńskiego -->
-        <div class="wilno-inscription-wrap" id="banner-wrap">
-          <span class="wilno-inscription-text" id="wilno-inscription-text">JEZU, UFAM TOBIE</span>
-        </div>
 
         <!-- Prawy dolny róg: 🎵 Lektor, ▶ Auto, ↺ Od nowa, ◀ Wstecz, ▶ Dalej (Play) -->
         <div class="bottom-right-cluster" id="bottom-right-cluster">
@@ -566,6 +566,15 @@
                 <small style="color: #cbd5e1; display: block; margin-top: 4px; font-size: 11.5px; line-height: 1.4;">Jest to modlitwa – akt zwyczajowo odmawiany na zakończenie lub na początku Koronki, nie jest obowiązkowa.</small>
               </div>
             </div>
+
+            <div class="schema-item">
+              <span class="step-num">7</span>
+              <div>
+                <strong>Na sam koniec Koronki (3x):</strong><br>
+                <em>„Jezu, ufam Tobie!” (3x)</em><br>
+                <small style="color: #cbd5e1; display: block; margin-top: 4px; font-size: 11.5px; line-height: 1.4;">oraz Znak Krzyża Świętego: „W imię Ojca i Syna, i Ducha Świętego. Amen.”</small>
+              </div>
+            </div>
           </div>
 
           <!-- Odsyłacze edukacyjne -->
@@ -657,6 +666,6 @@
 
   </div>
 
-  <script src="app.js?v=38"></script>
+  <script src="app.js?v=40"></script>
 </body>
 </html>
