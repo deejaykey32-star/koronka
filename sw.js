@@ -1,4 +1,4 @@
-const CACHE_NAME = 'koronka-v2-cache-v38';
+const CACHE_NAME = 'koronka-v2-cache-v41';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const ASSETS_TO_CACHE = [
   './manifest.json',
   './assets/jezus-milosierny-wilno.jpg',
   './assets/matka-boza.jpg',
+  './assets/schemat-koronki.webp',
   './assets/icon-192.png',
   './assets/icon-512.png',
   './assets/koronka-offline.zip',

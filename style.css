@@ -1193,6 +1193,41 @@ input:checked + .slider:before {
   box-shadow: 0 0 10px var(--gold-glow);
 }
 
+/* Załączona oficjalna grafika ze schematem odmawiania Koronki */
+.schema-infographic-wrap {
+  margin: 12px 0 16px 0;
+  text-align: center;
+  background: rgba(18, 22, 28, 0.7);
+  border: 1px solid var(--gold-border);
+  border-radius: 12px;
+  padding: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55);
+}
+
+.schema-infographic-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  cursor: pointer;
+}
+
+.schema-infographic-img:hover {
+  transform: scale(1.015);
+  filter: brightness(1.04);
+}
+
+.schema-infographic-hint {
+  display: block;
+  margin-top: 6px;
+  font-size: 11px;
+  color: var(--gold-light);
+  font-style: italic;
+  letter-spacing: 0.3px;
+}
+
 /* Kroki schematu */
 .schema-steps {
   display: flex;
