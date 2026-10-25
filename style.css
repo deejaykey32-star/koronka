@@ -148,21 +148,21 @@ html, body {
    ======================================================== */
 .prayer-floating-capsule {
   position: absolute;
-  top: calc(56px + var(--safe-top));
-  left: 10px;
-  right: 10px;
-  max-width: 480px;
+  top: calc(52px + var(--safe-top));
+  left: 12px;
+  right: 12px;
+  max-width: 460px;
   margin: 0 auto;
-  background: rgba(14, 18, 22, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(8, 10, 14, 0.40);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 14px;
-  padding: 8px 14px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.7);
+  padding: 6px 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
   z-index: 30;
   transition: all 0.25s ease;
 }
@@ -176,7 +176,7 @@ html, body {
 }
 
 .prayer-floating-capsule.collapsed {
-  padding: 5px 12px;
+  padding: 4px 10px;
 }
 
 .prayer-floating-capsule.collapsed .prayer-text-container {
@@ -193,14 +193,15 @@ html, body {
 
 .prayer-floating-capsule .prayer-text {
   font-family: var(--font-sans);
-  font-size: var(--prayer-font-size, 14px);
+  font-size: var(--prayer-font-size, 13px);
   font-weight: 500;
-  line-height: 1.35;
+  line-height: 1.38;
   color: #ffffff;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 1px 2px #000000, 0 2px 5px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.9);
   margin: 0;
   word-break: break-word;
   text-align: center;
+  white-space: pre-line;
 }
 
 .btn-restore-text {
@@ -462,7 +463,12 @@ html, body {
   border: none;
   outline: none;
   pointer-events: none;
-  transition: opacity 0.4s ease;
+  transition: opacity 0.4s ease, transform 0.3s ease;
+}
+
+.holy-image-jesus {
+  transform: translateY(32px) scale(0.92);
+  transform-origin: center top;
 }
 
 /* ========================================================
@@ -656,31 +662,88 @@ html, body {
 }
 
 .cameo-img {
-  width: 66px;
-  height: 70px;
+  width: 52px;
+  height: 56px;
   object-fit: contain;
   display: block;
 }
 
-.banner-scroll-wrap {
+.wilno-inscription-wrap {
   pointer-events: auto;
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 2px;
-  filter: drop-shadow(0 4px 12px rgba(0,0,0,0.9));
-  transition: transform 0.2s ease;
   min-width: 0;
   padding: 0 4px;
+  margin-bottom: 4px;
 }
 
-.banner-scroll-img {
-  max-width: 180px;
-  width: 100%;
-  height: auto;
-  display: block;
-  object-fit: contain;
+.wilno-inscription-text {
+  font-family: var(--font-serif);
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #c4261d;
+  letter-spacing: 2.2px;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.98), 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(196, 38, 29, 0.4);
+  transition: color 0.3s ease;
+  user-select: none;
+}
+
+.btn-autoplay {
+  background: rgba(14, 18, 24, 0.82);
+  border: 1px solid var(--gold-border);
+  color: var(--gold-light);
+  border-radius: 16px;
+  padding: 0 10px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
+}
+
+.btn-autoplay .autoplay-icon {
+  font-size: 11px;
+  line-height: 1;
+}
+
+.btn-autoplay:hover {
+  background: rgba(212, 175, 55, 0.25);
+  border-color: var(--gold-primary);
+  color: #ffffff;
+  transform: scale(1.06);
+}
+
+.btn-autoplay:active {
+  transform: scale(0.94);
+}
+
+.btn-autoplay.playing {
+  background: rgba(212, 175, 55, 0.32);
+  border-color: #ffe07a;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(212, 175, 55, 0.75);
+  animation: pulseAutoplay 2s infinite ease-in-out;
+}
+
+@keyframes pulseAutoplay {
+  0%, 100% { border-color: rgba(255, 224, 122, 0.8); }
+  50% { border-color: rgba(255, 255, 255, 1); box-shadow: 0 0 18px rgba(255, 215, 0, 0.9); }
 }
 
 .bottom-right-cluster {

@@ -12,9 +12,20 @@
 function generateDivineMercySteps() {
   const steps = [];
 
-  const OJCZE_NASZ_FULL = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
-  const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
-  const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
+  const OJCZE_NASZ_FULL = 'Ojcze nasz, któryś jest w niebie,\nświęć się imię Twoje, przyjdź królestwo Twoje,\nbądź wola Twoja jako w niebie, tak i na ziemi.\n\nChleba naszego powszedniego daj nam dzisiaj\ni odpuść nam nasze winy, jako i my odpuszczamy naszym winowajcom,\ni nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
+  const OJCZE_NASZ_SPEECH = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
+
+  const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą.\nBłogosławionaś Ty między niewiastami\ni błogosławiony owoc żywota Twojego, Jezus.\n\nŚwięta Maryjo, Matko Boża, módl się za nami grzesznymi,\nteraz i w godzinę śmierci naszej. Amen.';
+  const ZDROVAS_SPEECH = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
+
+  const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego,\nStworzyciela nieba i ziemi,\ni w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego,\nktóry się począł z Ducha Świętego,\nnarodził się z Maryi Panny,\numęczon pod Ponckim Piłatem,\nukrzyżowan, umarł i pogrzebion.\nZstąpił do piekieł, trzeciego dnia zmartwychwstał.\nWstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego.\nStamtąd przyjdzie sądzić żywych i umarłych.\n\nWierzę w Ducha Świętego, święty Kościół powszechny,\nświętych obcowanie, grzechów odpuszczenie,\nciała zmartwychwstanie, żywot wieczny. Amen.';
+  const WIERZE_W_BOGA_SPEECH = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
+
+  const OJCZE_PRZEDWIECZNY_FULL = 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew,\nDuszę i Bóstwo najmilszego Syna Twojego,\na Pana naszego Jezusa Chrystusa,\nna przebłaganie za grzechy nasze i całego świata.';
+  const OJCZE_PRZEDWIECZNY_SPEECH = 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.';
+
+  const BOLESNA_MEKA_FULL = 'Dla Jego bolesnej męki,\nmiej miłosierdzie dla nas i całego świata.';
+  const BOLESNA_MEKA_SPEECH = 'Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.';
 
   // Krok 1: Złoty Krzyżyk – Znak Krzyża
   steps.push({
@@ -34,10 +45,10 @@ function generateDivineMercySteps() {
   steps.push({
     stepIndex: 2,
     part: 'Modlitwy wstępne',
-    title: 'Wzbudzenie intencji (Duży niebieski paciorek)',
-    shortText: 'Na początku – wzbudzić intencję. Jezu, ufam Tobie...',
-    fullText: 'Na początku – wzbudzić intencję modlitwy: Jezu, ufam Tobie!\n\n(Możesz wzbudzić własną intencję modlitwy lub ofiarować Koronkę na przebłaganie za grzechy nasze i całego świata).',
-    speechText: 'Na początku – wzbudź intencję modlitwy. Jezu, ufam Tobie!',
+    title: 'Wzbudzenie intencji',
+    shortText: 'Na początku — wzbudzić intencję',
+    fullText: 'Na początku — wzbudzić intencję',
+    speechText: 'Na początku — wzbudzić intencję.',
     type: 'large',
     decade: 0,
     beadNumber: 2,
@@ -48,10 +59,10 @@ function generateDivineMercySteps() {
   steps.push({
     stepIndex: 3,
     part: 'Modlitwy wstępne',
-    title: 'Modlitwa Pańska (Ojcze nasz)',
+    title: 'Ojcze nasz',
     shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
     fullText: OJCZE_NASZ_FULL,
-    speechText: OJCZE_NASZ_FULL,
+    speechText: OJCZE_NASZ_SPEECH,
     type: 'small',
     decade: 0,
     beadNumber: 3,
@@ -62,10 +73,10 @@ function generateDivineMercySteps() {
   steps.push({
     stepIndex: 4,
     part: 'Modlitwy wstępne',
-    title: 'Pozdrowienie Anielskie (Zdrowaś Maryjo)',
+    title: 'Zdrowaś Maryjo',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL,
-    speechText: ZDROVAS_FULL,
+    speechText: ZDROVAS_SPEECH,
     type: 'small',
     decade: 0,
     beadNumber: 4,
@@ -76,10 +87,10 @@ function generateDivineMercySteps() {
   steps.push({
     stepIndex: 5,
     part: 'Modlitwy wstępne',
-    title: 'Skład Apostolski (Wierzę w Boga)',
+    title: 'Wierzę w Boga',
     shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
     fullText: WIERZE_W_BOGA_FULL,
-    speechText: WIERZE_W_BOGA_FULL,
+    speechText: WIERZE_W_BOGA_SPEECH,
     type: 'small',
     decade: 0,
     beadNumber: 5,
@@ -101,8 +112,8 @@ function generateDivineMercySteps() {
       part: `Dziesiątka ${d} z 5`,
       title: `Ojcze Przedwieczny (${d}. dziesiątka)`,
       shortText: 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew...',
-      fullText: 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.',
-      speechText: 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew, Duszę i Bóstwo najmilszego Syna Twojego, a Pana naszego Jezusa Chrystusa, na przebłaganie za grzechy nasze i całego świata.',
+      fullText: OJCZE_PRZEDWIECZNY_FULL,
+      speechText: OJCZE_PRZEDWIECZNY_SPEECH,
       type: 'large',
       decade: d,
       beadNumber: 0,
@@ -116,8 +127,8 @@ function generateDivineMercySteps() {
         part: `Dziesiątka ${d} · ${b} z 10`,
         title: `Dla Jego bolesnej męki (${b}/10)`,
         shortText: 'Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.',
-        fullText: 'Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.',
-        speechText: 'Dla Jego bolesnej męki, miej miłosierdzie dla nas i całego świata.',
+        fullText: BOLESNA_MEKA_FULL,
+        speechText: BOLESNA_MEKA_SPEECH,
         type: 'small',
         decade: d,
         beadNumber: b,
@@ -126,13 +137,13 @@ function generateDivineMercySteps() {
     }
   }
 
-  // Krok 61: Na zakończenie (3 razy) - Święty Boże
+  // Krok 61: Na zakończenie (3x) - Święty Boże
   steps.push({
     stepIndex: 61,
     part: 'Zakończenie',
-    title: 'Święty Boże (3 razy)',
-    shortText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny...',
-    fullText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem. (odmawia się 3 razy)',
+    title: 'Święty Boże (3x)',
+    shortText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny... (3x)',
+    fullText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny,\nzmiłuj się nad nami i nad całym światem.\n(3x)',
     speechText: 'Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem. Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem. Święty Boże, Święty Mocny, Święty Nieśmiertelny, zmiłuj się nad nami i nad całym światem.',
     type: 'holyGod',
     decade: 6,
@@ -140,13 +151,13 @@ function generateDivineMercySteps() {
     beadId: 'bead-connector'
   });
 
-  // Krok 62: Na koniec (3 razy) - O Krwi i Wodo + Znak Krzyża
+  // Krok 62: Akt strzelisty (3x) - O Krwi i Wodo + Znak Krzyża
   steps.push({
     stepIndex: 62,
     part: 'Zakończenie',
-    title: 'O Krwi i Wodo (3 razy) & Znak Krzyża',
-    shortText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego...',
-    fullText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! (3 razy) + W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    title: 'O Krwi i Wodo (3x) & Znak Krzyża',
+    shortText: 'O Krwi i Wodo, któraś wypłynęła... (3x)',
+    fullText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas — ufam Tobie!\n(3x)\n\n+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
     speechText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! W imię Ojca i Syna, i Ducha Świętego. Amen.',
     type: 'closing',
     decade: 6,
@@ -418,25 +429,37 @@ const chime = new SacredChime();
 // W dziesiątkach duże paciorki są czerwone, a małe niebieskie.
 // ========================================================
 function triggerHaptic(typeOrStep = 'small') {
-  if (!AppState.settings.vibration || !('vibrate' in navigator)) return;
+  if (!AppState.settings.vibration) return;
   try {
     const type = typeof typeOrStep === 'object' && typeOrStep !== null ? typeOrStep.type : typeOrStep;
     
-    if (type === 'cross' || type === 'closing') {
-      // 1. Złoty Krzyżyk: uroczysty Znak Krzyża / zakończenie Koronki (trzykrotna wibracja)
-      navigator.vibrate([60, 40, 60, 40, 100]);
-    } else if (type === 'large' || type === 'holyGod') {
-      // 2. Duże paciorki (1. duży czerwony paciorek Ojcze nasz, duże czerwone paciorki dziesiątek Ojcze Przedwieczny, Święty Boże):
-      // Wyraźny, głęboki podwójny impuls (75ms wibracji, 50ms przerwy, 75ms wibracji)
-      // Pozwala osobie modlącej się bez patrzenia na ekran natychmiast wyczuć duży paciorek
-      navigator.vibrate([75, 50, 75]);
-    } else {
-      // 3. Małe paciorki (3 niebieskie paciorki wstępne, 10 niebieskich paciorków dziesiątek):
-      // Krótki, pojedynczy i subtelny impuls (30ms), potwierdzający zaliczenie paciorka
-      navigator.vibrate(30);
+    // 1. Obsługa wibracji natywnej Capacitor (Android/iOS)
+    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics) {
+      const haptics = window.Capacitor.Plugins.Haptics;
+      if (type === 'cross' || type === 'closing') {
+        haptics.notification({ type: 'SUCCESS' }).catch(() => {});
+      } else if (type === 'large' || type === 'holyGod') {
+        haptics.impact({ style: 'HEAVY' }).catch(() => {});
+      } else {
+        haptics.impact({ style: 'MEDIUM' }).catch(() => {});
+      }
+    }
+
+    // 2. Standardowa wibracja Web Vibration API
+    if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
+      if (type === 'cross' || type === 'closing') {
+        // Złoty Krzyżyk / Zakończenie: 3 wyraziste impulsy
+        navigator.vibrate([70, 50, 70, 50, 110]);
+      } else if (type === 'large' || type === 'holyGod') {
+        // Duże paciorki (Ojcze Przedwieczny, Święty Boże): podwójna wibracja
+        navigator.vibrate([80, 50, 80]);
+      } else {
+        // Małe paciorki: wyraźny, wyczuwalny impuls 55ms
+        navigator.vibrate(55);
+      }
     }
   } catch (e) {
-    // Bezpieczne wyciszenie wyjątków na urządzeniach bez silnika wibracyjnego
+    // Bezpieczne wyciszenie wyjątków
   }
 }
 
@@ -488,45 +511,57 @@ class PrayerSpeaker {
   constructor() {
     this.synth = window.speechSynthesis || null;
     this.voice = null;
-    this.currentUtterance = null;
+    this.activeToken = 0;
+    this.keepAliveInterval = null;
     this.loadVoices();
   }
 
   loadVoices() {
     if (!this.synth) return;
-    const voices = this.synth.getVoices();
-    this.voice = voices.find(v => v.lang.startsWith('pl') || v.lang.includes('PL')) || voices[0] || null;
+    const updateVoice = () => {
+      const voices = this.synth.getVoices();
+      this.voice = voices.find(v => v.lang.startsWith('pl') || v.lang.includes('PL')) || voices[0] || null;
+    };
+    updateVoice();
     if (this.synth.onvoiceschanged !== undefined) {
-      this.synth.onvoiceschanged = () => {
-        const vList = this.synth.getVoices();
-        this.voice = vList.find(v => v.lang.startsWith('pl') || v.lang.includes('PL')) || vList[0] || null;
-      };
+      this.synth.onvoiceschanged = updateVoice;
     }
   }
 
   speak(text, onEndCallback) {
     this.stop();
+    const token = ++this.activeToken;
+
     if (AppState.settings.soundEnabled && NativePlugins.TextToSpeech) {
-      this.speakNative(text, onEndCallback);
+      this.speakNative(text, onEndCallback, token);
       return;
     }
     if (!AppState.settings.soundEnabled || !this.synth) {
-      if (onEndCallback) setTimeout(onEndCallback, 1500);
+      if (onEndCallback && AppState.isPlaying) setTimeout(onEndCallback, 1500);
       return;
     }
 
+    // Wyświetl sformatowany tekst z podziałem na wiersze dla podświetlania słów
     const textContainer = document.getElementById('prayer-text');
-    const words = text.split(' ');
-    textContainer.innerHTML = words.map((w, idx) => `<span id="word-${idx}">${w}</span>`).join(' ');
+    if (textContainer) {
+      const lines = text.split('\n');
+      let globalWordIdx = 0;
+      textContainer.innerHTML = lines.map(line => {
+        if (!line.trim()) return '<span class="prayer-line-break"></span>';
+        const words = line.split(/\s+/).filter(Boolean);
+        return words.map(w => `<span id="word-${globalWordIdx++}">${w}</span>`).join(' ');
+      }).join('<br>');
+    }
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'pl-PL';
     if (this.voice) utterance.voice = this.voice;
-    utterance.rate = AppState.settings.speechRate;
+    utterance.rate = AppState.settings.speechRate || 1.0;
     utterance.pitch = 0.95;
 
     let wordIdx = 0;
     utterance.onboundary = (event) => {
+      if (this.activeToken !== token) return;
       if (event.name === 'word') {
         const prev = document.querySelector('.highlight-spoken');
         if (prev) prev.classList.remove('highlight-spoken');
@@ -538,41 +573,66 @@ class PrayerSpeaker {
       }
     };
 
-    utterance.onend = () => {
+    const cleanup = () => {
+      if (this.keepAliveInterval) {
+        clearInterval(this.keepAliveInterval);
+        this.keepAliveInterval = null;
+      }
       const prev = document.querySelector('.highlight-spoken');
       if (prev) prev.classList.remove('highlight-spoken');
-      this.currentUtterance = null;
-      document.getElementById('voice-wave').classList.add('hidden');
+      const voiceWave = document.getElementById('voice-wave');
+      if (voiceWave) voiceWave.classList.add('hidden');
+    };
+
+    utterance.onend = () => {
+      if (this.activeToken !== token) return;
+      cleanup();
       if (onEndCallback) onEndCallback();
     };
 
-    utterance.onerror = () => {
-      this.currentUtterance = null;
-      document.getElementById('voice-wave').classList.add('hidden');
+    utterance.onerror = (event) => {
+      if (this.activeToken !== token) return;
+      cleanup();
+      // Anulowane lub przerwane wypowiedzi NIE mogą wywoływać przejścia dalej
+      if (event && (event.error === 'canceled' || event.error === 'interrupted')) {
+        return;
+      }
       if (onEndCallback) onEndCallback();
     };
 
-    this.currentUtterance = utterance;
-    document.getElementById('voice-wave').classList.remove('hidden');
+    const voiceWave = document.getElementById('voice-wave');
+    if (voiceWave) voiceWave.classList.remove('hidden');
+
+    // Podtrzymanie syntezy dla długich modlitw (zapobiega usypianiu silnika Chrome po 14s)
+    this.keepAliveInterval = setInterval(() => {
+      if (this.activeToken !== token) {
+        clearInterval(this.keepAliveInterval);
+        return;
+      }
+      if (this.synth && this.synth.speaking && !this.synth.paused) {
+        this.synth.pause();
+        this.synth.resume();
+      }
+    }, 10000);
+
     this.synth.speak(utterance);
     updateMediaSession();
   }
 
-  // Lektor w aplikacji natywnej: systemowy syntezator mowy (WebView nie ma speechSynthesis)
-  speakNative(text, onEndCallback) {
-    const token = {};
-    this.currentUtterance = token;
-    document.getElementById('voice-wave').classList.remove('hidden');
+  speakNative(text, onEndCallback, token) {
+    const voiceWave = document.getElementById('voice-wave');
+    if (voiceWave) voiceWave.classList.remove('hidden');
+
     const finish = () => {
-      if (this.currentUtterance !== token) return; // przerwane przez stop() lub kolejny tekst
-      this.currentUtterance = null;
-      document.getElementById('voice-wave').classList.add('hidden');
+      if (this.activeToken !== token) return;
+      if (voiceWave) voiceWave.classList.add('hidden');
       if (onEndCallback) onEndCallback();
     };
+
     NativePlugins.TextToSpeech.speak({
       text,
       lang: 'pl-PL',
-      rate: AppState.settings.speechRate,
+      rate: AppState.settings.speechRate || 1.0,
       pitch: 0.95,
       category: 'playback'
     }).then(finish, finish);
@@ -580,15 +640,21 @@ class PrayerSpeaker {
   }
 
   stop() {
-    if (NativePlugins.TextToSpeech && this.currentUtterance) {
-      this.currentUtterance = null;
+    this.activeToken++;
+    if (this.keepAliveInterval) {
+      clearInterval(this.keepAliveInterval);
+      this.keepAliveInterval = null;
+    }
+    if (NativePlugins.TextToSpeech) {
       NativePlugins.TextToSpeech.stop().catch(() => {});
     }
-    if (this.synth && this.synth.speaking) {
-      this.synth.cancel();
+    if (this.synth) {
+      try {
+        this.synth.cancel();
+      } catch (e) {}
     }
-    this.currentUtterance = null;
-    document.getElementById('voice-wave').classList.add('hidden');
+    const voiceWave = document.getElementById('voice-wave');
+    if (voiceWave) voiceWave.classList.add('hidden');
     const prev = document.querySelector('.highlight-spoken');
     if (prev) prev.classList.remove('highlight-spoken');
   }
@@ -782,24 +848,42 @@ function handlePrayerCompleted() {
 // ========================================================
 function startAutoplay() {
   AppState.isPlaying = true;
-  const btnAutoplay = document.getElementById('btn-autoplay');
-  if (btnAutoplay) btnAutoplay.classList.add('playing');
-  const iconPlay = document.getElementById('icon-play');
-  if (iconPlay) iconPlay.classList.add('hidden');
-  const iconPause = document.getElementById('icon-pause');
-  if (iconPause) iconPause.classList.remove('hidden');
+  updateAutoplayButtonUI();
   requestScreenWakeLock();
 
   const currentStep = AppState.steps[AppState.currentIndex];
-  if (currentStep && AppState.settings.soundEnabled) {
-    const textToSpeak = currentStep.speechText || currentStep.fullText;
-    speaker.speak(textToSpeak, () => {
-      if (AppState.isPlaying) {
-        AppState.audioTimer = setTimeout(() => {
-          goToNextStep(true);
-        }, AppState.settings.pauseBetweenPrayers * 1000);
-      }
-    });
+  if (currentStep) {
+    if (AppState.settings.soundEnabled) {
+      const textToSpeak = currentStep.speechText || currentStep.fullText;
+      speaker.speak(textToSpeak, () => {
+        if (AppState.isPlaying) {
+          AppState.audioTimer = setTimeout(() => {
+            goToNextStep(true);
+          }, AppState.settings.pauseBetweenPrayers * 1000);
+        }
+      });
+    } else {
+      const delay = Math.max(2500, AppState.settings.pauseBetweenPrayers * 1000);
+      AppState.audioTimer = setTimeout(() => {
+        goToNextStep(true);
+      }, delay);
+    }
+  }
+}
+
+function updateAutoplayButtonUI() {
+  const btnAutoplay = document.getElementById('btn-autoplay');
+  if (!btnAutoplay) return;
+  if (AppState.isPlaying) {
+    btnAutoplay.classList.add('playing');
+    btnAutoplay.setAttribute('title', 'Zatrzymaj autoodtwarzanie');
+    btnAutoplay.setAttribute('aria-label', 'Zatrzymaj autoodtwarzanie');
+    btnAutoplay.innerHTML = '<span class="autoplay-icon">⏸</span><span class="autoplay-label">PAUZA</span>';
+  } else {
+    btnAutoplay.classList.remove('playing');
+    btnAutoplay.setAttribute('title', 'Włącz autoodtwarzanie (odmawianie automatyczne)');
+    btnAutoplay.setAttribute('aria-label', 'Włącz odmawianie automatyczne');
+    btnAutoplay.innerHTML = '<span class="autoplay-icon">▶</span><span class="autoplay-label">AUTO</span>';
   }
 }
 
@@ -810,12 +894,7 @@ function stopAutoplay() {
     AppState.audioTimer = null;
   }
   speaker.stop();
-  const btnAutoplay = document.getElementById('btn-autoplay');
-  if (btnAutoplay) btnAutoplay.classList.remove('playing');
-  const iconPlay = document.getElementById('icon-play');
-  if (iconPlay) iconPlay.classList.remove('hidden');
-  const iconPause = document.getElementById('icon-pause');
-  if (iconPause) iconPause.classList.add('hidden');
+  updateAutoplayButtonUI();
 }
 
 function toggleAutoplay() {
@@ -913,9 +992,10 @@ function switchMode(newMode) {
       cameoBtn.title = 'Przełącz na Koronkę do Miłosierdzia Bożego';
       cameoBtn.setAttribute('aria-label', cameoBtn.title);
     }
-    if (bannerImg) {
-      bannerImg.src = 'assets/banner-mary-transparent.png';
-      bannerImg.alt = 'Królowo Pokoju, módl się za nami';
+    const wilnoText = document.getElementById('wilno-inscription-text');
+    if (wilnoText) {
+      wilnoText.textContent = 'KRÓLOWO POKOJU, MÓDL SIĘ ZA NAMI';
+      wilnoText.style.color = 'var(--gold-light)';
     }
   } else {
     AppState.steps = generateDivineMercySteps();
@@ -932,9 +1012,10 @@ function switchMode(newMode) {
       cameoBtn.title = 'Przełącz na Różaniec Święty';
       cameoBtn.setAttribute('aria-label', cameoBtn.title);
     }
-    if (bannerImg) {
-      bannerImg.src = 'assets/banner-transparent.png';
-      bannerImg.alt = 'Jezu Ufam Tobie';
+    const wilnoText = document.getElementById('wilno-inscription-text');
+    if (wilnoText) {
+      wilnoText.textContent = 'JEZU, UFAM TOBIE';
+      wilnoText.style.color = '#c4261d';
     }
   }
 
@@ -1177,6 +1258,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadState();
   updateStemBeadsLayout();
   updateUI();
+  updateAutoplayButtonUI();
   initSwipeGestures();
   setupMercyHourReminder();
   requestScreenWakeLock();
@@ -1247,27 +1329,46 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Kliknięcie w obszar wizerunku przechodzi dalej (idealne zwłaszcza przy ukrytym tekście)
+  // Kliknięcie w tło wizerunku przechodzi dalej (z pominięciem kontrolek i paciorków)
   const prayerStage = document.getElementById('prayer-stage');
   if (prayerStage) {
     prayerStage.addEventListener('click', (e) => {
-      if (e.target.closest('.bead-item') || e.target.closest('#btn-restore-text') || e.target.closest('#btn-restart') || e.target.closest('#btn-restart-always')) return;
+      if (
+        e.target.closest('#bottom-floating-controls') ||
+        e.target.closest('.bead-item') ||
+        e.target.closest('.prayer-floating-capsule') ||
+        e.target.closest('.top-bar') ||
+        e.target.closest('#btn-restore-text') ||
+        e.target.closest('#btn-restart') ||
+        e.target.closest('#btn-restart-always') ||
+        e.target.closest('.modal-overlay')
+      ) return;
       goToNextStep();
     });
   }
 
-  // 3. Przyciski akcji na dole ekranu
+  // 3. Przyciski akcji na dole ekranu (zabezpieczone przed propagacją do tła)
   const btnNext = document.getElementById('btn-next');
-  if (btnNext) btnNext.addEventListener('click', () => goToNextStep());
+  if (btnNext) btnNext.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToNextStep();
+  });
   const btnPrev = document.getElementById('btn-prev');
-  if (btnPrev) btnPrev.addEventListener('click', () => goToPrevStep());
+  if (btnPrev) btnPrev.addEventListener('click', (e) => {
+    e.stopPropagation();
+    goToPrevStep();
+  });
   const btnAutoplay = document.getElementById('btn-autoplay');
-  if (btnAutoplay) btnAutoplay.addEventListener('click', () => toggleAutoplay());
+  if (btnAutoplay) btnAutoplay.addEventListener('click', (e) => {
+    e.stopPropagation();
+    toggleAutoplay();
+  });
 
   // 4. Przełącznik trybu (Koronka <-> Różaniec) - medalion w lewym dolnym rogu
   const btnSwitchMode = document.getElementById('btn-switch-mode');
   if (btnSwitchMode) {
-    btnSwitchMode.addEventListener('click', () => {
+    btnSwitchMode.addEventListener('click', (e) => {
+      e.stopPropagation();
       switchMode(AppState.mode === 'koronka' ? 'rozaniec' : 'koronka');
     });
   }
@@ -1275,7 +1376,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // 5. Przycisk dźwięku / lektora (🎵 błękitna nutka)
   const btnAudio = document.getElementById('btn-audio');
   if (btnAudio) {
-    btnAudio.addEventListener('click', () => {
+    btnAudio.addEventListener('click', (e) => {
+      e.stopPropagation();
       AppState.settings.soundEnabled = !AppState.settings.soundEnabled;
       applySettingsToUI();
       saveSettings();
