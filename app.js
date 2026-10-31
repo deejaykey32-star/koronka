@@ -952,8 +952,8 @@ function updateRosarySvgViewBox() {
 
   // Pozycja brody Jezusa na ekranie w pikselach:
   const screenChinY = (imgTop + 10) + (imgHeight * 0.95 * (265 / 1234));
-  // Środek dużego niebieskiego paciorka łącznika bezpośrednio pod brodą (+4px):
-  const targetBeadY_screen = screenChinY + 4;
+  // Schemat paciorków w kształcie serca 20px niżej pod głową Pana Jezusa (+24px):
+  const targetBeadY_screen = screenChinY + 24;
   const targetBeadY_svg = targetBeadY_screen * (460 / w);
   const dy = targetBeadY_svg - 348.0;
 
@@ -1634,6 +1634,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
 if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=50').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=51').catch(() => {});
   });
 }
