@@ -938,7 +938,7 @@ function updateRosarySvgViewBox() {
 
   // Schemat paciorków w kształcie serca bezpośrednio pod głową Pana Jezusa:
   // Duży niebieski paciorek łącznika (bead-connector na środku, Y=348)
-  // ma znajdować się bezpośrednio pod brodą Jezusa (na dekolcie tuniki).
+  // znajduje się bezpośrednio pod brodą Jezusa (na dekolcie tuniki).
   const imgAspect = 635 / 1234;
   const stageAspect = w / h;
   let imgHeight, imgTop;
@@ -952,8 +952,8 @@ function updateRosarySvgViewBox() {
 
   // Pozycja brody Jezusa na ekranie w pikselach:
   const screenChinY = (imgTop + 10) + (imgHeight * 0.95 * (265 / 1234));
-  // Środek dużego niebieskiego paciorka łącznika bezpośrednio pod brodą (+16px):
-  const targetBeadY_screen = screenChinY + 16;
+  // Środek dużego niebieskiego paciorka łącznika bezpośrednio pod brodą (+4px):
+  const targetBeadY_screen = screenChinY + 4;
   const targetBeadY_svg = targetBeadY_screen * (460 / w);
   const dy = targetBeadY_svg - 348.0;
 
@@ -1634,6 +1634,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
 if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=38').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=50').catch(() => {});
   });
 }
