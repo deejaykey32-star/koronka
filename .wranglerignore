@@ -1,0 +1,11 @@
+native/
+scratch/
+.git/
+node_modules/
+.vscode/
+.claude/
+.github/
+scripts/
+server.js
+update-packages.js
+

@@ -153,18 +153,22 @@ html, body {
   right: 12px;
   max-width: 460px;
   margin: 0 auto;
-  background: rgba(8, 10, 14, 0.40);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  /* Ciemniejsze tło w stylu Rosario – czytelny tekst, nie zasłania wizerunku */
+  background: rgba(5, 5, 12, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   border-radius: 14px;
   padding: 6px 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   gap: 3px;
   z-index: 30;
   transition: all 0.25s ease;
+  /* Ograniczenie maksymalnej wysokości aby nie zasłaniać głowy Jezusa */
+  max-height: clamp(60px, 15dvh, 120px);
+  overflow-y: auto;
 }
 
 .prayer-floating-header-row {
@@ -467,7 +471,8 @@ html, body {
 }
 
 .holy-image-jesus {
-  transform: translateY(18px) scale(0.96);
+  /* Głowa Jezusa z aureolą w pełni widoczna – schemat paciorków przesunięty niżej */
+  transform: translateY(10px) scale(0.95);
   transform-origin: center top;
 }
 
@@ -672,7 +677,7 @@ html, body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(20px + var(--safe-bottom));
+  bottom: calc(90px + var(--safe-bottom));
   z-index: 26;
   pointer-events: none;
   display: flex;
@@ -683,14 +688,14 @@ html, body {
 
 .wilno-inscription-text {
   font-family: var(--font-serif);
-  font-size: 15px;
+  font-size: clamp(14px, 3.8vw, 20px);
   font-weight: 700;
   color: #c4261d;
-  letter-spacing: 2.5px;
+  letter-spacing: clamp(1.5px, 0.6vw, 3px);
   text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.98), 0 2px 8px rgba(0, 0, 0, 0.9), 0 0 12px rgba(196, 38, 29, 0.4);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.98), 0 2px 10px rgba(0, 0, 0, 0.95), 0 0 14px rgba(196, 38, 29, 0.4);
   transition: color 0.3s ease;
   user-select: none;
 }
@@ -800,16 +805,19 @@ html, body {
 }
 
 .nav-circle-btn {
-  background: none;
-  border: none;
-  padding: 0;
+  background: rgba(10, 10, 18, 0.75);
+  border: 1.5px solid rgba(212, 175, 55, 0.35);
+  border-radius: 50%;
+  padding: 4px;
   cursor: pointer;
   outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, background 0.2s ease;
   filter: drop-shadow(0 4px 12px rgba(0,0,0,0.85));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .nav-circle-btn:hover {
@@ -836,16 +844,19 @@ html, body {
 }
 
 .play-circle-btn {
-  background: none;
-  border: none;
-  padding: 0;
+  background: rgba(10, 10, 18, 0.75);
+  border: 2px solid rgba(212, 175, 55, 0.45);
+  border-radius: 50%;
+  padding: 4px;
   cursor: pointer;
   outline: none;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.2s ease, background 0.2s ease;
   filter: drop-shadow(0 4px 14px rgba(0,0,0,0.9));
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .play-circle-btn:hover {

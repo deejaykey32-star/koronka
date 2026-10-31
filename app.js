@@ -16,7 +16,7 @@ function generateDivineMercySteps() {
   const OJCZE_NASZ_SPEECH = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
 
   const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą.\nBłogosławionaś Ty między niewiastami\ni błogosławiony owoc żywota Twojego, Jezus.\n\nŚwięta Maryjo, Matko Boża, módl się za nami grzesznymi,\nteraz i w godzinę śmierci naszej. Amen.';
-  const ZDROVAS_SPEECH = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
+  const ZDROVAS_SPEECH = 'Zdrowaś Marijo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Marijo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
 
   const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego,\nStworzyciela nieba i ziemi,\ni w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego,\nktóry się począł z Ducha Świętego,\nnarodził się z Maryi Panny,\numęczon pod Ponckim Piłatem,\nukrzyżowan, umarł i pogrzebion.\nZstąpił do piekieł, trzeciego dnia zmartwychwstał.\nWstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego.\nStamtąd przyjdzie sądzić żywych i umarłych.\n\nWierzę w Ducha Świętego, święty Kościół powszechny,\nświętych obcowanie, grzechów odpuszczenie,\nciała zmartwychwstanie, żywot wieczny. Amen.';
   const WIERZE_W_BOGA_SPEECH = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
@@ -60,7 +60,7 @@ function generateDivineMercySteps() {
     stepIndex: 3,
     part: 'Modlitwy wstępne',
     title: 'Ojcze nasz',
-    shortText: 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje...',
+    shortText: 'Ojcze nasz...',
     fullText: OJCZE_NASZ_FULL,
     speechText: OJCZE_NASZ_SPEECH,
     type: 'small',
@@ -74,7 +74,7 @@ function generateDivineMercySteps() {
     stepIndex: 4,
     part: 'Modlitwy wstępne',
     title: 'Zdrowaś Maryjo',
-    shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
+    shortText: 'Zdrowaś Maryjo...',
     fullText: ZDROVAS_FULL,
     speechText: ZDROVAS_SPEECH,
     type: 'small',
@@ -88,7 +88,7 @@ function generateDivineMercySteps() {
     stepIndex: 5,
     part: 'Modlitwy wstępne',
     title: 'Wierzę w Boga',
-    shortText: 'Wierzę w Boga, Ojca wszechmogącego...',
+    shortText: 'Wierzę w Boga...',
     fullText: WIERZE_W_BOGA_FULL,
     speechText: WIERZE_W_BOGA_SPEECH,
     type: 'small',
@@ -111,7 +111,7 @@ function generateDivineMercySteps() {
       stepIndex: currentStep++,
       part: `Dziesiątka ${d} z 5`,
       title: `Ojcze Przedwieczny (${d}. dziesiątka)`,
-      shortText: 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew...',
+      shortText: 'Ojcze Przedwieczny, ofiaruję Ci Ciało i Krew,\nDuszę i Bóstwo najmilszego Syna Twojego,\na Pana naszego Jezusa Chrystusa,\nna przebłaganie za grzechy nasze i całego świata.',
       fullText: OJCZE_PRZEDWIECZNY_FULL,
       speechText: OJCZE_PRZEDWIECZNY_SPEECH,
       type: 'large',
@@ -151,14 +151,14 @@ function generateDivineMercySteps() {
     beadId: 'bead-connector'
   });
 
-  // Krok 62: Akt strzelisty (3x) + Jezu, ufam Tobie (3x) + Znak Krzyża
+  // Krok 62: Zakończenie – Znak Krzyża Świętego
   steps.push({
     stepIndex: 62,
     part: 'Zakończenie',
-    title: 'O Krwi i Wodo (3x) · Jezu, ufam Tobie (3x)',
-    shortText: 'O Krwi i Wodo... (3x) · Jezu, ufam Tobie! (3x)',
-    fullText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas — ufam Tobie!\n(3x)\n\nJezu, ufam Tobie!\n(3x)\n\n+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
-    speechText: 'O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! O Krwi i Wodo, któraś wypłynęła z Najświętszego Serca Jezusowego jako zdrój miłosierdzia dla nas, ufam Tobie! Jezu, ufam Tobie. Jezu, ufam Tobie. Jezu, ufam Tobie. W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    title: 'Znak Krzyża',
+    shortText: '+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    fullText: '+ W imię Ojca i Syna, i Ducha Świętego. Amen.',
+    speechText: 'W imię Ojca i Syna, i Ducha Świętego. Amen.',
     type: 'closing',
     decade: 6,
     beadNumber: 2,
@@ -230,6 +230,8 @@ function generateRosarySteps() {
   
   const OJCZE_NASZ_FULL = 'Ojcze nasz, któryś jest w niebie, święć się imię Twoje, przyjdź królestwo Twoje, bądź wola Twoja jako w niebie, tak i na ziemi. Chleba naszego powszedniego daj nam dzisiaj i odpuść nam nasze winy jako i my odpuszczamy naszym winowajcom i nie wódź nas na pokuszenie, ale nas zbaw ode złego. Amen.';
   const ZDROVAS_FULL = 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Maryjo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
+  // Wymowa TTS: „Maryjo" → „Marijo" dla poprawnej wymowy w polskim syntetyzatorze mowy
+  const ZDROVAS_SPEECH = 'Zdrowaś Marijo, łaski pełna, Pan z Tobą. Błogosławionaś Ty między niewiastami i błogosławiony owoc żywota Twojego, Jezus. Święta Marijo, Matko Boża, módl się za nami grzesznymi, teraz i w godzinę śmierci naszej. Amen.';
   const WIERZE_W_BOGA_FULL = 'Wierzę w Boga, Ojca wszechmogącego, Stworzyciela nieba i ziemi, i w Jezusa Chrystusa, Syna Jego jedynego, Pana naszego, który się począł z Ducha Świętego, narodził się z Maryi Panny, umęczon pod Ponckim Piłatem, ukrzyżowan, umarł i pogrzebion. Zstąpił do piekieł, trzeciego dnia zmartwychwstał. Wstąpił na niebiosa, siedzi po prawicy Boga Ojca wszechmogącego. Stamtąd przyjdzie sądzić żywych i umarłych. Wierzę w Ducha Świętego, święty Kościół powszechny, świętych obcowanie, grzechów odpuszczenie, ciała zmartwychwstanie, żywot wieczny. Amen.';
   const CHWALA_OJCU_FULL = 'Chwała Ojcu i Synowi, i Duchowi Świętemu, jak była na początku, teraz i zawsze, i na wieki wieków. Amen.';
   const FATIMA_FULL = 'O mój Jezu, przebacz nam nasze grzechy, zachowaj nas od ognia piekielnego, zaprowadź wszystkie dusze do nieba i dopomóż szczególnie tym, którzy najbardziej potrzebują Twojego miłosierdzia.';
@@ -264,7 +266,7 @@ function generateRosarySteps() {
     title: 'Zdrowaś Maryjo (1/3 – o cnotę Wiary)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL + ' (o przymnożenie Wiary)',
-    speechText: ZDROVAS_FULL,
+    speechText: ZDROVAS_SPEECH,
     type: 'small', decade: 0, beadNumber: 3, beadId: 'bead-stem-red-1'
   });
 
@@ -275,7 +277,7 @@ function generateRosarySteps() {
     title: 'Zdrowaś Maryjo (2/3 – o cnotę Nadziei)',
     shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
     fullText: ZDROVAS_FULL + ' (o ugruntowanie Nadziei)',
-    speechText: ZDROVAS_FULL,
+    speechText: ZDROVAS_SPEECH,
     type: 'small', decade: 0, beadNumber: 4, beadId: 'bead-stem-red-2'
   });
 
@@ -286,7 +288,7 @@ function generateRosarySteps() {
     title: 'Zdrowaś Maryjo (3/3 – o cnotę Miłości) & Chwała Ojcu',
     shortText: 'Zdrowaś Maryjo... Chwała Ojcu...',
     fullText: ZDROVAS_FULL + ' (o rozpalenie Miłości)\n\n' + CHWALA_OJCU_FULL,
-    speechText: ZDROVAS_FULL + ' ' + CHWALA_OJCU_FULL,
+    speechText: ZDROVAS_SPEECH + ' ' + CHWALA_OJCU_FULL,
     type: 'small', decade: 0, beadNumber: 5, beadId: 'bead-stem-red-3'
   });
 
@@ -320,7 +322,7 @@ function generateRosarySteps() {
           title: `Zdrowaś Maryjo (${b}/10)`,
           shortText: 'Zdrowaś Maryjo, łaski pełna, Pan z Tobą...',
           fullText: ZDROVAS_FULL,
-          speechText: ZDROVAS_FULL,
+          speechText: ZDROVAS_SPEECH,
           type: 'small', decade: d, beadNumber: b, beadId: `bead-dec${d}-${b}`
         });
       } else {
@@ -330,7 +332,7 @@ function generateRosarySteps() {
           title: `Zdrowaś Maryjo (10/10) · Chwała Ojcu · O mój Jezu`,
           shortText: 'Zdrowaś Maryjo... Chwała Ojcu... O mój Jezu...',
           fullText: `${ZDROVAS_FULL}\n\n${CHWALA_OJCU_FULL}\n\n${FATIMA_FULL}`,
-          speechText: `${ZDROVAS_FULL} ${CHWALA_OJCU_FULL} ${FATIMA_FULL}`,
+          speechText: `${ZDROVAS_SPEECH} ${CHWALA_OJCU_FULL} ${FATIMA_FULL}`,
           type: 'small', decade: d, beadNumber: b, beadId: `bead-dec${d}-${b}`
         });
       }
@@ -425,8 +427,6 @@ const chime = new SacredChime();
 
 // ========================================================
 // 4. ZRÓŻNICOWANA WIBRACJA HAPTYCZNA DLA SENIORÓW I MODLITWY W KIESZENI
-// Pierwszy duży paciorek jest czerwony, po nim 3 małe niebieskie paciorki.
-// W dziesiątkach duże paciorki są czerwone, a małe niebieskie.
 // ========================================================
 function triggerHaptic(typeOrStep = 'small') {
   if (!AppState.settings.vibration) return;
@@ -434,33 +434,41 @@ function triggerHaptic(typeOrStep = 'small') {
     const type = typeof typeOrStep === 'object' && typeOrStep !== null ? typeOrStep.type : typeOrStep;
     
     // 1. Obsługa wibracji natywnej Capacitor (Android/iOS)
-    if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics) {
-      const haptics = window.Capacitor.Plugins.Haptics;
+    const Haptics = (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Haptics) || null;
+    if (Haptics) {
       if (type === 'cross' || type === 'closing') {
-        haptics.notification({ type: 'SUCCESS' }).catch(() => {});
+        Haptics.notification({ type: 'SUCCESS' }).catch(() => {});
       } else if (type === 'large' || type === 'holyGod') {
-        haptics.impact({ style: 'HEAVY' }).catch(() => {});
+        Haptics.impact({ style: 'HEAVY' }).catch(() => {});
       } else {
-        haptics.impact({ style: 'MEDIUM' }).catch(() => {});
+        Haptics.impact({ style: 'MEDIUM' }).catch(() => {});
       }
     }
 
-    // 2. Standardowa wibracja Web Vibration API
+    // 2. Standardowa wibracja Web Vibration API (Android / PWA)
     if ('vibrate' in navigator && typeof navigator.vibrate === 'function') {
       if (type === 'cross' || type === 'closing') {
         // Złoty Krzyżyk / Zakończenie: 3 wyraziste impulsy
-        navigator.vibrate([70, 50, 70, 50, 110]);
+        navigator.vibrate([80, 50, 80, 50, 140]);
       } else if (type === 'large' || type === 'holyGod') {
-        // Duże paciorki (Ojcze Przedwieczny, Święty Boże): podwójna wibracja
-        navigator.vibrate([80, 50, 80]);
+        // Duże paciorki (Ojcze Przedwieczny, Święty Boże): podwójna wyczuwalna wibracja
+        navigator.vibrate([100, 60, 100]);
       } else {
-        // Małe paciorki: wyraźny, wyczuwalny impuls 55ms
-        navigator.vibrate(55);
+        // Małe paciorki: wyraźny, wyczuwalny impuls 75ms
+        navigator.vibrate(75);
       }
     }
   } catch (e) {
     // Bezpieczne wyciszenie wyjątków
   }
+}
+
+// Funkcja pomocnicza: poprawa wymowy trudnych słów przez syntezator mowy (np. Maryjo -> Marijo)
+function prepareSpeechText(rawText) {
+  if (!rawText) return '';
+  return rawText
+    .replace(/Maryjo/g, 'Marijo')
+    .replace(/Maryi/g, 'Marii');
 }
 
 // Wtyczki aplikacji natywnej (Capacitor) – w przeglądarce/PWA są niedostępne
@@ -528,7 +536,7 @@ class PrayerSpeaker {
     }
   }
 
-  speak(text, onEndCallback) {
+  speak(text, onEndCallback, displayText = null) {
     this.stop();
     const token = ++this.activeToken;
 
@@ -541,10 +549,11 @@ class PrayerSpeaker {
       return;
     }
 
-    // Wyświetl sformatowany tekst z podziałem na wiersze dla podświetlania słów
+    // Wyświetl tekst modlitwy (zwięzły displayText, aby nie zasłaniał wizerunku ani paciorków)
     const textContainer = document.getElementById('prayer-text');
+    const textToShow = displayText || text;
     if (textContainer) {
-      const lines = text.split('\n');
+      const lines = textToShow.split('\n');
       let globalWordIdx = 0;
       textContainer.innerHTML = lines.map(line => {
         if (!line.trim()) return '<span class="prayer-line-break"></span>';
@@ -704,7 +713,7 @@ function updateUI() {
   const titleEl = document.getElementById('prayer-title');
   const textEl = document.getElementById('prayer-text');
   titleEl.textContent = step.title;
-  textEl.textContent = step.fullText;
+  textEl.textContent = step.shortText;
 
   // 3. Sprawdzenie intencji
   const intentionBox = document.getElementById('prayer-intention-box');
@@ -777,6 +786,9 @@ function goToStep(index, fromAutoplay = false) {
     return;
   }
 
+  // Wywołanie wibracji bezpośrednio przy aktywacji użytkownika
+  triggerHaptic(AppState.steps[index]);
+
   // Przerwij poprzednie oczekiwanie na kolejny krok
   if (AppState.audioTimer) {
     clearTimeout(AppState.audioTimer);
@@ -788,7 +800,6 @@ function goToStep(index, fromAutoplay = false) {
 
   AppState.currentIndex = index;
   updateUI();
-  triggerHaptic(AppState.steps[index]);
   chime.playSoftBead(stepFrequency(AppState.steps[index]));
 
   if (AppState.isPlaying && !fromAutoplay) {
@@ -797,14 +808,15 @@ function goToStep(index, fromAutoplay = false) {
 
   // Odmawianie wraz z lektorem lub bez (wg stanu soundEnabled)
   if (AppState.settings.soundEnabled) {
-    const textToSpeak = AppState.steps[index].speechText || AppState.steps[index].fullText;
+    const textToSpeak = prepareSpeechText(AppState.steps[index].speechText || AppState.steps[index].fullText);
+    const textToShow = AppState.steps[index].shortText || AppState.steps[index].fullText;
     speaker.speak(textToSpeak, () => {
       if (AppState.isPlaying) {
         AppState.audioTimer = setTimeout(() => {
           goToNextStep(true);
         }, AppState.settings.pauseBetweenPrayers * 1000);
       }
-    });
+    }, textToShow);
   }
 }
 
@@ -854,14 +866,15 @@ function startAutoplay() {
   const currentStep = AppState.steps[AppState.currentIndex];
   if (currentStep) {
     if (AppState.settings.soundEnabled) {
-      const textToSpeak = currentStep.speechText || currentStep.fullText;
+      const textToSpeak = prepareSpeechText(currentStep.speechText || currentStep.fullText);
+      const textToShow = currentStep.shortText || currentStep.fullText;
       speaker.speak(textToSpeak, () => {
         if (AppState.isPlaying) {
           AppState.audioTimer = setTimeout(() => {
             goToNextStep(true);
           }, AppState.settings.pauseBetweenPrayers * 1000);
         }
-      });
+      }, textToShow);
     } else {
       const delay = Math.max(2500, AppState.settings.pauseBetweenPrayers * 1000);
       AppState.audioTimer = setTimeout(() => {
@@ -923,10 +936,10 @@ function updateRosarySvgViewBox() {
   const vbHeight = Math.round(460 * (h / w));
   svg.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
 
-  // Precyzyjne pozycjonowanie: duży niebieski paciorek łącznika (bead-connector na środku)
-  // ma znajdować się dokładnie pod brodą Pana Jezusa.
-  // W wizerunku wileńskim (635x1234) podbródek Jezusa jest na wysokości 260px (21.07% wysokości).
-  // Obraz (.holy-image-jesus) ma transform: translateY(18px) scale(0.96) z origin: center top.
+  // Pozycjonowanie schematu paciorków:
+  // Głowa Pana Jezusa wraz z aureolą pozostaje w pełni odsłonięta i widoczna.
+  // Schemat paciorków jest przesunięty nieco niżej, zachowując swój rozmiar,
+  // tak aby górne łuki serca (lokalnie Y = 304) układały się poniżej brody na piersiach Jezusa.
   const imgAspect = 635 / 1234;
   const stageAspect = w / h;
   let imgHeight, imgTop;
@@ -939,16 +952,14 @@ function updateRosarySvgViewBox() {
   }
 
   // Pozycja brody Jezusa na ekranie w pikselach:
-  const screenChinY = imgTop + 18 + (imgHeight * 0.96 * (260 / 1234));
-  // Środek dużego niebieskiego paciorka (promień 13px) umieszczamy tuż pod brodą na dekolcie (+18px):
-  const targetBeadY_screen = screenChinY + 18;
+  const screenChinY = imgTop + 10 + (imgHeight * 0.95 * (265 / 1234));
+  // W jednostkach viewBox SVG (1 unit = w / 460 px):
+  const chinSvgY = screenChinY * (460 / w);
 
-  // Przeliczenie pikseli ekranu na jednostki viewBox SVG (1 jednostka SVG = w / 460 px):
-  const targetBeadY_svg = targetBeadY_screen * (460 / w);
-
-  // W bazowym SVG bead-connector ma współrzędną Y = 348.0.
-  // Aby bead-connector znalazł się dokładnie pod brodą, przesunięcie grupy wynosi:
-  const dy = targetBeadY_svg - 348.0;
+  // Górna krawędź pętli serca w SVG ma lokalną współrzędną Y = 304.
+  // Umieszczamy górne paciorki serca ok. 45 jednostek poniżej brody (na piersiach wokół promieni):
+  const targetHeartTopSvg = chinSvgY + 45;
+  const dy = Math.max(-20, targetHeartTopSvg - 304.0);
 
   heartGroup.setAttribute('transform', `translate(0, ${dy.toFixed(1)})`);
 }
@@ -1043,7 +1054,7 @@ function switchMode(newMode) {
   if (AppState.settings.soundEnabled) {
     const firstStep = AppState.steps[0];
     if (firstStep) {
-      speaker.speak(firstStep.speechText || firstStep.fullText);
+      speaker.speak(prepareSpeechText(firstStep.speechText || firstStep.fullText), null, firstStep.shortText);
     }
   }
 }
@@ -1403,7 +1414,7 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         const curStep = AppState.steps[AppState.currentIndex];
         if (curStep) {
-          speaker.speak(curStep.speechText || curStep.fullText);
+          speaker.speak(prepareSpeechText(curStep.speechText || curStep.fullText), null, curStep.shortText);
         }
       }
     });
@@ -1557,6 +1568,9 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('toggle-vibration').addEventListener('change', (e) => {
     AppState.settings.vibration = e.target.checked;
     saveSettings();
+    if (e.target.checked) {
+      triggerHaptic('large');
+    }
   });
 
   document.getElementById('toggle-wakelock').addEventListener('change', (e) => {

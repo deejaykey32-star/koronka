@@ -89,10 +89,12 @@ Set-ZipEntry -Zip $zipArchive -EntryName "style.css" -SourceFilePath $stylePath
 Set-ZipEntry -Zip $zipArchive -EntryName "app.js" -SourceFilePath $appPath
 Set-ZipEntry -Zip $zipArchive -EntryName "sw.js" -SourceFilePath $swPath
 Set-ZipEntry -Zip $zipArchive -EntryName "manifest.json" -SourceFilePath $manifestPath
-Set-ZipEntry -Zip $zipArchive -EntryName "assets/icon-192.png" -SourceFilePath $icon192
-Set-ZipEntry -Zip $zipArchive -EntryName "assets/icon-512.png" -SourceFilePath $icon512
-Set-ZipEntry -Zip $zipArchive -EntryName "assets/jezus-milosierny-wilno.jpg" -SourceFilePath $jezusImg
-Set-ZipEntry -Zip $zipArchive -EntryName "assets/matka-boza.jpg" -SourceFilePath $maryImg
+
+# Kopiuj wszystkie zasoby graficzne/dźwiękowe z assets
+$allAssetFiles = Get-ChildItem -Path $assetsDir -File | Where-Object { $_.Name -notmatch '\.(apk|aab|ipa|zip)$' }
+foreach ($af in $allAssetFiles) {
+    Set-ZipEntry -Zip $zipArchive -EntryName "assets/$($af.Name)" -SourceFilePath $af.FullName
+}
 
 # Kopie w katalogu głównym dla bezpośredniego otwierania offline
 Set-ZipEntry -Zip $zipArchive -EntryName "icon-192.png" -SourceFilePath $icon192
