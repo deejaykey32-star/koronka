@@ -936,10 +936,9 @@ function updateRosarySvgViewBox() {
   const vbHeight = Math.round(460 * (h / w));
   svg.setAttribute('viewBox', `0 0 ${vbWidth} ${vbHeight}`);
 
-  // Pozycjonowanie schematu paciorków:
-  // Głowa Pana Jezusa wraz z aureolą pozostaje w pełni odsłonięta i widoczna.
-  // Schemat paciorków jest przesunięty nieco niżej, zachowując swój rozmiar,
-  // tak aby górne łuki serca (lokalnie Y = 304) układały się poniżej brody na piersiach Jezusa.
+  // Schemat paciorków w kształcie serca bezpośrednio pod głową Pana Jezusa:
+  // Duży niebieski paciorek łącznika (bead-connector na środku, Y=348)
+  // ma znajdować się bezpośrednio pod brodą Jezusa (na dekolcie tuniki).
   const imgAspect = 635 / 1234;
   const stageAspect = w / h;
   let imgHeight, imgTop;
@@ -952,14 +951,11 @@ function updateRosarySvgViewBox() {
   }
 
   // Pozycja brody Jezusa na ekranie w pikselach:
-  const screenChinY = imgTop + 10 + (imgHeight * 0.95 * (265 / 1234));
-  // W jednostkach viewBox SVG (1 unit = w / 460 px):
-  const chinSvgY = screenChinY * (460 / w);
-
-  // Górna krawędź pętli serca w SVG ma lokalną współrzędną Y = 304.
-  // Umieszczamy górne paciorki serca ok. 45 jednostek poniżej brody (na piersiach wokół promieni):
-  const targetHeartTopSvg = chinSvgY + 45;
-  const dy = Math.max(-20, targetHeartTopSvg - 304.0);
+  const screenChinY = (imgTop + 10) + (imgHeight * 0.95 * (265 / 1234));
+  // Środek dużego niebieskiego paciorka łącznika bezpośrednio pod brodą (+16px):
+  const targetBeadY_screen = screenChinY + 16;
+  const targetBeadY_svg = targetBeadY_screen * (460 / w);
+  const dy = targetBeadY_svg - 348.0;
 
   heartGroup.setAttribute('transform', `translate(0, ${dy.toFixed(1)})`);
 }
