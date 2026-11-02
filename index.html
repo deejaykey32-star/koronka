@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=51">
+  <link rel="stylesheet" href="style.css?v=52">
 </head>
 <body>
   <div id="app" class="app-container mode-koronka">
@@ -242,7 +242,7 @@
         </svg>
       </div>
       
-      <!-- 2. Pływająca kapsuła z tekstem modlitwy w górnej części z możliwością zwijania/ukrywania -->
+      <!-- 2. Pływająca kapsuła z tekstem modlitwy w dolnej części (pod schematem) z możliwością zwijania/ukrywania -->
       <section class="prayer-floating-capsule" id="prayer-tap-text-area" role="region" aria-label="Tekst aktualnej modlitwy">
         <div class="prayer-floating-header-row">
           <span id="prayer-progress-indicator" class="prayer-progress-indicator">KROK 1 Z 62</span>
@@ -254,7 +254,7 @@
               <span class="text-ctrl-label">Aa</span>
             </button>
             <button id="btn-text-collapse" class="text-ctrl-btn" title="Zwiń / rozwiń tekst modlitwy" aria-label="Zwiń lub rozwiń tekst">
-              <span class="text-ctrl-label">&#9650;</span>
+              <span class="text-ctrl-label">&#9660;</span>
             </button>
             <button id="btn-text-hide" class="text-ctrl-btn" title="Ukryj tekst modlitwy" aria-label="Ukryj tekst">
               <span class="text-ctrl-label">&#128065;</span>
@@ -690,6 +690,6 @@
 
   </div>
 
-  <script src="app.js?v=51"></script>
+  <script src="app.js?v=52"></script>
 </body>
 </html>
