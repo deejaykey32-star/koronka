@@ -144,15 +144,15 @@ html, body {
 }
 
 /* ========================================================
-   2. ZWĘŻONA KAPSUŁA Z TEKSTEM MODLITWY (POMIĘDZY PRZYCISKAMI NA DOLE)
-   Zwężona i obniżona, umieszczona w dolnym pasku pomiędzy
-   medalionem Maryi a przyciskami nawigacji.
+   2. WYŚRODKOWANA KAPSUŁA Z TEKSTEM MODLITWY (POŚRODKU DOLNEGO PASKA)
+   Ściśle wyśrodkowana w dolnym pasku pomiędzy lewą grupą (Maryja, lektor, auto)
+   a prawą grupą (od nowa, wstecz, dalej). Nigdy nie nachodzi na przyciski!
    ======================================================== */
 .prayer-floating-capsule {
   pointer-events: auto;
   flex: 1 1 auto;
-  max-width: 250px;
-  min-width: 160px;
+  min-width: 0; /* Gwarancja braku overflow w flexbox */
+  max-width: 240px;
   margin: 0;
   /* Ciemniejsze półprzezroczyste tło w stylu Rosario – czytelny tekst, nie zasłania wizerunku */
   background: rgba(6, 8, 14, 0.88);
@@ -160,15 +160,15 @@ html, body {
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 12px;
-  padding: 5px 8px;
+  padding: 4px 6px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.75);
   display: flex;
   flex-direction: column;
   gap: 2px;
-  z-index: 30;
+  z-index: 27;
   transition: all 0.25s ease;
-  max-height: clamp(65px, 16dvh, 105px);
-  overflow-y: auto;
+  max-height: clamp(60px, 15dvh, 100px);
+  overflow: hidden;
   box-sizing: border-box;
 }
 
@@ -177,11 +177,22 @@ html, body {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  gap: 4px;
+  gap: 3px;
+  flex-shrink: 0;
+}
+
+.prayer-progress-indicator {
+  font-family: var(--font-serif);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: var(--gold-light);
+  white-space: nowrap;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
 }
 
 .prayer-floating-capsule.collapsed {
-  padding: 4px 8px;
+  padding: 3px 6px;
 }
 
 .prayer-floating-capsule.collapsed .prayer-text-container {
@@ -196,13 +207,19 @@ html, body {
   display: none !important;
 }
 
+.prayer-text-container {
+  overflow-y: auto;
+  max-height: 72px;
+  width: 100%;
+}
+
 .prayer-floating-capsule .prayer-text {
   font-family: var(--font-sans);
-  font-size: var(--prayer-font-size, 12px);
+  font-size: var(--prayer-font-size, 11.5px);
   font-weight: 500;
-  line-height: 1.32;
+  line-height: 1.28;
   color: #ffffff;
-  text-shadow: 0 1px 2px #000000, 0 2px 5px rgba(0, 0, 0, 0.95), 0 0 10px rgba(0, 0, 0, 0.9);
+  text-shadow: 0 1px 2px #000000, 0 2px 5px rgba(0, 0, 0, 0.95);
   margin: 0;
   word-break: break-word;
   text-align: center;
@@ -213,18 +230,18 @@ html, body {
   pointer-events: auto;
   flex: 0 0 auto;
   margin: 0 auto;
-  z-index: 30;
+  z-index: 27;
   background: rgba(14, 18, 22, 0.92);
   border: 1px solid var(--gold-border);
   color: var(--gold-light);
-  border-radius: 16px;
-  padding: 0 10px;
-  height: 30px;
+  border-radius: 14px;
+  padding: 0 8px;
+  height: 26px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: 11px;
+  gap: 3px;
+  font-size: 10px;
   font-weight: 600;
   cursor: pointer;
   backdrop-filter: blur(10px);
@@ -357,8 +374,8 @@ html, body {
   border: 1px solid rgba(255, 255, 255, 0.18);
   color: var(--text-muted);
   border-radius: 5px;
-  width: 25px;
-  height: 23px;
+  width: 22px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -378,7 +395,7 @@ html, body {
 }
 
 .text-ctrl-label {
-  font-size: 11.5px;
+  font-size: 9.5px;
   font-weight: 700;
   line-height: 1;
 }
@@ -633,15 +650,66 @@ html, body {
    ======================================================== */
 .bottom-floating-controls {
   position: absolute;
-  bottom: calc(10px + var(--safe-bottom));
-  left: 8px;
-  right: 8px;
+  bottom: calc(8px + var(--safe-bottom));
+  left: 6px;
+  right: 6px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
   gap: 6px;
   pointer-events: none;
   z-index: 25;
+  box-sizing: border-box;
+}
+
+/* Lewa grupa: Lektor, Auto oraz Medalion Maryi */
+.bottom-left-cluster {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+  flex-shrink: 0;
+  z-index: 28;
+}
+
+/* Prawa grupa: ↺ Od nowa, ◀ Wstecz, ▶ Dalej */
+.bottom-right-cluster {
+  pointer-events: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  flex-shrink: 0;
+  z-index: 28;
+}
+
+.ctrl-sub-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.left-sub-row {
+  justify-content: flex-start;
+}
+
+.right-sub-row {
+  justify-content: flex-end;
+}
+
+.ctrl-main-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.left-main-row {
+  justify-content: flex-start;
+}
+
+.right-main-row {
+  justify-content: flex-end;
 }
 
 .cameo-btn {
@@ -679,7 +747,7 @@ html, body {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  bottom: calc(96px + var(--safe-bottom));
+  bottom: calc(88px + var(--safe-bottom));
   z-index: 26;
   pointer-events: none;
   display: flex;
@@ -690,10 +758,10 @@ html, body {
 
 .wilno-inscription-text {
   font-family: var(--font-serif);
-  font-size: clamp(12px, 3.4vw, 17px);
+  font-size: clamp(12px, 3.4vw, 16px);
   font-weight: 700;
   color: #c4261d;
-  letter-spacing: clamp(1.2px, 0.5vw, 2.4px);
+  letter-spacing: clamp(1px, 0.5vw, 2.2px);
   text-transform: uppercase;
   text-align: center;
   white-space: nowrap;
@@ -706,17 +774,17 @@ html, body {
   background: rgba(14, 18, 24, 0.85);
   border: 1px solid var(--gold-border);
   color: var(--gold-light);
-  border-radius: 14px;
-  padding: 0 8px;
-  height: 26px;
+  border-radius: 12px;
+  padding: 0 6px;
+  height: 24px;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 3px;
+  gap: 2px;
   font-family: var(--font-sans);
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.4px;
   cursor: pointer;
   outline: none;
   backdrop-filter: blur(8px);
@@ -727,7 +795,7 @@ html, body {
 }
 
 .btn-autoplay .autoplay-icon {
-  font-size: 10px;
+  font-size: 9.5px;
   line-height: 1;
 }
 
@@ -755,33 +823,10 @@ html, body {
   50% { border-color: rgba(255, 255, 255, 1); box-shadow: 0 0 18px rgba(255, 215, 0, 0.9); }
 }
 
-.bottom-right-cluster {
-  pointer-events: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 4px;
-  flex-shrink: 0;
-}
-
-.ctrl-sub-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 5px;
-}
-
-.ctrl-main-row {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 5px;
-}
-
 .music-note-btn {
   background: none;
   border: none;
-  padding: 2px;
+  padding: 1px;
   cursor: pointer;
   outline: none;
   display: flex;
@@ -806,8 +851,8 @@ html, body {
 }
 
 .music-note-img {
-  width: 28px;
-  height: 26px;
+  width: 26px;
+  height: 24px;
   object-fit: contain;
   display: block;
 }
@@ -838,15 +883,15 @@ html, body {
 }
 
 .btn-restart-style .nav-btn-img {
-  width: 30px;
-  height: 30px;
+  width: 28px;
+  height: 28px;
   object-fit: contain;
   display: block;
 }
 
 .btn-prev-style .nav-btn-img {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   display: block;
 }
@@ -877,28 +922,28 @@ html, body {
 }
 
 .play-circle-img {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
   display: block;
 }
 
 @media (max-width: 360px) {
-  .play-circle-img { width: 40px; height: 40px; }
-  .btn-prev-style .nav-btn-img { width: 32px; height: 32px; }
-  .btn-restart-style .nav-btn-img { width: 26px; height: 26px; }
+  .play-circle-img { width: 38px; height: 38px; }
+  .btn-prev-style .nav-btn-img { width: 30px; height: 30px; }
+  .btn-restart-style .nav-btn-img { width: 24px; height: 24px; }
   .cameo-img { width: 38px; height: 42px; }
-  .wilno-inscription-text { font-size: 11.5px; letter-spacing: 0.8px; }
-  .prayer-floating-capsule { min-width: 140px; padding: 4px 6px; }
+  .wilno-inscription-text { font-size: 11px; letter-spacing: 0.8px; }
+  .prayer-floating-capsule { max-width: 175px; padding: 3px 4px; }
 }
 
 @media (max-height: 700px) {
   .prayer-floating-capsule {
-    max-height: 85px;
-    padding: 3px 6px;
+    max-height: 75px;
+    padding: 2px 4px;
   }
   .wilno-inscription-wrap {
-    bottom: calc(88px + var(--safe-bottom));
+    bottom: calc(82px + var(--safe-bottom));
   }
 }
 

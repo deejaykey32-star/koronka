@@ -1634,6 +1634,6 @@ document.addEventListener('DOMContentLoaded', () => {
 // Rejestracja Service Worker (PWA Offline) – w aplikacji natywnej pliki są już wbudowane w pakiet
 if ('serviceWorker' in navigator && !window.Capacitor) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js?v=53').catch(() => {});
+    navigator.serviceWorker.register('sw.js?v=54').catch(() => {});
   });
 }

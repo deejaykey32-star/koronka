@@ -22,7 +22,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <link rel="stylesheet" href="style.css?v=53">
+  <link rel="stylesheet" href="style.css?v=54">
 </head>
 <body>
   <div id="app" class="app-container mode-koronka">
@@ -242,19 +242,31 @@
         </svg>
       </div>
       
-            <!-- Środek dolnej części: Napis „JEZU, UFAM TOBIE” pod stopami Jezusa -->
+                  <!-- Środek dolnej części: Napis „JEZU, UFAM TOBIE” pod stopami Jezusa -->
       <div class="wilno-inscription-wrap" id="banner-wrap">
         <span class="wilno-inscription-text" id="wilno-inscription-text">JEZU, UFAM TOBIE</span>
       </div>
 
-      <!-- 3. Pływające kontrolki na dole ekranu z tekstem modlitwy pośrodku pomiędzy przyciskami -->
+      <!-- 3. Pływające kontrolki na dole ekranu: Lewa strona, Środek (tekst), Prawa strona -->
       <div class="bottom-floating-controls" id="bottom-floating-controls">
-        <!-- Lewa strona: Medalion z wizerunkiem Maryi (przełącznik Koronka <-> Różaniec) -->
-        <button id="btn-switch-mode" class="cameo-btn" title="Przełącz modlitwę: Koronka / Różaniec" aria-label="Przełącz Koronka lub Różaniec">
-          <img src="assets/cameo-mary-clean.png" alt="Matka Boża" id="cameo-mode-img" class="cameo-img">
-        </button>
+        <!-- Lewa strona: Lektor, Auto oraz Medalion Maryi -->
+        <div class="bottom-left-cluster" id="bottom-left-cluster">
+          <div class="ctrl-sub-row left-sub-row">
+            <button id="btn-audio" class="music-note-btn" title="Lektor i dźwięk (włącz / wyłącz odczytywanie na głos)" aria-label="Włącz / wyłącz lektora">
+              <img src="assets/btn-music-transparent.png" alt="Lektor" id="music-note-img" class="music-note-img">
+            </button>
+            <button id="btn-autoplay" class="btn-autoplay" title="Odmawianie automatyczne (Auto-play)" aria-label="Odmawianie automatyczne">
+              <span class="autoplay-icon">▶</span><span class="autoplay-label">AUTO</span>
+            </button>
+          </div>
+          <div class="ctrl-main-row left-main-row">
+            <button id="btn-switch-mode" class="cameo-btn" title="Przełącz modlitwę: Koronka / Różaniec" aria-label="Przełącz Koronka lub Różaniec">
+              <img src="assets/cameo-mary-clean.png" alt="Matka Boża" id="cameo-mode-img" class="cameo-img">
+            </button>
+          </div>
+        </div>
 
-        <!-- Środek: Zwężona kapsuła z tekstem modlitwy pomiędzy przyciskami -->
+        <!-- Środek: Wyśrodkowany blok z tekstem modlitwy (bez nachodzenia na przyciski) -->
         <section class="prayer-floating-capsule" id="prayer-tap-text-area" role="region" aria-label="Tekst aktualnej modlitwy">
           <div class="prayer-floating-header-row">
             <span id="prayer-progress-indicator" class="prayer-progress-indicator">KROK 1 Z 62</span>
@@ -288,20 +300,14 @@
           <span>&#128065;</span> Tekst
         </button>
 
-        <!-- Prawa strona: 🎵 Lektor, ▶ Auto, ↺ Od nowa, ◀ Wstecz, ▶ Dalej (Play) -->
+        <!-- Prawa strona: ↺ Od nowa, ◀ Wstecz, ▶ Dalej (Play) -->
         <div class="bottom-right-cluster" id="bottom-right-cluster">
-          <div class="ctrl-sub-row">
-            <button id="btn-audio" class="music-note-btn" title="Lektor i dźwięk (włącz / wyłącz odczytywanie na głos)" aria-label="Włącz / wyłącz lektora">
-              <img src="assets/btn-music-transparent.png" alt="Lektor" id="music-note-img" class="music-note-img">
-            </button>
-            <button id="btn-autoplay" class="btn-autoplay" title="Odmawianie automatyczne (Auto-play)" aria-label="Odmawianie automatyczne">
-              <span class="autoplay-icon">▶</span><span class="autoplay-label">AUTO</span>
-            </button>
-          </div>
-          <div class="ctrl-main-row">
+          <div class="ctrl-sub-row right-sub-row">
             <button id="btn-restart" class="nav-circle-btn btn-restart-style" title="Od nowa (początek modlitwy)" aria-label="Rozpocznij od nowa">
               <img src="assets/btn-restart-clean.png" alt="Od nowa" class="nav-btn-img restart-btn-img">
             </button>
+          </div>
+          <div class="ctrl-main-row right-main-row">
             <button id="btn-prev" class="nav-circle-btn btn-prev-style" title="Poprzednia modlitwa (wstecz)" aria-label="Poprzednia modlitwa (wstecz)">
               <img src="assets/btn-prev-clean.png" alt="Wstecz" class="nav-btn-img prev-btn-img">
             </button>
@@ -690,6 +696,6 @@
 
   </div>
 
-  <script src="app.js?v=53"></script>
+  <script src="app.js?v=54"></script>
 </body>
 </html>
